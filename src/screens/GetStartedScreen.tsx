@@ -2,9 +2,10 @@ import {useNavigation} from "@react-navigation/core";
 import React from "react";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
-import {CONTENT, HEAD_TEXT, SECONDARY} from "../assets/colors";
-import {APP_MARGIN_HORIZONTAL} from "../assets/styles";
+import {CONTENT, HEAD_TEXT, SECONDARY} from "../assets/constants/colors";
+import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import AppButton from "../components/common/AppButton";
+import { signInScreen, signUpScreen } from "../navigation/routes";
 
 export default function GetStartedScreen() {
   const navigation = useNavigation();
@@ -62,7 +63,7 @@ export default function GetStartedScreen() {
                 fontSize: scale(16),
                 fontWeight: "500",
               }}
-              onPressHandle={() => navigation.navigate("signInScreen")}
+              onPressHandle={() => navigation.navigate(signInScreen)}
             />
           </View>
           <AppButton
@@ -80,7 +81,7 @@ export default function GetStartedScreen() {
               fontSize: scale(16),
               fontWeight: "500",
             }}
-            onPressHandle={() => navigation.navigate("signUpScreen")}
+            onPressHandle={() => navigation.navigate(signUpScreen)}
           />
         </View>
       </View>

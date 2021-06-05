@@ -1,9 +1,19 @@
 import React from "react";
 import {enableScreens} from "react-native-screens";
-import {createNativeStackNavigator} from "react-native-screens/native-stack";
+import {createNativeStackNavigator, NativeStackNavigationOptions} from "react-native-screens/native-stack";
 import GetStartedScreen from "../screens/GetStartedScreen";
-import {getStartedScreen} from "./routes";
-import {HEAD_TEXT} from "../assets/colors";
+import {
+  forgotPasswordScreen,
+  getStartedScreen,
+  signInScreen,
+  signUpScreen,
+  verifySignUpScreen,
+} from "./routes";
+import {HEAD_TEXT} from "../assets/constants/colors";
+import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
+import ForgotPaswordScreen from "../screens/ForgotPaswordScreen";
+import VerifySignUpScreen from "../screens/VerifySignUpScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -20,24 +30,36 @@ const noTitle = {
   headerTintColor: HEAD_TEXT,
 };
 
+const modalStyle: NativeStackNavigationOptions = {stackPresentation: "modal", headerShown: false};
+
 const AuthNavigator = () => (
   <Stack.Navigator initialRouteName={getStartedScreen}>
     <Stack.Screen
       name={getStartedScreen}
       component={GetStartedScreen}
-      options={noHeader}
+      options={modalStyle}
+    />
+    <Stack.Screen
+      name={signInScreen}
+      component={SignInScreen}
+      options={modalStyle}
+    />
+    <Stack.Screen
+      name={signUpScreen}
+      component={SignUpScreen}
+      options={modalStyle}
+    />
+    <Stack.Screen
+      name={forgotPasswordScreen}
+      component={ForgotPaswordScreen}
+      options={modalStyle}
+    />
+        <Stack.Screen
+      name={verifySignUpScreen}
+      component={VerifySignUpScreen}
+      options={modalStyle}
     />
     {/* <Stack.Screen
-        name="AuthOptionsScreen"
-        component={AuthOptionsScreen}
-        options={noHeader}
-      />
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={noTitle}
-      />
-      <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
         options={noHeader}
@@ -56,15 +78,15 @@ const AuthNavigator = () => (
         name="VerifySignupScreen"
         component={VerifySignup}
         options={noHeader}
-      />
-  
-      {/* Error handling screen */}
+      /> */}
+
+    {/* Error handling screen */}
     {/* <Stack.Screen
       name="ErrorScreen"
       component={AppFallbackErrorComponent}
       options={noHeader}
     />
-    <Stack.Screen name="Home" component={AppNavigation} options={noHeader} /> */}
+    <Stack.Screen name="Home" component={AppNavigation} options={noHeader} />  */}
   </Stack.Navigator>
 );
 
