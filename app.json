@@ -1,0 +1,12 @@
+{
+  "name": "orbit-fitness-user-app",
+  "displayName": "orbit-fitness-user-app",
+  "expo": {
+    "name": "orbit-fitness-user-app",
+    "slug": "orbit-fitness-user-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
