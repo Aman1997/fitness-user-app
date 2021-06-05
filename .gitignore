@@ -37,6 +37,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# aws-exports file
+aws-exports.js
+
 # BUCK
 buck-out/
 \.buckd/
@@ -52,3 +55,6 @@ buck-out/
 # Expo
 .expo/
 web-build/
+
+# env files
+.env
