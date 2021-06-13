@@ -4,8 +4,8 @@ import {
   NativeScrollEvent,
   Text,
   ScrollView,
-  TextStyle,
   View,
+  Dimensions,
 } from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {ICONS, IMAGE_OVERLAY, WHITE} from "../../assets/constants/colors";
@@ -14,9 +14,11 @@ import Constants from "expo-constants";
 import {Entypo} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
 
+const {width} = Dimensions.get("window");
+
 export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
   const [imageCount, setImageCount] = useState(1);
-  //   const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const imageChange = ({nativeEvent}: {nativeEvent: NativeScrollEvent}) => {
     const slide = Math.ceil(
@@ -35,8 +37,6 @@ export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
         style={{
           position: "absolute",
           zIndex: 2,
-          width: "100%",
-          height: "100%",
         }}
       >
         <View
@@ -55,43 +55,43 @@ export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
             name="cross"
             size={scale(20)}
             color={ICONS}
-            // onPress={() => navigation.goBack()}
+            onPress={() => navigation.goBack()}
           />
         </View>
-        <View>
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            pagingEnabled
-            onScroll={imageChange}
-          >
-            {imageUrl.map((image, index) => (
-              <Image
-                key={index}
-                source={{uri: image}}
-                style={{height: "100%", width: "100%", resizeMode: "cover"}}
-              />
-            ))}
-          </ScrollView>
-        </View>
-        {/* Number of images */}
-        <View
-          style={{
-            position: "absolute",
-            zIndex: 2,
-            backgroundColor: "#767574",
-            bottom: scale(15),
-            right: scale(20),
-            justifyContent: "center",
-            alignContent: "center",
-            padding: scale(5),
-            borderRadius: scale(4),
-          }}
+      </View>
+      <View style={{height: "100%"}}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          pagingEnabled
+          onScroll={imageChange}
         >
-          <Text style={{color: WHITE, fontSize: scale(10)}}>
-            {imageCount} / {imageUrl.length}
-          </Text>
-        </View>
+          {imageUrl.map((image, index) => (
+            <Image
+              key={index}
+              source={{uri: image || "https://picsum.photos/300"}}
+              style={{height: "100%", width, resizeMode: "cover"}}
+            />
+          ))}
+        </ScrollView>
+      </View>
+      {/* Number of images */}
+      <View
+        style={{
+          position: "absolute",
+          zIndex: 2,
+          backgroundColor: "#767574",
+          bottom: scale(15),
+          right: scale(20),
+          justifyContent: "center",
+          alignContent: "center",
+          padding: scale(5),
+          borderRadius: scale(4),
+        }}
+      >
+        <Text style={{color: WHITE, fontSize: scale(10)}}>
+          {imageCount} / {imageUrl.length}
+        </Text>
       </View>
     </View>
   );
@@ -99,8 +99,7 @@ export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
 
 const styles = ScaledSheet.create({
   imageContainer: {
-    height: "275@s",
-    width: "100%",
+    height: "250@s",
     backgroundColor: IMAGE_OVERLAY,
   },
 });

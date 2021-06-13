@@ -20,7 +20,7 @@ import * as Location from "expo-location";
 import {coords} from "../utils/findDistance";
 import LocationChange from "../components/home/LocationChange";
 import {checkServiceAvailablibity} from "../helpers/checkServiceAvailability";
-import {searchScreen} from "../navigation/routes";
+import {fitnessProfileScreen, searchScreen, settingsScreen} from "../navigation/routes";
 import {IUserState} from "../redux/reducers/userReducer";
 
 export default function HomeScreen() {
@@ -133,7 +133,7 @@ export default function HomeScreen() {
           }
           onPressLocation={() => setLocation(true)}
           onPressSearch={() => navigation.navigate(searchScreen)}
-          onPressSettings={() => navigation.navigate("SettingsScreen")}
+          onPressSettings={() => navigation.navigate(settingsScreen)}
           onPressToggle={() => {
             setTrainerSelected(!isTrainerSelected);
           }}
@@ -159,8 +159,8 @@ export default function HomeScreen() {
                     {...item}
                     coords={userCoords || {}}
                     onPressHandler={() =>
-                      navigation.navigate("PartnerScreen", {
-                        partnerId: item.id,
+                      navigation.navigate(fitnessProfileScreen, {
+                        data: item
                       })
                     }
                   />

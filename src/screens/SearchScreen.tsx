@@ -12,6 +12,7 @@ import AppSeparator from "../components/common/AppSeparator";
 import MainCard from "../components/home/MainCard";
 import Search from "../components/search/Search";
 import {debounce} from "../helpers/debounce";
+import { fitnessProfileScreen } from "../navigation/routes";
 import {SEARCH_FITNESS_PARTNER_BY_NAME} from "../queries/query";
 import {IUserState} from "../redux/reducers/userReducer";
 
@@ -86,9 +87,9 @@ export default function SearchScreen() {
                     longitude: user.currentLong,
                   }}
                   onPressHandler={() =>
-                    navigation.navigate("PartnerScreen", {
+                    navigation.navigate(fitnessProfileScreen, {
                       // @ts-ignore
-                      partnerId: item.id,
+                      data: item,
                     })
                   }
                 />

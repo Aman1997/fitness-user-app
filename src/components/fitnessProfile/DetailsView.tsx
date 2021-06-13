@@ -19,21 +19,32 @@ const DATA = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 };
 
-export default function DetailsView() {
+interface IProps {
+  name: string;
+  ratings?: string;
+  address: string;
+  about: string;
+}
+
+export default function DetailsView({name, ratings, address, about}: IProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>{DATA.name}</Text>
+      <Text style={styles.name}>{name}</Text>
       <View style={{flexDirection: "row", alignItems: "center"}}>
-        <AntDesign name="star" size={scale(14)} color={PRIMARY} />
-        <Text
-          style={{
-            paddingLeft: scale(5),
-            fontSize: scale(10),
-            color: CONTENT
-          }}
-        >
-          {DATA.ratings}/5.0
-        </Text>
+        {ratings ? (
+          <>
+            <AntDesign name="star" size={scale(14)} color={PRIMARY} />
+            <Text
+              style={{
+                paddingLeft: scale(5),
+                fontSize: scale(10),
+                color: CONTENT,
+              }}
+            >
+              {ratings}/5.0
+            </Text>
+          </>
+        ) : null}
       </View>
       <Text
         style={{
@@ -42,13 +53,13 @@ export default function DetailsView() {
           color: CONTENT,
         }}
       >
-        {DATA.location}
+        {address}
       </Text>
       <AppSeparator style={{marginVertical: scale(20)}} />
 
       {/* About */}
       <Text style={styles.headingText}>about</Text>
-      <Text style={styles.textBody}>{DATA.about}</Text>
+      <Text style={styles.textBody}>{about}</Text>
 
       <AppSeparator style={{marginVertical: scale(20)}} />
     </View>

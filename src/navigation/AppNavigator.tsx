@@ -5,23 +5,21 @@ import {
   bookingCalendarScreen,
   fitnessProfileScreen,
   homeScreen,
+  postLogoutScreen,
   reviewsDetailsScreen,
   searchScreen,
+  settingsScreen,
 } from "./routes";
 import FitnessProfileScreen from "../screens/FitnessProfileScreen";
 import ReviewsScreen from "../screens/ReviewsScreen";
 import BookingCalendarScreen from "../screens/BookingCalendarScreen";
-import {NativeStackNavigationOptions} from "react-native-screens/lib/typescript/native-stack";
 import SearchScreen from "../screens/SearchScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import AuthNavigator from "./AuthNavigator";
 
 const Stack = createStackNavigator();
 
 const noHeader = {headerShown: false};
-
-const modalStyle: NativeStackNavigationOptions = {
-  stackPresentation: "modal",
-  headerShown: false,
-};
 
 const AppNavigator = () => (
   <Stack.Navigator initialRouteName={homeScreen}>
@@ -43,6 +41,16 @@ const AppNavigator = () => (
     <Stack.Screen
       name={reviewsDetailsScreen}
       component={ReviewsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={settingsScreen}
+      component={SettingsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={postLogoutScreen}
+      component={AuthNavigator}
       options={noHeader}
     />
   </Stack.Navigator>

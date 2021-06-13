@@ -1,42 +1,46 @@
-import React from "react";
+import {API, graphqlOperation} from "aws-amplify";
+import React, {useState} from "react";
+import {useEffect} from "react";
 import {Text, View, FlatList} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {HEAD_TEXT} from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
+import {FETCH_REVIEWS} from "../../queries/query";
 import ReviewCard from "./ReviewCard";
 
-const reviews = [
-  {
-    imageUrl: "https://picsum.photos/30",
-    name: "string",
-    createdAt: "string",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-  {
-    imageUrl: "https://picsum.photos/30",
-    name: "string",
-    createdAt: "string",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-  {
-    imageUrl: "https://picsum.photos/30",
-    name: "string",
-    createdAt: "string",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-  {
-    imageUrl: "https://picsum.photos/30",
-    name: "string",
-    createdAt: "string",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-];
+export default function ReviewsContainer({id}: {id: string}) {
+  const [reviews, setReviews] = useState<
+    Array<{
+      imageUrl: string;
+      name: string;
+      createdAt: string;
+      review: string;
+    }>
+  >([{imageUrl: "", name: "", createdAt: "", review: ""}]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const reviewRes = await API.graphql(
+          graphqlOperation(FETCH_REVIEWS, {id}),
+        );
+        // @ts-ignore
+        const requiredData = reviewRes.data.getFitnessService.reviews.items;
+        console.log(requiredData)
+        setReviews(
+          // @ts-ignore
+          requiredData.map((item) => ({
+            imageUrl: item.user.items[0].imageUrl,
+            name: item.user.items[0].name,
+            createdAt: item.createdAt,
+            review: item.review,
+          })),
+        );
+      } catch (error) {
+        console.log("Some error occured while fetching reviews ", error);
+      }
+    })();
+  }, []);
 
-export default function ReviewsContainer() {
   return (
     <View style={styles.container}>
       <Text style={styles.headingText}>Reviews</Text>

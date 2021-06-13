@@ -12,3 +12,5 @@ export const searchScreen = "searchScreen";
 export const fitnessProfileScreen = "fitnessProfileScreen";
 export const reviewsDetailsScreen = "reviewsDetailsScreen";
 export const bookingCalendarScreen = "bookingCalendarScreen";
+export const settingsScreen = "settingsScreen";
+export const postLogoutScreen = "postLogoutScreen";

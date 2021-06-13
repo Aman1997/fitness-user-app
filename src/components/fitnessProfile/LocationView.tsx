@@ -6,23 +6,29 @@ import MapView, {Marker} from "react-native-maps";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
 import AppSeparator from "../common/AppSeparator";
 
-export default function LocationView() {
+export default function LocationView({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}) {
   return (
     <View style={styles.mapView}>
       <Text style={styles.headingText}>Location</Text>
       <MapView
         style={{flex: 1, borderRadius: scale(10), height: scale(180)}}
         region={{
-          latitude: 28.63530455551025,
-          longitude: 77.05838343526752,
+          latitude,
+          longitude,
           latitudeDelta: 0.005,
           longitudeDelta: 0.004,
         }}
       >
         <Marker
           coordinate={{
-            latitude: 28.63530455551025,
-            longitude: 77.05838343526752,
+            latitude,
+            longitude,
           }}
         />
       </MapView>

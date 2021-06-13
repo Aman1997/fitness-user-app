@@ -84,3 +84,23 @@ export const SEARCH_FITNESS_PARTNER_BY_NAME = `
     }
   }
 `;
+
+export const FETCH_REVIEWS = `
+  query FETCH_REVIEWS($id: ID!) {
+    getFitnessService(id: $id) {
+      reviews {
+        items {
+          id
+          ratings
+          review
+          user {
+            id
+            name
+            imageUrl
+          }
+          createdAt
+        }
+      }
+    }
+  }
+`;

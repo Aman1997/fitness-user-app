@@ -29,7 +29,11 @@ const plans = [
   },
 ];
 
-export default function StudioPlans() {
+export default function StudioPlans({
+  plans,
+}: {
+  plans: Array<{type: number; price: number}>;
+}) {
   return (
     <View style={styles.container}>
       <Text style={styles.headingText}>Studio plans</Text>
