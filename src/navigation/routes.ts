@@ -8,6 +8,7 @@ export const appHomeScreen = "appHomeScreen";
 
 // app navigator
 export const homeScreen = "homeScreen";
+export const searchScreen = "searchScreen";
 export const fitnessProfileScreen = "fitnessProfileScreen";
 export const reviewsDetailsScreen = "reviewsDetailsScreen";
 export const bookingCalendarScreen = "bookingCalendarScreen";

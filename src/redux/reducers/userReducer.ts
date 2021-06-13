@@ -5,7 +5,9 @@ export interface IUserState {
   email: string;
   name: string;
   imageUrl: string;
-  phoneNumber: string
+  phoneNumber: string;
+  currentLat: number;
+  currentLong: number;
 }
 
 const initialState = {
@@ -13,7 +15,9 @@ const initialState = {
   email: "",
   name: "",
   imageUrl: "",
-  phoneNumber: ""
+  phoneNumber: "",
+  currentLat: 0,
+  currentLong: 0,
 };
 
 export const userReducer = (state: IUserState = initialState, action: UserAction) => {
@@ -25,7 +29,9 @@ export const userReducer = (state: IUserState = initialState, action: UserAction
                 name: action.payload.name,
                 email: action.payload.email,
                 imageUrl: action.payload.imageUrl,
-                phoneNumber: action.payload.phoneNumber
+                phoneNumber: action.payload.phoneNumber,
+                currentLat: action.payload.currentLat,
+                currentLong: action.payload.currentLong
             }
         default: 
             return state    

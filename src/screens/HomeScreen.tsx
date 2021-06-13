@@ -20,11 +20,14 @@ import * as Location from "expo-location";
 import {coords} from "../utils/findDistance";
 import LocationChange from "../components/home/LocationChange";
 import {checkServiceAvailablibity} from "../helpers/checkServiceAvailability";
+import {searchScreen} from "../navigation/routes";
+import {IUserState} from "../redux/reducers/userReducer";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
+  const user = useSelector((state: {user: IUserState}) => state.user);
   const fitnessProfiles = useSelector(
     (state: {fitnessProfiles: IFitnessProfilesState}) => state.fitnessProfiles,
   ).profiles;
@@ -54,6 +57,13 @@ export default function HomeScreen() {
       let location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
+      dispatch(
+        addUser({
+          ...user,
+          currentLat: location.coords.latitude,
+          currentLong: location.coords.longitude,
+        }),
+      );
       let address = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -122,7 +132,7 @@ export default function HomeScreen() {
             )
           }
           onPressLocation={() => setLocation(true)}
-          onPressSearch={() => navigation.navigate("SearchScreen")}
+          onPressSearch={() => navigation.navigate(searchScreen)}
           onPressSettings={() => navigation.navigate("SettingsScreen")}
           onPressToggle={() => {
             setTrainerSelected(!isTrainerSelected);
