@@ -1,14 +1,35 @@
+import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
-import {homeScreen} from "./routes";
+import {bookingCalendarScreen, fitnessProfileScreen, homeScreen, reviewsDetailsScreen} from "./routes";
+import FitnessProfileScreen from "../screens/FitnessProfileScreen";
+import ReviewsScreen from "../screens/ReviewsScreen";
+import BookingCalendarScreen from "../screens/BookingCalendarScreen";
+import { NativeStackNavigationOptions } from "react-native-screens/lib/typescript/native-stack";
 
 const Stack = createStackNavigator();
 
 const noHeader = {headerShown: false};
 
+const modalStyle: NativeStackNavigationOptions = {
+  stackPresentation: "modal",
+  headerShown: false,
+};
+
 const AppNavigator = () => (
   <Stack.Navigator initialRouteName={homeScreen}>
     <Stack.Screen name={homeScreen} component={HomeScreen} options={noHeader} />
+    <Stack.Screen
+      name={fitnessProfileScreen}
+      component={FitnessProfileScreen}
+      options={noHeader}
+    />
+    <Stack.Screen name={bookingCalendarScreen} component={BookingCalendarScreen}/>
+    <Stack.Screen
+      name={reviewsDetailsScreen}
+      component={ReviewsScreen}
+      options={noHeader}
+    />
   </Stack.Navigator>
 );
 

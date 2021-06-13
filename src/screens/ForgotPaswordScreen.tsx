@@ -1,8 +1,9 @@
+import Auth from "@aws-amplify/auth";
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {Formik} from "formik";
 import React, {useState} from "react";
-import {Text, View} from "react-native";
+import {Alert, Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {SECONDARY} from "../assets/constants/colors";
 import {CONTENT_CONTAINER} from "../assets/constants/styles";
@@ -22,12 +23,25 @@ export default function ForgotPaswordScreen() {
 
   // create the OTP
   const createCode = async (email: string) => {
-    console.log("Create code");
+    try {
+      await Auth.forgotPassword(email.toLowerCase());
+      Alert.alert("OPT has been generated and sent to your mail!");
+      setCodeGeneration(false);
+      setEmail(email.toLowerCase());
+    } catch (error) {
+      console.log("Some error occured while creating a code");
+    }
   };
 
   // create new password
   const createNewPassword = async (code: string, newPassword: string) => {
-    console.log("Create new password");
+    try {
+      await Auth.forgotPasswordSubmit(email, code, newPassword);
+      Alert.alert("Password has been successfully changed");
+      navigation.replace("signInScreen");
+    } catch (error) {
+      console.log("Some error occured while creating a new password");
+    }
   };
 
   return (

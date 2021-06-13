@@ -11,7 +11,7 @@ export default function NoInternet() {
   return (
     <View style={styles.container}>
       <LottieView
-        source={require("../../../assets/lotties/no-internet.json")}
+        source={require("../../assets/lotties/no-internet.json")}
         loop
         autoPlay
         style={{width: "80%"}}

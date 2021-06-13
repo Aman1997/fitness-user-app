@@ -1,5 +1,5 @@
 import React from "react";
-import {Platform, View} from "react-native";
+import {Platform, View, ViewStyle} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
 import {PRIMARY_20, PRIMARY} from "../../assets/constants/colors";
 import Constants from "expo-constants";
@@ -7,13 +7,14 @@ import {useNavigation} from "@react-navigation/core";
 import {scale, ScaledSheet} from "react-native-size-matters";
 interface IProps {
   onBack?: () => void;
+  extraStyles?: ViewStyle
 }
 
-export default function AppHeaderBack({onBack}: IProps) {
+export default function AppHeaderBack({onBack, extraStyles}: IProps) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, extraStyles]}>
       <View style={styles.backContainer}>
         <AntDesign
           name="left"

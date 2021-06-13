@@ -1,8 +1,12 @@
 import React from "react";
 import {enableScreens} from "react-native-screens";
-import {createNativeStackNavigator, NativeStackNavigationOptions} from "react-native-screens/native-stack";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from "react-native-screens/native-stack";
 import GetStartedScreen from "../screens/GetStartedScreen";
 import {
+  appHomeScreen,
   forgotPasswordScreen,
   getStartedScreen,
   signInScreen,
@@ -14,6 +18,7 @@ import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPaswordScreen from "../screens/ForgotPaswordScreen";
 import VerifySignUpScreen from "../screens/VerifySignUpScreen";
+import AppNavigator from "./AppNavigator";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -30,7 +35,10 @@ const noTitle = {
   headerTintColor: HEAD_TEXT,
 };
 
-const modalStyle: NativeStackNavigationOptions = {stackPresentation: "modal", headerShown: false};
+const modalStyle: NativeStackNavigationOptions = {
+  stackPresentation: "modal",
+  headerShown: false,
+};
 
 const AuthNavigator = () => (
   <Stack.Navigator initialRouteName={getStartedScreen}>
@@ -54,11 +62,12 @@ const AuthNavigator = () => (
       component={ForgotPaswordScreen}
       options={modalStyle}
     />
-        <Stack.Screen
+    <Stack.Screen
       name={verifySignUpScreen}
       component={VerifySignUpScreen}
       options={modalStyle}
     />
+    <Stack.Screen name={appHomeScreen} component={AppNavigator} options={noHeader} />
     {/* <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}

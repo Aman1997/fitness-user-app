@@ -6,7 +6,7 @@ interface IProps {
     containerStyle: ViewStyle, 
     text: string, 
     textStyle: TextStyle, 
-    onPressHandle: () => void
+    onPressHandle?: () => void
 }
 
 export default function AppButton({ containerStyle, text, textStyle, onPressHandle } : IProps) {

@@ -17,7 +17,6 @@ export default function AppSafeAreaView( { children, style }: IProps )   {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0
     }
 })

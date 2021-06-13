@@ -16,3 +16,5 @@ export const PAGE_TITLE_COLOR = '#5A5A5C'
 export const HEAD_TEXT = '#5A5A5C'
 export const DANGER = "#F32013"
 export const IMAGE_OVERLAY = "#e1e4e8"
+export const WHITE = "#ffffff"
+export const OFF_WHITE = '#F3F3F3';

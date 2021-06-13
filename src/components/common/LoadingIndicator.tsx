@@ -8,7 +8,7 @@ export default function LoadingIndicator() {
       <LottieView
         autoPlay
         loop
-        source={require("../../../assets/lotties/loading.json")}
+        source={require("../../assets/lotties/loading.json")}
       />
     </View>
   );
