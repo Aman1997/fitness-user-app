@@ -20,7 +20,11 @@ import * as Location from "expo-location";
 import {coords} from "../utils/findDistance";
 import LocationChange from "../components/home/LocationChange";
 import {checkServiceAvailablibity} from "../helpers/checkServiceAvailability";
-import {fitnessProfileScreen, searchScreen, settingsScreen} from "../navigation/routes";
+import {
+  fitnessProfileScreen,
+  searchScreen,
+  settingsScreen,
+} from "../navigation/routes";
 import {IUserState} from "../redux/reducers/userReducer";
 
 export default function HomeScreen() {
@@ -40,30 +44,27 @@ export default function HomeScreen() {
   const [city, setUserCity] = useState("");
 
   useEffect(() => {
-    getUserId().then(async (id) => {
-      const userData = await API.graphql(
-        graphqlOperation(GET_USER_DATA, {email: id}),
-      );
-      // @ts-ignore
-      dispatch(addUser({...userData.data.getUser}));
-    });
-  }, []);
-
-  useEffect(() => {
     (async () => {
-      let start = new Date();
       // requesting permission to location
       await requestLocationPermission();
       let location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
-      dispatch(
-        addUser({
-          ...user,
-          currentLat: location.coords.latitude,
-          currentLong: location.coords.longitude,
-        }),
-      );
+
+      getUserId().then(async (id) => {
+        const userData = await API.graphql(
+          graphqlOperation(GET_USER_DATA, {email: id}),
+        );
+        dispatch(
+          addUser({
+            // @ts-ignore
+            ...userData.data.getUser,
+            currentLat: location.coords.latitude,
+            currentLong: location.coords.longitude,
+          }),
+        );
+      });
+
       let address = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -160,7 +161,7 @@ export default function HomeScreen() {
                     coords={userCoords || {}}
                     onPressHandler={() =>
                       navigation.navigate(fitnessProfileScreen, {
-                        data: item
+                        data: item,
                       })
                     }
                   />

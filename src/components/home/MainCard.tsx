@@ -8,7 +8,7 @@ import {coords, findDistance} from "../../utils/findDistance";
 interface IProps {
   imageUrl: Array<string>;
   name: string;
-  ratings: string;
+  ratings: string | null;
   plans: Array<{id: string; price: string; type: number}>;
   coords: coords;
   latitude: string;

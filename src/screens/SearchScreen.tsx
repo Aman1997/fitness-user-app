@@ -12,7 +12,7 @@ import AppSeparator from "../components/common/AppSeparator";
 import MainCard from "../components/home/MainCard";
 import Search from "../components/search/Search";
 import {debounce} from "../helpers/debounce";
-import { fitnessProfileScreen } from "../navigation/routes";
+import {fitnessProfileScreen} from "../navigation/routes";
 import {SEARCH_FITNESS_PARTNER_BY_NAME} from "../queries/query";
 import {IUserState} from "../redux/reducers/userReducer";
 
@@ -29,8 +29,9 @@ export default function SearchScreen() {
   }, [searchValue]);
 
   const search = async (query: string) => {
+
     try {
-      if (query) {
+      if (query && user) {
         const searchRes = await API.graphql(
           graphqlOperation(SEARCH_FITNESS_PARTNER_BY_NAME, {
             name: query,
@@ -38,6 +39,7 @@ export default function SearchScreen() {
         );
         // @ts-ignore
         const requiredData = searchRes.data.listFitnessServices.items;
+
         setSearchResults(
           // @ts-ignore
           requiredData.map((item) => ({
@@ -79,21 +81,23 @@ export default function SearchScreen() {
           <View style={styles.cardContainer}>
             <FlatList
               data={searchResults}
-              renderItem={({item}) => (
-                <MainCard
-                  {...item}
-                  coords={{
-                    latitude: user.currentLat,
-                    longitude: user.currentLong,
-                  }}
-                  onPressHandler={() =>
-                    navigation.navigate(fitnessProfileScreen, {
-                      // @ts-ignore
-                      data: item,
-                    })
-                  }
-                />
-              )}
+              renderItem={({item}: {item: any}) => {
+                return (
+                  <MainCard
+                    {...item}
+                    coords={{
+                      latitude: user.currentLat,
+                      longitude: user.currentLong,
+                    }}
+                    onPressHandler={() =>
+                      navigation.navigate(fitnessProfileScreen, {
+                        // @ts-ignore
+                        data: item,
+                      })
+                    }
+                  />
+                );
+              }}
               // @ts-ignore
               keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
