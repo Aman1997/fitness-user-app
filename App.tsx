@@ -14,7 +14,7 @@ import FitnessProfileScreen from "./src/screens/FitnessProfileScreen";
 import ReviewsScreen from "./src/screens/ReviewsScreen";
 import BookingCalendarScreen from "./src/screens/BookingCalendarScreen";
 import {Provider} from "react-redux";
-import { store } from "./src/redux/store";
+import {store} from "./src/redux/store";
 
 Amplify.configure(config);
 

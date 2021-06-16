@@ -13,9 +13,23 @@ interface IProps {
   type: number;
   plans: Array<{type: number; price: number}>;
   isBestOffer: boolean;
+  selectPlan: (type: number, price: number) => void;
 }
 
-export default function PlanView({type, plans, isBestOffer}: IProps) {
+export default function PlanView({
+  type,
+  plans,
+  isBestOffer,
+  selectPlan,
+}: IProps) {
+  const select = () => {
+    selectPlan(type, getPrice(type));
+  };
+
+  const getPrice = (type: number): number => {
+    return plans.filter((plan) => plan.type === type)[0]?.price;
+  };
+
   return (
     <View style={styles.individualPlanContainer}>
       <View>
@@ -38,23 +52,15 @@ export default function PlanView({type, plans, isBestOffer}: IProps) {
         ) : null}
         <Text style={styles.textBody}>
           {type === 0
-            ? `Per session @ ₹ ${
-                plans.filter((plan) => plan.type === 0)[0]?.price
-              }`
+            ? `Per session @ ₹ ${getPrice(0)}`
             : type === 1
-            ? `1 month @ ₹ ${plans.filter((plan) => plan.type === 1)[0]?.price}`
+            ? `1 month @ ₹ ${getPrice(1)}`
             : type === 2
-            ? `3 months @ ₹ ${
-                plans.filter((plan) => plan.type === 2)[0]?.price
-              }`
+            ? `3 months @ ₹ ${getPrice(2)}`
             : type === 3
-            ? `6 months @ ₹ ${
-                plans.filter((plan) => plan.type === 3)[0]?.price
-              }`
+            ? `6 months @ ₹ ${getPrice(3)}`
             : type === 4
-            ? `12 months @ ₹ ${
-                plans.filter((plan) => plan.type === 4)[0]?.price
-              }`
+            ? `12 months @ ₹ ${getPrice(4)}`
             : null}
         </Text>
       </View>
@@ -71,38 +77,7 @@ export default function PlanView({type, plans, isBestOffer}: IProps) {
           width: scale(60),
           alignItems: "center",
         }}
-        // onPressHandle={() =>
-        //   navigation.navigate("BookingCalendarScreen", {
-        //     partnerData: {
-        //       id: partnerDetails?.getFitnessPartner.id,
-        //       imageUrl: partnerDetails?.getFitnessPartner.imageUrl,
-        //       name: partnerDetails?.getFitnessPartner.name,
-        //       rating: partnerDetails?.getFitnessPartner.ratings,
-        //       address: partnerDetails?.getFitnessPartner.address,
-        //       availableSlots: partnerDetails?.getFitnessPartner.availableSlots,
-        //     },
-        //     bookingData: {
-        //       price: plans.filter((plan) => plan.type === 0)[0]?.price,
-        //       type: 0,
-        //     },
-        //   })
-        // }
-        // onPressHandle={() =>
-        //     navigation.navigate("ConfirmationScreen", {
-        //       partnerData: {
-        //         id: partnerDetails?.getFitnessPartner.id,
-        //         imageUrl: partnerDetails?.getFitnessPartner.imageUrl,
-        //         name: partnerDetails?.getFitnessPartner.name,
-        //         rating: partnerDetails?.getFitnessPartner.ratings,
-        //         address: partnerDetails?.getFitnessPartner.address,
-        //       },
-        //       bookingData: {
-        //         price: plans.filter((plan) => plan.type === 1)[0]?.price,
-        //         type: 1,
-        //       },
-        //       isMembership: true,
-        //     })
-        //   }
+        onPressHandle={select}
       />
     </View>
   );

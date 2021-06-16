@@ -9,6 +9,7 @@ import StudioPlans from "../components/fitnessProfile/StudioPlans";
 import ReviewsContainer from "../components/fitnessProfile/ReviewsContainer";
 import {useRoute} from "@react-navigation/native";
 
+
 export default function FitnessProfileScreen() {
   const route = useRoute();
   // @ts-ignore
@@ -24,8 +25,18 @@ export default function FitnessProfileScreen() {
         address={data.address}
         about={data.about}
       />
-      <LocationView latitude={parseFloat(data.latitude)} longitude={parseFloat(data.longitude)} />
-      <StudioPlans plans={data.plans}/>
+      <LocationView
+        latitude={parseFloat(data.latitude)}
+        longitude={parseFloat(data.longitude)}
+      />
+      <StudioPlans
+        plans={data.plans}
+        id={data.id}
+        name={data.name}
+        imageUrl={data.imageUrl[0]}
+        ratings={data.ratings}
+        address={data.address}
+      />
       <ReviewsContainer id={data.id} />
     </ScrollView>
   );

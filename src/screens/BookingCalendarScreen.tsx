@@ -9,6 +9,12 @@ import AppButton from "../components/common/AppButton";
 import Constants from "expo-constants";
 import CalendarView from "../components/bookingCalendar/CalendarView";
 import TimeSlotView from "../components/bookingCalendar/TimeSlotView";
+import {useNavigation} from "@react-navigation/native";
+import {useDispatch, useSelector} from "react-redux";
+import {addSelectedProfile} from "../redux/actions/actionCreator";
+import {confirmationScreen} from "../navigation/routes";
+import {ISelectedProfileState} from "../redux/reducers/selectedProfile";
+import {Alert} from "react-native";
 
 const availableSlots = [
   "07:00",
@@ -27,6 +33,13 @@ export default function BookingCalendarScreen() {
   const [time, setTime] = useState("");
   const [slot, setSlot] = useState<Array<Array<string>>>([]);
 
+  const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+  const profile = useSelector(
+    (state: {selectedProfile: ISelectedProfileState}) => state.selectedProfile,
+  );
+
   useEffect(() => {
     const generateMonth = takeMonth(start);
     setCalendarData(generateMonth());
@@ -35,7 +48,9 @@ export default function BookingCalendarScreen() {
   }, [start]);
 
   const proceedToConfirmation = () => {
-    console.log("Proceed");
+    if (!time) return Alert.alert("Please select a time slot");
+    dispatch(addSelectedProfile({...profile, timeSlot: time, date: start}));
+    navigation.navigate(confirmationScreen);
   };
 
   return (
@@ -97,7 +112,7 @@ export default function BookingCalendarScreen() {
             marginBottom: scale(10),
             backgroundColor: WHITE,
           }}
-          // onPressHandle={() => navigation.goBack()}
+          onPressHandle={() => navigation.goBack()}
         />
       </View>
     </ScrollView>

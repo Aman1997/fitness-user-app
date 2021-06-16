@@ -13,12 +13,17 @@ import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
 import Constants from "expo-constants";
 import {Entypo} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/core";
+import {useDispatch} from "react-redux";
+import {addSelectedProfile} from "../../redux/actions/actionCreator";
+import {selectedProfileState} from "../../redux/reducers/selectedProfile";
 
 const {width} = Dimensions.get("window");
 
 export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
   const [imageCount, setImageCount] = useState(1);
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
 
   const imageChange = ({nativeEvent}: {nativeEvent: NativeScrollEvent}) => {
     const slide = Math.ceil(
@@ -55,7 +60,10 @@ export default function ImageContainer({imageUrl}: {imageUrl: Array<string>}) {
             name="cross"
             size={scale(20)}
             color={ICONS}
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              dispatch(addSelectedProfile(selectedProfileState));
+              navigation.goBack();
+            }}
           />
         </View>
       </View>

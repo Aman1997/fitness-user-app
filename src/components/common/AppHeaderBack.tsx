@@ -7,7 +7,7 @@ import {useNavigation} from "@react-navigation/core";
 import {scale, ScaledSheet} from "react-native-size-matters";
 interface IProps {
   onBack?: () => void;
-  extraStyles?: ViewStyle
+  extraStyles?: ViewStyle;
 }
 
 export default function AppHeaderBack({onBack, extraStyles}: IProps) {

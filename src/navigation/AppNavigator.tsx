@@ -1,8 +1,9 @@
 import React from "react";
-import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
+import {enableScreens} from "react-native-screens";
 import {
   bookingCalendarScreen,
+  confirmationScreen,
   fitnessProfileScreen,
   homeScreen,
   postLogoutScreen,
@@ -16,10 +17,20 @@ import BookingCalendarScreen from "../screens/BookingCalendarScreen";
 import SearchScreen from "../screens/SearchScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import AuthNavigator from "./AuthNavigator";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from "react-native-screens/native-stack";
+import ConfirmationScreen from "../screens/ConfirmationScreen";
 
-const Stack = createStackNavigator();
+enableScreens();
+const Stack = createNativeStackNavigator();
 
 const noHeader = {headerShown: false};
+const modalStyle: NativeStackNavigationOptions = {
+  stackPresentation: "modal",
+  headerShown: false,
+};
 
 const AppNavigator = () => (
   <Stack.Navigator initialRouteName={homeScreen}>
@@ -37,6 +48,12 @@ const AppNavigator = () => (
     <Stack.Screen
       name={bookingCalendarScreen}
       component={BookingCalendarScreen}
+      options={modalStyle}
+    />
+    <Stack.Screen
+      name={confirmationScreen}
+      component={ConfirmationScreen}
+      options={{stackPresentation: "fullScreenModal", headerShown: false}}
     />
     <Stack.Screen
       name={reviewsDetailsScreen}

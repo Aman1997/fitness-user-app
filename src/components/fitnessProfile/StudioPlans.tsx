@@ -1,59 +1,101 @@
+import {useNavigation} from "@react-navigation/native";
 import React from "react";
 import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
+import {useDispatch} from "react-redux";
 import {HEAD_TEXT} from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
+import {bookingCalendarScreen, confirmationScreen} from "../../navigation/routes";
+import {addSelectedProfile} from "../../redux/actions/actionCreator";
 import AppSeparator from "../common/AppSeparator";
 import PlanView from "./PlanView";
 
-const plans = [
-  {
-    type: 0,
-    price: 200,
-  },
-  {
-    type: 1,
-    price: 2000,
-  },
-  {
-    type: 2,
-    price: 5000,
-  },
-  {
-    type: 3,
-    price: 12000,
-  },
-  {
-    type: 4,
-    price: 24000,
-  },
-];
+interface IProps {
+  plans: Array<{type: number; price: number}>;
+  id: string;
+  name: string;
+  imageUrl: string;
+  ratings: number;
+  address: string;
+}
 
 export default function StudioPlans({
   plans,
-}: {
-  plans: Array<{type: number; price: number}>;
-}) {
+  id,
+  name,
+  imageUrl,
+  ratings,
+  address,
+}: IProps) {
+  const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
+  const selectPlan = (type: number, price: number) => {
+    dispatch(
+      addSelectedProfile({
+        id,
+        name,
+        imageUrl,
+        ratings,
+        address,
+        plan: type,
+        price,
+      }),
+    );
+    if (type === 0) {
+      navigation.navigate(bookingCalendarScreen);
+    }
+    else {
+      navigation.navigate(confirmationScreen);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headingText}>Studio plans</Text>
 
-      <PlanView type={0} isBestOffer={true} plans={plans} />
+      <PlanView
+        type={0}
+        isBestOffer={true}
+        plans={plans}
+        selectPlan={(type: number, price: number) => selectPlan(type, price)}
+      />
 
       {plans.filter((plan) => plan.type === 1).length === 0 ? null : (
-        <PlanView type={1} isBestOffer={false} plans={plans} />
+        <PlanView
+          type={1}
+          isBestOffer={false}
+          plans={plans}
+          selectPlan={(type: number, price: number) => selectPlan(type, price)}
+        />
       )}
 
       {plans.filter((plan) => plan.type === 2).length === 0 ? null : (
-        <PlanView type={2} isBestOffer={true} plans={plans} />
+        <PlanView
+          type={2}
+          isBestOffer={true}
+          plans={plans}
+          selectPlan={(type: number, price: number) => selectPlan(type, price)}
+        />
       )}
 
       {plans.filter((plan) => plan.type === 3).length === 0 ? null : (
-        <PlanView type={3} isBestOffer={false} plans={plans} />
+        <PlanView
+          type={3}
+          isBestOffer={false}
+          plans={plans}
+          selectPlan={(type: number, price: number) => selectPlan(type, price)}
+        />
       )}
 
       {plans.filter((plan) => plan.type === 4).length === 0 ? null : (
-        <PlanView type={1} isBestOffer={true} plans={plans} />
+        <PlanView
+          type={1}
+          isBestOffer={true}
+          plans={plans}
+          selectPlan={(type: number, price: number) => selectPlan(type, price)}
+        />
       )}
 
       <AppSeparator style={{marginVertical: scale(20)}} />

@@ -51,19 +51,23 @@ export default function HomeScreen() {
         accuracy: Location.Accuracy.Balanced,
       });
 
-      getUserId().then(async (id) => {
-        const userData = await API.graphql(
-          graphqlOperation(GET_USER_DATA, {email: id}),
+      getUserId()
+        .then(async (id) => {
+          const userData = await API.graphql(
+            graphqlOperation(GET_USER_DATA, {email: id}),
+          );
+          dispatch(
+            addUser({
+              // @ts-ignore
+              ...userData.data.getUser,
+              currentLat: location.coords.latitude,
+              currentLong: location.coords.longitude,
+            }),
+          );
+        })
+        .catch((err) =>
+          console.log("Some error occured while fetching user data", err),
         );
-        dispatch(
-          addUser({
-            // @ts-ignore
-            ...userData.data.getUser,
-            currentLat: location.coords.latitude,
-            currentLong: location.coords.longitude,
-          }),
-        );
-      });
 
       let address = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
