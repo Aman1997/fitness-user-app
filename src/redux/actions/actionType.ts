@@ -1,3 +1,4 @@
+import { IBookingState } from "../reducers/bookingsReducer";
 import {IFitnessProfilesState} from "../reducers/fitnessProfiles";
 import {ISelectedProfileState} from "../reducers/selectedProfile";
 import {IUserState} from "../reducers/userReducer";
@@ -15,4 +16,9 @@ export type FitnessProfilesAction = {
 export type SelectedProfileAction = {
   type: "ADD_SELECTED_PROFILE";
   payload: ISelectedProfileState;
+};
+
+export type BookingsAction = {
+  type: "ADD_BOOKINGS";
+  payload: IBookingState;
 };

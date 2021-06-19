@@ -3,6 +3,8 @@ import HomeScreen from "../screens/HomeScreen";
 import {enableScreens} from "react-native-screens";
 import {
   bookingCalendarScreen,
+  bookingDetailsScreen,
+  bookingsScreen,
   confirmationScreen,
   fitnessProfileScreen,
   homeScreen,
@@ -22,6 +24,8 @@ import {
   NativeStackNavigationOptions,
 } from "react-native-screens/native-stack";
 import ConfirmationScreen from "../screens/ConfirmationScreen";
+import BookingsScreen from "../screens/BookingsScreen";
+import BookingDetailsScreen from "../screens/BookingDetailsScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -63,6 +67,16 @@ const AppNavigator = () => (
     <Stack.Screen
       name={settingsScreen}
       component={SettingsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={bookingsScreen}
+      component={BookingsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={bookingDetailsScreen}
+      component={BookingDetailsScreen}
       options={noHeader}
     />
     <Stack.Screen

@@ -1,7 +1,9 @@
+import {IBookingState} from "../reducers/bookingsReducer";
 import {IFitnessProfilesState} from "../reducers/fitnessProfiles";
 import {ISelectedProfileState} from "../reducers/selectedProfile";
 import {IUserState} from "../reducers/userReducer";
 import {
+  BookingsAction,
   FitnessProfilesAction,
   SelectedProfileAction,
   UserAction,
@@ -23,5 +25,10 @@ export const addSelectedProfile = (
   data: ISelectedProfileState,
 ): SelectedProfileAction => ({
   type: "ADD_SELECTED_PROFILE",
+  payload: data,
+});
+
+export const addBookingsData = (data: IBookingState): BookingsAction => ({
+  type: "ADD_BOOKINGS",
   payload: data,
 });

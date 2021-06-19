@@ -38,6 +38,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      {/* @ts-ignore */}
       <NavigationContainer theme={{colors: {background: "#fff"}}}>
         {dataFetched ? (
           <View style={styles.container}>

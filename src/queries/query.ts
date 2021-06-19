@@ -104,3 +104,40 @@ export const FETCH_REVIEWS = `
     }
   }
 `;
+
+export const CURRENT_USER_BOOKINGS = `
+query CURRENT_USER_BOOKINGS($email: String!) {
+  getUser(email: $email)  {
+    bookings(sortDirection: DESC) {
+      items {
+        id
+        bookingDate
+        status
+        pin
+        timeSlot
+        fitnessService {
+          id
+          longitude
+          latitude
+          name
+          imageUrl
+          trainerName
+          trainerImageUrl
+        }
+      }
+    }
+    memberships(sortDirection: DESC) {
+      items {
+        id
+        to
+        from
+        fitnessService {
+          id
+          name
+          imageUrl
+        }
+      }
+    }
+  }
+}
+`;

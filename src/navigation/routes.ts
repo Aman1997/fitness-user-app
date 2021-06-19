@@ -14,4 +14,7 @@ export const reviewsDetailsScreen = "reviewsDetailsScreen";
 export const bookingCalendarScreen = "bookingCalendarScreen";
 export const confirmationScreen = "confirmationScreen";
 export const settingsScreen = "settingsScreen";
+export const bookingsScreen = "bookingsScreen";
+export const bookingDetailsScreen = "bookingDetailsScreen";
+export const membershipDetailsScreen = "membershipDetailsScreen";
 export const postLogoutScreen = "postLogoutScreen";
