@@ -13,11 +13,11 @@ interface IProps {
   data: {
     imageUrl: string;
     name: string;
-    bookingDate: string;
-    timeSlot: string;
+    bookingDate?: string;
+    timeSlot?: string;
+    to?: string;
   };
 }
-
 
 export default function FitnessServiceImageView({data}: IProps) {
   const navigation = useNavigation();
@@ -65,10 +65,16 @@ export default function FitnessServiceImageView({data}: IProps) {
           }}
         >
           <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.date}>
-            {format(new Date(data.bookingDate), "dd MMMM yyyy")},{" "}
-            {data.timeSlot}
-          </Text>
+          {data.to ? (
+            <Text style={styles.date}>
+              Valid upto: {format(new Date(data.to), "dd MMMM yyyy")}
+            </Text>
+          ) : (
+            <Text style={styles.date}>
+              {format(new Date(data.bookingDate as string), "dd MMMM yyyy")},{" "}
+              {data.timeSlot}
+            </Text>
+          )}
         </View>
       </View>
     </View>

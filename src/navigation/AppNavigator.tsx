@@ -8,6 +8,7 @@ import {
   confirmationScreen,
   fitnessProfileScreen,
   homeScreen,
+  membershipDetailsScreen,
   postLogoutScreen,
   reviewsDetailsScreen,
   searchScreen,
@@ -26,6 +27,7 @@ import {
 import ConfirmationScreen from "../screens/ConfirmationScreen";
 import BookingsScreen from "../screens/BookingsScreen";
 import BookingDetailsScreen from "../screens/BookingDetailsScreen";
+import MembershipDetailsScreen from "../screens/MembershipDetailsScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -77,6 +79,11 @@ const AppNavigator = () => (
     <Stack.Screen
       name={bookingDetailsScreen}
       component={BookingDetailsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={membershipDetailsScreen}
+      component={MembershipDetailsScreen}
       options={noHeader}
     />
     <Stack.Screen

@@ -14,7 +14,6 @@ export const cancelBooking = async (
   bookings: IBookingState["bookings"],
 ) => {
   try {
-    console.log("canceled");
     await API.graphql(graphqlOperation(CANCEL_BOOKING, {id}));
     Alert.alert(
       "Booking Cancelled",
@@ -37,7 +36,7 @@ export const cancelBooking = async (
         ),
       }),
     );
-    
+
     setLoading(false);
   } catch (error) {
     setLoading(false);

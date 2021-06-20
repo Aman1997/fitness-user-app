@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View, ScrollView, Image, Alert} from "react-native";
+import {StyleSheet, View, ScrollView, Alert} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import FitnessServiceImageView from "../components/bookingsScreen/FitnessServiceImageView";
@@ -36,9 +36,9 @@ export default function BookingDetailsScreen() {
         <LoadingIndicator />
       ) : (
         <ScrollView
-          contentContainerStyle={styles.container}
+          style={styles.container}
           showsVerticalScrollIndicator={false}
-          bounces={false}
+          // bounces={false}
         >
           <StatusBar style="light" />
 

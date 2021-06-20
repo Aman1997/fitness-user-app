@@ -3,9 +3,12 @@ import React from "react";
 import {Image, Text, TouchableWithoutFeedback, View} from "react-native";
 import {ScaledSheet} from "react-native-size-matters";
 import {WHITE} from "../../assets/constants/colors";
+import {IBookingState} from "../../redux/reducers/bookingsReducer";
+import {IMembershipData} from "../../types/stateTypes";
+import { checkMembershipStatus } from "../../utils/checkMembershipStatus";
 
 interface IProps {
-  data: IMembershipData | IBookingData;
+  data: IMembershipData | IBookingState["bookings"][0];
   onPressHandler: () => void;
   isMembership: boolean;
 }
@@ -15,9 +18,6 @@ export default function BookingCard({
   onPressHandler,
   isMembership,
 }: IProps) {
-  const checkStatus = (to: string) => {
-    return differenceInDays(Date.now(), Date.parse(to)) <= 0;
-  };
 
   return (
     <TouchableWithoutFeedback onPress={onPressHandler}>
@@ -48,7 +48,7 @@ export default function BookingCard({
               Status:{" "}
               {isMembership
                 ? // @ts-ignore
-                  checkStatus(data.to as string)
+                  checkMembershipStatus(data.to as string)
                   ? "Ongoing"
                   : "Expired"
                 : // @ts-ignore

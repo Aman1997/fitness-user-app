@@ -135,6 +135,15 @@ query CURRENT_USER_BOOKINGS($email: String!) {
           id
           name
           imageUrl
+          ratings
+          address
+          plans {
+            items {
+                id
+                price
+                type
+            }
+        }
         }
       }
     }

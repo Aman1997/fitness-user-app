@@ -2,7 +2,7 @@ import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch, SetStateAction} from "react";
 import {CURRENT_USER_BOOKINGS} from "../queries/query";
 import {addBookingsData} from "../redux/actions/actionCreator";
-import { IMembershipData } from "../types/stateTypes";
+import {IMembershipData} from "../types/stateTypes";
 
 export const fetchBookings = async (
   email: string,
@@ -51,10 +51,13 @@ export const fetchBookings = async (
         id: item.id,
         to: item.to,
         from: item.from,
+        ratings: item.ratings,
         fitnessService: {
           id: item.fitnessService.id,
           name: item.fitnessService.name,
           imageUrl: item.fitnessService.imageUrl[0],
+          plans: item.fitnessService.plans.items,
+          address: item.fitnessService.address,
         },
       })),
     );
