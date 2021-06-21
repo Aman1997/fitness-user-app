@@ -10,6 +10,7 @@ import {
   homeScreen,
   membershipDetailsScreen,
   postLogoutScreen,
+  profileScreen,
   reviewsDetailsScreen,
   searchScreen,
   settingsScreen,
@@ -28,6 +29,7 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import BookingsScreen from "../screens/BookingsScreen";
 import BookingDetailsScreen from "../screens/BookingDetailsScreen";
 import MembershipDetailsScreen from "../screens/MembershipDetailsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -84,6 +86,11 @@ const AppNavigator = () => (
     <Stack.Screen
       name={membershipDetailsScreen}
       component={MembershipDetailsScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={profileScreen}
+      component={ProfileScreen}
       options={noHeader}
     />
     <Stack.Screen

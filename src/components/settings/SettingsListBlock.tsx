@@ -1,7 +1,7 @@
 import React from "react";
 import {Text, View, TouchableWithoutFeedback} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
-import {ScaledSheet} from "react-native-size-matters";
+import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT, ICONS} from "../../assets/constants/colors";
 
 interface IProps {
@@ -15,7 +15,7 @@ export default function SettingsListBlock({icon, text, onPressHandle}: IProps) {
     <TouchableWithoutFeedback onPress={onPressHandle}>
       <View style={styles.container}>
         {/* @ts-ignore */}
-        <AntDesign name={icon} size={22} color={ICONS} />
+        <AntDesign name={icon} size={scale(20)} color={ICONS} />
         <Text style={styles.text}>{text}</Text>
       </View>
     </TouchableWithoutFeedback>

@@ -14,7 +14,11 @@ import AppHeaderBack from "../components/common/AppHeaderBack";
 import AppPageTitle from "../components/common/AppPageTitle";
 import AppSeparator from "../components/common/AppSeparator";
 import SettingsListBlock from "../components/settings/SettingsListBlock";
-import {bookingsScreen, postLogoutScreen} from "../navigation/routes";
+import {
+  bookingsScreen,
+  postLogoutScreen,
+  profileScreen,
+} from "../navigation/routes";
 import removeUserId from "../utils/removeUserId";
 
 export default function SettingsScreen() {
@@ -51,7 +55,7 @@ export default function SettingsScreen() {
             <SettingsListBlock
               text="My Profile"
               icon="user"
-              onPressHandle={() => navigation.navigate("ProfileScreen")}
+              onPressHandle={() => navigation.navigate(profileScreen)}
             />
             <SettingsListBlock
               text="My Bookings"
