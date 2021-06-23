@@ -5,6 +5,7 @@ import {scale, ScaledSheet} from "react-native-size-matters";
 import {FontAwesome} from "@expo/vector-icons";
 import AppHeaderBack from "../common/AppHeaderBack";
 import Constants from "expo-constants";
+import { editProfileScreen } from "../../navigation/routes";
 
 const ProfileHeader = () => {
   const navigation = useNavigation();
@@ -16,12 +17,7 @@ const ProfileHeader = () => {
         size={scale(22)}
         color="black"
         onPress={
-          () => navigation.navigate("EditProfileScreen") //, {
-          //     id: data.getUser?.id,
-          //     email: userEmail,
-          //     name: data.getUser?.name,
-          //     imageUrl: data.getUser?.imageUrl,
-          //   })
+          () => navigation.navigate(editProfileScreen)
         }
         style={{
           marginTop:

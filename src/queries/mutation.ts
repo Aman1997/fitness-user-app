@@ -5,3 +5,16 @@ export const CANCEL_BOOKING = `
         }
     }
 `;
+
+export const UPDATE_USER_DETAILS = `
+    mutation UPDATE_USER_DETAILS(
+        $email: String!
+        $id: ID!
+        $name: String!
+        $imageUrl: String!
+    ) {
+        updateUser( input: { email: $email, id: $id, name: $name, imageUrl: $imageUrl }) {
+        id
+        }
+    }
+`;

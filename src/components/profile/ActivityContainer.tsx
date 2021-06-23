@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, Image, StyleSheet, Text, View} from "react-native";
+import {FlatList, Image, Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT, HEAD_TEXT, WHITE} from "../../assets/constants/colors";
 
@@ -30,7 +30,7 @@ const Activity = ({content}: {content: string}) => {
       style={{
         flexDirection: "row",
         alignItems: "center",
-        marginVertical: scale(10)
+        marginVertical: scale(10),
       }}
     >
       <Image

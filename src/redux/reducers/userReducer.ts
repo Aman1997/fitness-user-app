@@ -1,4 +1,4 @@
-import { UserAction } from "../actions/actionType";
+import {UserAction} from "../actions/actionType";
 
 export interface IUserState {
   id: string;
@@ -20,20 +20,22 @@ const initialState = {
   currentLong: 0,
 };
 
-export const userReducer = (state: IUserState = initialState, action: UserAction) => {
-    switch(action.type) {
-        case 'ADD_USER':
-            return {
-                ...state,
-                id: action.payload.id,
-                name: action.payload.name,
-                email: action.payload.email,
-                imageUrl: action.payload.imageUrl,
-                phoneNumber: action.payload.phoneNumber,
-                currentLat: action.payload.currentLat,
-                currentLong: action.payload.currentLong
-            }
-        default: 
-            return state    
-    }
+export const userReducer = (
+  state: IUserState = initialState,
+  action: UserAction,
+) => {
+  switch (action.type) {
+    case "ADD_USER":
+      return {
+        id: action.payload.id,
+        name: action.payload.name,
+        email: action.payload.email,
+        imageUrl: action.payload.imageUrl,
+        phoneNumber: action.payload.phoneNumber,
+        currentLat: action.payload.currentLat,
+        currentLong: action.payload.currentLong,
+      };
+    default:
+      return state;
+  }
 };

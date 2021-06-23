@@ -6,6 +6,7 @@ import {
   bookingDetailsScreen,
   bookingsScreen,
   confirmationScreen,
+  editProfileScreen,
   fitnessProfileScreen,
   homeScreen,
   membershipDetailsScreen,
@@ -30,6 +31,7 @@ import BookingsScreen from "../screens/BookingsScreen";
 import BookingDetailsScreen from "../screens/BookingDetailsScreen";
 import MembershipDetailsScreen from "../screens/MembershipDetailsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -91,6 +93,11 @@ const AppNavigator = () => (
     <Stack.Screen
       name={profileScreen}
       component={ProfileScreen}
+      options={noHeader}
+    />
+    <Stack.Screen
+      name={editProfileScreen}
+      component={EditProfileScreen}
       options={noHeader}
     />
     <Stack.Screen
