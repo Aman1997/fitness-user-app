@@ -23,6 +23,7 @@ import {confirmationScreen} from "../navigation/routes";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import {useDispatch} from "react-redux";
 import {addSelectedProfile} from "../redux/actions/actionCreator";
+import { StatusBar } from "expo-status-bar";
 
 export default function MembershipDetailsScreen() {
   const navigation = useNavigation();
@@ -68,6 +69,7 @@ export default function MembershipDetailsScreen() {
 
   return (
     <View style={{flex: 1}}>
+      <StatusBar style="dark" />
       <FitnessServiceImageView
         data={{
           imageUrl: data.imageUrl,
@@ -170,8 +172,8 @@ export default function MembershipDetailsScreen() {
             width: "100%",
             alignItems: "center",
             paddingHorizontal: scale(20),
-            paddingVertical: scale(10),
-            borderRadius: scale(20),
+            paddingVertical: scale(15),
+            borderRadius: scale(24),
             marginBottom: scale(25),
           }}
           onPressHandle={renewMembership}

@@ -7,6 +7,7 @@ import {Alert} from "react-native";
 import {Dispatch} from "react";
 import {IUserState} from "../redux/reducers/userReducer";
 import {NavigationProp} from "@react-navigation/native";
+import {StackNavigationProp} from "@react-navigation/stack";
 
 export const updateUserDetails = async (
   name: string,
@@ -14,7 +15,7 @@ export const updateUserDetails = async (
   user: IUserState,
   image: string,
   dispatch: Dispatch<any>,
-  navigation: NavigationProp<any>,
+  navigation: StackNavigationProp<any>,
 ) => {
   if (!name) {
     return Alert.alert("Please Enter some name");
@@ -60,14 +61,7 @@ export const updateUserDetails = async (
       );
 
       setLoading(false);
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: homeScreen,
-          },
-        ],
-      });
+      navigation.pop();
     } catch (error) {
       console.log("Some error occured while updating user details ", error);
     }

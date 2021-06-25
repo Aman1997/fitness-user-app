@@ -8,30 +8,66 @@ import ActivityContainer from "../components/profile/ActivityContainer";
 import ProfileGreetings from "../components/profile/ProfileGreetings";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import {IUserState} from "../redux/reducers/userReducer";
+import Config from "react-native-config";
+import axios from "axios";
+import LoadingIndicator from "../components/common/LoadingIndicator";
+import {fetchJWT} from "../helpers/fetchJWT";
 
 const ProfileScreen = () => {
+  const [sessions, setSessions] = useState("0");
+  const [memberships, setMemberships] = useState("0");
+  const [isLoading, setLoading] = useState(true);
+
   const user = useSelector((state: {user: IUserState}) => state.user);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        if (user) {
+          const apiRes = await axios.post(
+            Config.FETCH_DATA_URL,
+            {
+              email: user.email,
+            },
+            {headers: await fetchJWT()},
+          );
+          setSessions(apiRes.data.bookings.toString());
+          setMemberships(apiRes.data.memberships.toString());
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("Some error occured while fetching booking counts", error);
+        setLoading(false);
+      }
+    })();
+  }, [user]);
+
   return (
-    <View style={{flex: 1}}>
-      <ProfileHeader />
-      <ScrollView
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Greetings */}
-        <ProfileGreetings
-          name={user.name as string}
-          imageUrl={user.imageUrl as string}
-        />
+    <>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <View style={{flex: 1}}>
+          <ProfileHeader />
+          <ScrollView
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {/* Greetings */}
+            <ProfileGreetings
+              name={user.name as string}
+              imageUrl={user.imageUrl as string}
+            />
 
-        {/* About */}
-        <AboutContainer />
+            {/* About */}
+            <AboutContainer sessions={sessions} memberships={memberships} />
 
-        {/* Activity container */}
-        <ActivityContainer />
-      </ScrollView>
-    </View>
+            {/* Activity container */}
+            <ActivityContainer />
+          </ScrollView>
+        </View>
+      )}
+    </>
   );
 };
 

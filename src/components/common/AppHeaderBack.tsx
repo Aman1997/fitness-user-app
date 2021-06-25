@@ -1,5 +1,10 @@
 import React from "react";
-import {Platform, View, ViewStyle} from "react-native";
+import {
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+  ViewStyle,
+} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
 import {PRIMARY_20, PRIMARY} from "../../assets/constants/colors";
 import Constants from "expo-constants";
@@ -15,14 +20,13 @@ export default function AppHeaderBack({onBack, extraStyles}: IProps) {
 
   return (
     <View style={[styles.container, extraStyles]}>
-      <View style={styles.backContainer}>
-        <AntDesign
-          name="left"
-          size={scale(22)}
-          color={PRIMARY}
-          onPress={onBack ? onBack : () => navigation.goBack()}
-        />
-      </View>
+      <TouchableWithoutFeedback
+        onPress={onBack ? onBack : () => navigation.goBack()}
+      >
+        <View style={styles.backContainer}>
+          <AntDesign name="left" size={scale(22)} color={PRIMARY} />
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
