@@ -43,6 +43,7 @@ export const GET_USER_DATA = `
         email
         name
         imageUrl
+        phoneNumber
         }
     }
 `;

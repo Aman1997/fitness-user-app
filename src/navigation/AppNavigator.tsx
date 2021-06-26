@@ -7,9 +7,11 @@ import {
   bookingsScreen,
   confirmationScreen,
   editProfileScreen,
+  errorScreen,
   fitnessProfileScreen,
   homeScreen,
   membershipDetailsScreen,
+  paymentScreen,
   postLogoutScreen,
   profileScreen,
   reviewsDetailsScreen,
@@ -18,7 +20,6 @@ import {
 } from "./routes";
 import FitnessProfileScreen from "../screens/FitnessProfileScreen";
 import ReviewsScreen from "../screens/ReviewsScreen";
-import BookingCalendarScreen from "../screens/BookingCalendarScreen";
 import SearchScreen from "../screens/SearchScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import AuthNavigator from "./AuthNavigator";
@@ -32,6 +33,8 @@ import BookingDetailsScreen from "../screens/BookingDetailsScreen";
 import MembershipDetailsScreen from "../screens/MembershipDetailsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import BookingCalendarScreen from "../screens/BookingCalendarScreen";
+import AppError from "../components/common/AppError";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -63,7 +66,7 @@ const AppNavigator = () => (
     <Stack.Screen
       name={confirmationScreen}
       component={ConfirmationScreen}
-      options={{stackPresentation: "fullScreenModal", headerShown: false}}
+      options={{headerShown: false}}
     />
     <Stack.Screen
       name={reviewsDetailsScreen}
@@ -105,6 +108,7 @@ const AppNavigator = () => (
       component={AuthNavigator}
       options={noHeader}
     />
+    <Stack.Screen name={errorScreen} component={AppError} options={noHeader} />
   </Stack.Navigator>
 );
 

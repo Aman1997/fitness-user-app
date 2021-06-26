@@ -29,7 +29,7 @@ export default function SignInScreen() {
 
       // setting the user email in async storage
       setUserId(signInRes.username);
-
+      
       navigation.reset({
         index: 0,
         routes: [

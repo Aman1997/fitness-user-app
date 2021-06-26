@@ -110,7 +110,7 @@ export default function HomeScreen() {
         {cancelable: false},
       );
     }
-  };
+  };  
 
   return (
     <>

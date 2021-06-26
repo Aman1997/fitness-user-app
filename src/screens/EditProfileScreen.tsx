@@ -14,6 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import LoadingIndicator from "../components/common/LoadingIndicator";
 import {useNavigation} from "@react-navigation/core";
 import {updateUserDetails} from "../helpers/updateUserDetails";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const EditProfileScreen = () => {
   const [name, setName] = useState("");
@@ -21,7 +22,7 @@ const EditProfileScreen = () => {
   const [image, setImage] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   const dispatch = useDispatch();
 

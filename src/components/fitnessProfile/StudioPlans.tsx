@@ -5,7 +5,10 @@ import {scale, ScaledSheet} from "react-native-size-matters";
 import {useDispatch} from "react-redux";
 import {HEAD_TEXT} from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
-import {bookingCalendarScreen, confirmationScreen} from "../../navigation/routes";
+import {
+  bookingCalendarScreen,
+  confirmationScreen,
+} from "../../navigation/routes";
 import {addSelectedProfile} from "../../redux/actions/actionCreator";
 import AppSeparator from "../common/AppSeparator";
 import PlanView from "./PlanView";
@@ -45,9 +48,8 @@ export default function StudioPlans({
     );
     if (type === 0) {
       navigation.navigate(bookingCalendarScreen);
-    }
-    else {
-      navigation.navigate(confirmationScreen);
+    } else {
+      navigation.navigate(confirmationScreen, {id});
     }
   };
 

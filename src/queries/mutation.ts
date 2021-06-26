@@ -18,3 +18,35 @@ export const UPDATE_USER_DETAILS = `
         }
     }
 `;
+
+export const CREATE_SESSION = `
+    mutation CREATE_SESSION(
+        $bookingDate: String!
+        $fitnessPartnerId: ID!
+        $pin: Int!
+        $status: String!
+        $timeSlot: String!
+        $userEmail: String!
+        $orderId: String!
+    ) {
+        createBookings(input: {bookingDate: $bookingDate, fitnessServiceId: $fitnessPartnerId, pin: $pin, status: $status, timeSlot: $timeSlot, userEmail: $userEmail, orderId: $orderId}) {
+        id
+        }
+    }  
+`;
+
+export const CREATE_MEMBERSHIP = `
+    mutation CREATE_MEMBERSHIP(
+        $fitnessPartnerId: ID!
+        $from: String!
+        $to: String!
+        $type: Int!
+        $userEmail: String!
+        $orderId: String!
+    )  {
+        createMemberships(input: {fitnessServiceId: $fitnessPartnerId, from: $from, to: $to, type: $type, userEmail: $userEmail, orderId: $orderId}) {
+        id
+        }
+    }
+  
+`;

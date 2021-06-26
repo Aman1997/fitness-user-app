@@ -18,7 +18,7 @@ export const selectBooking = (
   navigation: NavigationProp<any>,
 ) => {
   if (isSessionSelected) {
-    if (data.status === "booked") {
+    if (data.status === "confirmed") {
       const payload = {
         id: data.id,
         imageUrl: data.fitnessService.imageUrl,

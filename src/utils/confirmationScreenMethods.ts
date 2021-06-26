@@ -19,5 +19,5 @@ export const calculateTotal = (
   cgst: number,
 ): number => {
   // @ts-ignore
-  return parseFloat(amount) + sgst + cgst;
+  return (parseFloat(amount) + sgst + cgst).toFixed(2);
 };

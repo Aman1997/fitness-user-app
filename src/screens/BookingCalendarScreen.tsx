@@ -15,6 +15,7 @@ import {addSelectedProfile} from "../redux/actions/actionCreator";
 import {confirmationScreen} from "../navigation/routes";
 import {ISelectedProfileState} from "../redux/reducers/selectedProfile";
 import {Alert} from "react-native";
+import {StackNavigationProp} from "@react-navigation/stack";
 
 const availableSlots = [
   "07:00",
@@ -33,7 +34,7 @@ export default function BookingCalendarScreen() {
   const [time, setTime] = useState("");
   const [slot, setSlot] = useState<Array<Array<string>>>([]);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   const dispatch = useDispatch();
   const profile = useSelector(
@@ -50,7 +51,7 @@ export default function BookingCalendarScreen() {
   const proceedToConfirmation = () => {
     if (!time) return Alert.alert("Please select a time slot");
     dispatch(addSelectedProfile({...profile, timeSlot: time, date: start}));
-    navigation.navigate(confirmationScreen);
+    navigation.replace(confirmationScreen);
   };
 
   return (

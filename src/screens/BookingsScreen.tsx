@@ -12,8 +12,8 @@ import {fetchBookings} from "../helpers/fetchBookings";
 import LoadingIndicator from "../components/common/LoadingIndicator";
 import {useNavigation} from "@react-navigation/native";
 import {IBookingState} from "../redux/reducers/bookingsReducer";
-import { IMembershipData } from "../types/stateTypes";
-import { selectBooking } from "../utils/selectBooking";
+import {IMembershipData} from "../types/stateTypes";
+import {selectBooking} from "../utils/selectBooking";
 
 const Data = [
   {
@@ -160,7 +160,7 @@ export default function BookingsScreen() {
               setSessionSelected={setSessionSelected}
             />
             {isMembershipSelected ? (
-              Data.length > 0 ? (
+              membershipData && membershipData.length > 0 ? (
                 <FlatList
                   data={membershipData}
                   keyExtractor={(_, index) => index.toString()}
@@ -168,7 +168,9 @@ export default function BookingsScreen() {
                     <BookingCard
                       // @ts-ignore
                       data={item}
-                      onPressHandler={() => selectBooking(item, isSessionSelected, navigation)}
+                      onPressHandler={() =>
+                        selectBooking(item, isSessionSelected, navigation)
+                      }
                       isMembership={isMembershipSelected}
                     />
                   )}
@@ -176,16 +178,26 @@ export default function BookingsScreen() {
                   showsVerticalScrollIndicator={false}
                 />
               ) : (
-                <Text>No membership yet!</Text>
+                <View
+                  style={{
+                    marginTop: scale(40),
+                    alignItems: "center",
+                    flex: 1,
+                  }}
+                >
+                  <Text>No membership yet!</Text>
+                </View>
               )
-            ) : BookingData.length > 0 ? (
+            ) : bookings.length > 0 ? (
               <FlatList
                 data={bookings}
                 keyExtractor={(_, index) => index.toString()}
                 renderItem={({item, index}) => (
                   <BookingCard
                     data={item}
-                    onPressHandler={() => selectBooking(item, isSessionSelected, navigation)}
+                    onPressHandler={() =>
+                      selectBooking(item, isSessionSelected, navigation)
+                    }
                     isMembership={isMembershipSelected}
                   />
                 )}
@@ -193,7 +205,15 @@ export default function BookingsScreen() {
                 showsVerticalScrollIndicator={false}
               />
             ) : (
-              <Text>No Booking here yet!</Text>
+              <View
+                style={{
+                  marginTop: scale(40),
+                  alignItems: "center",
+                  flex: 1,
+                }}
+              >
+                <Text>No Booking here yet!</Text>
+              </View>
             )}
           </View>
         </View>

@@ -6,7 +6,7 @@ import AppButton from "./AppButton";
 import LottieView from "lottie-react-native";
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
-import * as Updates from 'expo-updates';
+import * as Updates from "expo-updates";
 
 export default function AppError() {
   const navigation = useNavigation<StackNavigationProp<any>>();
@@ -14,7 +14,7 @@ export default function AppError() {
     <View style={styles.container}>
       <View style={{height: 300, width: 200, alignItems: "center"}}>
         <LottieView
-          source={require("../../../assets/lotties/44656-error.json")}
+          source={require("../../assets/lotties/44656-error.json")}
           autoPlay
           loop
           style={{height: "100%", width: "100%"}}
