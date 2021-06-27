@@ -5,7 +5,7 @@ export interface IFitnessProfilesState {
     id: string;
     name: string;
     imageUrl: Array<string>;
-    ratings: number;
+    ratings: string;
     type: number;
     longitude: string;
     latitude: string;
@@ -31,7 +31,7 @@ export const fitnessProfilesInitialState = {
       id: "",
       name: "",
       imageUrl: [],
-      ratings: 0,
+      ratings: "",
       type: 0,
       longitude: "",
       latitude: "",

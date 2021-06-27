@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth";
 import {useNavigation} from "@react-navigation/core";
 import {Formik} from "formik";
 import React, {useState} from "react";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {Alert, ScrollView, Text, View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT} from "../assets/constants/colors";
@@ -46,8 +46,15 @@ export default function SignUpScreen() {
         password,
       });
     } catch (error) {
-      console.log("Some error occured while signing up ", error);
-      setLoading(false);
+      // Checking if user exist
+      if (error.code === "UsernameExistsException") {
+        Alert.alert("Sign Up Error", error.message, [{text: "Try Again"}], {
+          cancelable: false,
+        });
+      } else {
+        console.log("Some error occured while signing up ", error);
+        setLoading(false);
+      }
     }
   };
 

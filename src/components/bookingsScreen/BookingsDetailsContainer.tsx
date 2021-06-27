@@ -41,10 +41,12 @@ export default function BookingsDetailsContainer({data}: IProps) {
       </View>
 
       <View style={styles.pinContainer}>
-        <Entypo name="lock" size={scale(scale(24))} color={ICONS} />
+        <Entypo name="lock" size={scale(scale(22))} color={ICONS} />
         <View style={{paddingHorizontal: scale(12)}}>
           <Text style={styles.pin}>PIN: {data.pin}</Text>
-          <Text style={styles.pinText}>Share the pin at the entrance.</Text>
+          <Text style={styles.pinText}>
+            Share the pin with the fitness partner.
+          </Text>
         </View>
       </View>
       <View style={styles.locationContainer}>
@@ -86,9 +88,9 @@ const styles = ScaledSheet.create({
     paddingHorizontal: "20@s",
   },
   gymPOCImage: {
-    height: "26@s",
-    width: "26@s",
-    borderRadius: "13@s",
+    height: "24@s",
+    width: "24@s",
+    borderRadius: "23@s",
   },
   gymPOCText: {
     paddingHorizontal: "12@s",

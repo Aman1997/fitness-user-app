@@ -10,6 +10,7 @@ import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import AppSafeAreaView from "../components/common/AppSafeAreaView";
 import AppSeparator from "../components/common/AppSeparator";
 import MainCard from "../components/home/MainCard";
+import NoPartnerData from "../components/home/NoPartnerData";
 import Search from "../components/search/Search";
 import {debounce} from "../helpers/debounce";
 import {fitnessProfileScreen} from "../navigation/routes";
@@ -29,7 +30,6 @@ export default function SearchScreen() {
   }, [searchValue]);
 
   const search = async (query: string) => {
-
     try {
       if (query && user) {
         const searchRes = await API.graphql(
@@ -75,6 +75,8 @@ export default function SearchScreen() {
             Search 100+ gyms and yoga centers
           </Text>
         </View>
+      ) : searchValue && searchResults.length < 1 ? (
+        <NoPartnerData />
       ) : (
         //   Search results view
         <View style={styles.searchResultsView}>

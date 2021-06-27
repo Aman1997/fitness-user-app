@@ -2,8 +2,7 @@ import {useNavigation} from "@react-navigation/core";
 import {API, graphqlOperation} from "aws-amplify";
 import React, {useState} from "react";
 import {useEffect} from "react";
-import {Alert, Modal, View} from "react-native";
-import {FlatList} from "react-native-gesture-handler";
+import {Alert, Modal, View, FlatList} from "react-native";
 import {ScaledSheet} from "react-native-size-matters";
 import {useDispatch, useSelector} from "react-redux";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
@@ -26,6 +25,7 @@ import {
   settingsScreen,
 } from "../navigation/routes";
 import {IUserState} from "../redux/reducers/userReducer";
+import {ActivityIndicator} from "react-native-paper";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -39,9 +39,11 @@ export default function HomeScreen() {
   const [isTrainerSelected, setTrainerSelected] = useState(false);
   const [isServiceAvailable, setIsServiceAvailable] = useState(true);
   const [isSetLocation, setLocation] = useState(false);
-  const [nextToken, setNextToken] = useState("");
+  const [nextToken, setNextToken] = useState<null | string>(null);
   const [userCoords, setUserCoords] = useState<coords>();
   const [city, setUserCity] = useState("");
+  const [isRefreshing, setRefreshing] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -92,6 +94,8 @@ export default function HomeScreen() {
           city,
           dispatch,
           setNextToken,
+          nextToken,
+          setLoading,
         );
       } else {
         setIsServiceAvailable(false);
@@ -110,7 +114,7 @@ export default function HomeScreen() {
         {cancelable: false},
       );
     }
-  };  
+  };
 
   return (
     <>
@@ -140,13 +144,21 @@ export default function HomeScreen() {
           onPressSearch={() => navigation.navigate(searchScreen)}
           onPressSettings={() => navigation.navigate(settingsScreen)}
           onPressToggle={() => {
+            setLoading(true);
             setTrainerSelected(!isTrainerSelected);
           }}
         />
-
-        {/* Service unavailable or available view */}
-
-        {!isServiceAvailable ? (
+        {isLoading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              backgroundColor: "rgba(0,0,0,0.2)",
+            }}
+          >
+            <ActivityIndicator />
+          </View>
+        ) : !isServiceAvailable ? (
           <ServiceUnavailable
             city={city}
             serviceType={isTrainerSelected ? 1 : 0}
@@ -162,7 +174,7 @@ export default function HomeScreen() {
                 renderItem={({item}) => (
                   <MainCard
                     {...item}
-                    coords={userCoords || {}}
+                    coords={userCoords as coords}
                     onPressHandler={() =>
                       navigation.navigate(fitnessProfileScreen, {
                         data: item,
@@ -172,12 +184,36 @@ export default function HomeScreen() {
                 )}
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
-                // refreshing={}
-                onRefresh={() => {}}
-                onEndReached={async () => {
-                  console.log("Fetch more data");
+                refreshing={isRefreshing}
+                onRefresh={async () => {
+                  setRefreshing(true);
+                  await fetchData(
+                    isTrainerSelected ? 1 : 0,
+                    city,
+                    dispatch,
+                    setNextToken,
+                    null,
+                    setLoading,
+                  );
+                  setRefreshing(false);
                 }}
-                onEndReachedThreshold={0}
+                onEndReached={async () => {
+                  console.log("ran");
+
+                  if (nextToken === null) {
+                    null;
+                  } else {
+                    await fetchData(
+                      isTrainerSelected ? 1 : 0,
+                      city,
+                      dispatch,
+                      setNextToken,
+                      nextToken as string,
+                      setLoading,
+                    );
+                  }
+                }}
+                onEndReachedThreshold={0.8}
               />
             )}
           </View>
