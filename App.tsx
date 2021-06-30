@@ -15,9 +15,13 @@ import ReviewsScreen from "./src/screens/ReviewsScreen";
 import BookingCalendarScreen from "./src/screens/BookingCalendarScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/redux/store";
-import PaymentScreen from "./src/screens/PaymentScreen";
+import { sentryInit } from "./src/utils/sentrySetup";
 
+// configuring amplify
 Amplify.configure(config);
+
+// configuring sentry
+sentryInit();
 
 export default function App() {
   const [user, updateUser] = useState(null);

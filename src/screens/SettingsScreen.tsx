@@ -1,5 +1,4 @@
 import {useNavigation} from "@react-navigation/native";
-import {Auth} from "aws-amplify";
 import React from "react";
 import {Text, View, ScrollView, ViewStyle} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
@@ -14,32 +13,14 @@ import AppHeaderBack from "../components/common/AppHeaderBack";
 import AppPageTitle from "../components/common/AppPageTitle";
 import AppSeparator from "../components/common/AppSeparator";
 import SettingsListBlock from "../components/settings/SettingsListBlock";
+import { signOut } from "../helpers/signOut";
 import {
   bookingsScreen,
-  postLogoutScreen,
   profileScreen,
 } from "../navigation/routes";
-import removeUserId from "../utils/removeUserId";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
-
-  const signOut = async () => {
-    try {
-      await Auth.signOut();
-      await removeUserId();
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: postLogoutScreen,
-          },
-        ],
-      });
-    } catch (error) {
-      console.log("Some error occured while signing out user", error);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -62,7 +43,7 @@ export default function SettingsScreen() {
               icon="calendar"
               onPressHandle={() => navigation.navigate(bookingsScreen)}
             />
-            <SettingsListBlock text="Privacy and Safety" icon="Safety" />
+            {/* <SettingsListBlock text="My Activities" icon="notification" /> */}
           </View>
 
           <AppSeparator style={styles.appSeparatorStyle as ViewStyle} />
@@ -72,10 +53,10 @@ export default function SettingsScreen() {
             <SettingsListBlock text="Terms of Use" icon="book" />
             <SettingsListBlock text="Community Guidelines" icon="team" />
             <SettingsListBlock text="Copyright Policy" icon="copyright" />
-            <Text style={styles.logoutText} onPress={signOut}>
+            <Text style={styles.logoutText} onPress={async () => await signOut(navigation)}>
               Logout
             </Text>
-            <Text style={styles.version}>V1.0(1122xxxx-sdxxx-xxxxx)</Text>
+            <Text style={styles.version}>V1.0(beta)</Text>
           </View>
         </ScrollView>
       </View>

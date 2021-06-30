@@ -1,6 +1,6 @@
-import {format, startOfDay} from "date-fns";
-import React, {useEffect, useState} from "react";
-import {Platform, Text, View} from "react-native";
+import {format} from "date-fns";
+import React, {useEffect} from "react";
+import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {
   addToDays,

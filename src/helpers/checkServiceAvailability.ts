@@ -1,10 +1,14 @@
+import {NavigationProp} from "@react-navigation/native";
 import axios from "axios";
 import Config from "react-native-config";
+import {errorScreen} from "../navigation/routes";
+import {sentryError} from "../utils/sentrySetup";
 import {fetchJWT} from "./fetchJWT";
 
 export const checkServiceAvailablibity = async (
   currentCity: string,
-): Promise<boolean> => {
+  navigation: NavigationProp<any>,
+): Promise<boolean | undefined> => {
   try {
     // make an api call to verify if service exists
     const availableCities = await axios.get(
@@ -15,10 +19,7 @@ export const checkServiceAvailablibity = async (
     );
     return availableCities.data.includes(currentCity) ? true : false;
   } catch (error) {
-    console.log(
-      "Some error occured while fetching available cities data",
-      error,
-    );
-    return false;
+    sentryError(error);
+    navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

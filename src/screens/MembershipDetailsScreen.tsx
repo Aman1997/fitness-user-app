@@ -1,6 +1,6 @@
 import {useNavigation, useRoute} from "@react-navigation/native";
 import React, {useState} from "react";
-import {Alert, ScrollView, Text, View} from "react-native";
+import {ScrollView, Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import FitnessServiceImageView from "../components/bookingsScreen/FitnessServiceImageView";
 import {checkMembershipStatus} from "../utils/checkMembershipStatus";
@@ -16,14 +16,12 @@ import {differenceInDays} from "date-fns";
 import MembershipPlan from "../components/bookingsScreen/MembershipPlan";
 import {
   getPlanPrice,
-  getPlanType,
   handleRadioClick,
 } from "../utils/membershipMethods";
-import {confirmationScreen} from "../navigation/routes";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import {useDispatch} from "react-redux";
-import {addSelectedProfile} from "../redux/actions/actionCreator";
-import { StatusBar } from "expo-status-bar";
+import {StatusBar} from "expo-status-bar";
+import {renewMemberships} from "../helpers/renewMemberships";
 
 export default function MembershipDetailsScreen() {
   const navigation = useNavigation();
@@ -41,31 +39,6 @@ export default function MembershipDetailsScreen() {
     halfYearly: false,
     yearly: false,
   });
-
-  const renewMembership = () => {
-    if (
-      // @ts-ignore
-      Object.keys(isPlanSelected).filter((val) => isPlanSelected[val])
-        .length === 0
-    ) {
-      Alert.alert("Please select one membership plan to renew");
-    } else {
-      dispatch(
-        addSelectedProfile({
-          id: data.id,
-          name: data.name,
-          ratings: data.ratings,
-          address: data.address,
-          plan: getPlanType(isPlanSelected),
-          price: parseFloat(
-            getPlanPrice(getPlanType(isPlanSelected) as number, data.plans),
-          ),
-          imageUrl: data.imageUrl,
-        }),
-      );
-      navigation.navigate(confirmationScreen);
-    }
-  };
 
   return (
     <View style={{flex: 1}}>
@@ -176,7 +149,9 @@ export default function MembershipDetailsScreen() {
             borderRadius: scale(24),
             marginBottom: scale(25),
           }}
-          onPressHandle={renewMembership}
+          onPressHandle={() =>
+            renewMemberships(dispatch, data, isPlanSelected, navigation)
+          }
         />
       </View>
     </View>

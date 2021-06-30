@@ -7,6 +7,7 @@ import {
 import GetStartedScreen from "../screens/GetStartedScreen";
 import {
   appHomeScreen,
+  errorScreen,
   forgotPasswordScreen,
   getStartedScreen,
   signInScreen,
@@ -19,6 +20,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPaswordScreen from "../screens/ForgotPaswordScreen";
 import VerifySignUpScreen from "../screens/VerifySignUpScreen";
 import AppNavigator from "./AppNavigator";
+import AppError from "../components/common/AppError";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -67,7 +69,12 @@ const AuthNavigator = () => (
       component={VerifySignUpScreen}
       options={modalStyle}
     />
-    <Stack.Screen name={appHomeScreen} component={AppNavigator} options={noHeader} />
+    <Stack.Screen
+      name={appHomeScreen}
+      component={AppNavigator}
+      options={noHeader}
+    />
+    <Stack.Screen name={errorScreen} component={AppError} options={noHeader} />
     {/* <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
@@ -90,11 +97,7 @@ const AuthNavigator = () => (
       /> */}
 
     {/* Error handling screen */}
-    {/* <Stack.Screen
-      name="ErrorScreen"
-      component={AppFallbackErrorComponent}
-      options={noHeader}
-    />
+    {/* 
     <Stack.Screen name="Home" component={AppNavigation} options={noHeader} />  */}
   </Stack.Navigator>
 );

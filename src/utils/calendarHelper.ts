@@ -9,22 +9,22 @@ import {
   isSameMonth,
 } from "date-fns";
 
-export function isBeforeDay(day) {
+export function isBeforeDay(day: Date) {
   return isBefore(day, startOfDay(new Date()));
 }
 
-export function isSelectedDay(generatedDay, selectedDay) {
+export function isSelectedDay(generatedDay: Date, selectedDay: Date) {
   return isSameDay(generatedDay, selectedDay);
 }
 
-export function isSameMonthDate(day) {
+export function isSameMonthDate(day: Date) {
   return isSameMonth(day, startOfDay(new Date()));
 }
 
-export function subtractDays(day) {
+export function subtractDays(day: Date) {
   return subDays(startOfMonth(day), 1);
 }
 
-export function addToDays(day) {
+export function addToDays(day: Date) {
   return addDays(endOfMonth(day), 1);
 }

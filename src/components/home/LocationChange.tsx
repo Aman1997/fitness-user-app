@@ -6,6 +6,7 @@ import {scale, ScaledSheet} from "react-native-size-matters";
 import {ICONS, PRIMARY} from "../../assets/constants/colors";
 import {capitalize} from "../../utils/capitalize";
 import {fetchAvailableCities} from "../../helpers/fetchAvailableCities";
+import {useNavigation} from "@react-navigation/native";
 
 interface IProps {
   onCancel: () => void;
@@ -19,8 +20,10 @@ export default function LocationChange({onCancel, city, setUserCity}: IProps) {
     setUserCity(city);
   };
 
+  const navigation = useNavigation();
+
   useEffect(() => {
-    (async () => setCities(await fetchAvailableCities()))();
+    (async () => setCities(await fetchAvailableCities(navigation)))();
   }, []);
 
   return (

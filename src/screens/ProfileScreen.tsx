@@ -12,6 +12,9 @@ import Config from "react-native-config";
 import axios from "axios";
 import LoadingIndicator from "../components/common/LoadingIndicator";
 import {fetchJWT} from "../helpers/fetchJWT";
+import {sentryError} from "../utils/sentrySetup";
+import {useNavigation} from "@react-navigation/native";
+import {errorScreen} from "../navigation/routes";
 
 const ProfileScreen = () => {
   const [sessions, setSessions] = useState("0");
@@ -19,6 +22,8 @@ const ProfileScreen = () => {
   const [isLoading, setLoading] = useState(true);
 
   const user = useSelector((state: {user: IUserState}) => state.user);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -36,7 +41,8 @@ const ProfileScreen = () => {
           setLoading(false);
         }
       } catch (error) {
-        console.log("Some error occured while fetching booking counts", error);
+        sentryError(error);
+        navigation.reset({index: 0, routes: [{name: errorScreen}]});
         setLoading(false);
       }
     })();

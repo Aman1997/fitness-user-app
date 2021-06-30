@@ -38,7 +38,7 @@ npm-debug.log
 yarn-error.log
 
 # aws-exports file
-aws-exports.js
+# aws-exports.js
 
 # BUCK
 buck-out/

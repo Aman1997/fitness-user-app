@@ -10,6 +10,7 @@ import {CONTENT_CONTAINER} from "../assets/constants/styles";
 import AppButton from "../components/common/AppButton";
 import AppPageTitle from "../components/common/AppPageTitle";
 import LoadingIndicator from "../components/common/LoadingIndicator";
+import {resendConfirmation, verifyOTP} from "../helpers/otpHandler";
 import {appHomeScreen} from "../navigation/routes";
 import setUserId from "../utils/setUserId";
 
@@ -21,44 +22,6 @@ export default function VerifySignUpScreen() {
 
   const [otp, setOtp] = useState("");
   const [isLoading, setLoading] = useState(false);
-
-  // verify the otp
-  const verify = async () => {
-    setLoading(true);
-    try {
-      await Auth.confirmSignUp(email, otp);
-
-      const signInRes = await Auth.signIn(email.toLowerCase(), password);
-
-      // setting the user email in async storage
-      setUserId(signInRes.username);
-
-      setLoading(false);
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: appHomeScreen,
-          },
-        ],
-      });
-    } catch (error) {
-      console.log("Some error occured while verifying otp ", error);
-      setLoading(false);
-    }
-  };
-
-  // resend the otp
-  const resendConfirmationCode = async () => {
-    try {
-      await Auth.resendSignUp(email);
-      setLoading(false);
-      Alert.alert("The otp has been re sent!");
-    } catch (error) {
-      console.log("Some error occured while resending otp", error);
-      setLoading(false);
-    }
-  };
 
   return (
     <>
@@ -90,7 +53,9 @@ export default function VerifySignUpScreen() {
                 fontSize: scale(12),
                 marginTop: scale(10),
               }}
-              onPress={resendConfirmationCode}
+              onPress={async () =>
+                await resendConfirmation(email, setLoading, navigation)
+              }
             >
               Resend verificiation code
             </Text>
@@ -111,7 +76,9 @@ export default function VerifySignUpScreen() {
                   borderRadius: scale(20),
                   marginVertical: scale(25),
                 }}
-                onPressHandle={verify}
+                onPressHandle={async () =>
+                  await verifyOTP(email, otp, password, setLoading, navigation)
+                }
               />
             </View>
           </View>

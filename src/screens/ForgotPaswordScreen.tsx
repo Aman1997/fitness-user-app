@@ -1,15 +1,16 @@
-import Auth from "@aws-amplify/auth";
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {Formik} from "formik";
 import React, {useState} from "react";
-import {Alert, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {SECONDARY} from "../assets/constants/colors";
 import {CONTENT_CONTAINER} from "../assets/constants/styles";
 import AppButton from "../components/common/AppButton";
 import AppPageTitle from "../components/common/AppPageTitle";
 import AppTextInput from "../components/common/AppTextInput";
+import {createNewPassword} from "../helpers/createNewPassword";
+import {createOTP} from "../helpers/createOTP";
 import {
   emailValidationSchema,
   otpPasswordValidationSchema,
@@ -20,29 +21,6 @@ export default function ForgotPaswordScreen() {
   const [email, setEmail] = useState("");
 
   const navigation = useNavigation<StackNavigationProp<any>>();
-
-  // create the OTP
-  const createCode = async (email: string) => {
-    try {
-      await Auth.forgotPassword(email.toLowerCase());
-      Alert.alert("OPT has been generated and sent to your mail!");
-      setCodeGeneration(false);
-      setEmail(email.toLowerCase());
-    } catch (error) {
-      console.log("Some error occured while creating a code");
-    }
-  };
-
-  // create new password
-  const createNewPassword = async (code: string, newPassword: string) => {
-    try {
-      await Auth.forgotPasswordSubmit(email, code, newPassword);
-      Alert.alert("Password has been successfully changed");
-      navigation.replace("signInScreen");
-    } catch (error) {
-      console.log("Some error occured while creating a new password");
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -56,7 +34,14 @@ export default function ForgotPaswordScreen() {
               userEmail: "",
             }}
             validationSchema={emailValidationSchema}
-            onSubmit={(values) => createCode(values.userEmail)}
+            onSubmit={async (values) =>
+              await createOTP(
+                values.userEmail,
+                setCodeGeneration,
+                setEmail,
+                navigation,
+              )
+            }
           >
             {({
               handleChange,
@@ -107,8 +92,13 @@ export default function ForgotPaswordScreen() {
               newPassword: "",
             }}
             validationSchema={otpPasswordValidationSchema}
-            onSubmit={(values) =>
-              createNewPassword(values.code, values.newPassword)
+            onSubmit={async (values) =>
+              createNewPassword(
+                email,
+                values.code,
+                values.newPassword,
+                navigation,
+              )
             }
           >
             {({

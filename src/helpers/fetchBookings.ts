@@ -1,8 +1,11 @@
+import {NavigationProp} from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch, SetStateAction} from "react";
+import {errorScreen} from "../navigation/routes";
 import {CURRENT_USER_BOOKINGS} from "../queries/query";
 import {addBookingsData} from "../redux/actions/actionCreator";
 import {IMembershipData} from "../types/stateTypes";
+import {sentryError} from "../utils/sentrySetup";
 
 export const fetchBookings = async (
   email: string,
@@ -11,6 +14,7 @@ export const fetchBookings = async (
     SetStateAction<Array<IMembershipData> | undefined>
   >,
   setLoading: Dispatch<SetStateAction<boolean>>,
+  navigation: NavigationProp<any>,
 ) => {
   try {
     const bookingsRes = await API.graphql(
@@ -65,6 +69,7 @@ export const fetchBookings = async (
     setLoading(false);
   } catch (error) {
     setLoading(false);
-    console.log("Some error occured while fetching bookings", error);
+    sentryError(error);
+    navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

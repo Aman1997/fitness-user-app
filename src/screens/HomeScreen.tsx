@@ -20,18 +20,18 @@ import {coords} from "../utils/findDistance";
 import LocationChange from "../components/home/LocationChange";
 import {checkServiceAvailablibity} from "../helpers/checkServiceAvailability";
 import {
+  errorScreen,
   fitnessProfileScreen,
   searchScreen,
   settingsScreen,
 } from "../navigation/routes";
-import {IUserState} from "../redux/reducers/userReducer";
 import {ActivityIndicator} from "react-native-paper";
+import {sentryError} from "../utils/sentrySetup";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
-  const user = useSelector((state: {user: IUserState}) => state.user);
   const fitnessProfiles = useSelector(
     (state: {fitnessProfiles: IFitnessProfilesState}) => state.fitnessProfiles,
   ).profiles;
@@ -67,9 +67,10 @@ export default function HomeScreen() {
             }),
           );
         })
-        .catch((err) =>
-          console.log("Some error occured while fetching user data", err),
-        );
+        .catch((error) => {
+          sentryError(error);
+          navigation.reset({index: 0, routes: [{name: errorScreen}]});
+        });
 
       let address = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
@@ -87,7 +88,7 @@ export default function HomeScreen() {
   useEffect(() => {
     (async () => {
       // check if service available in the user's city
-      if (await checkServiceAvailablibity(city.toLowerCase())) {
+      if (await checkServiceAvailablibity(city.toLowerCase(), navigation)) {
         setIsServiceAvailable(true);
         await fetchData(
           isTrainerSelected ? 1 : 0,
@@ -96,6 +97,7 @@ export default function HomeScreen() {
           setNextToken,
           nextToken,
           setLoading,
+          navigation,
         );
       } else {
         setIsServiceAvailable(false);
@@ -194,6 +196,7 @@ export default function HomeScreen() {
                     setNextToken,
                     null,
                     setLoading,
+                    navigation,
                   );
                   setRefreshing(false);
                 }}
@@ -210,6 +213,7 @@ export default function HomeScreen() {
                       setNextToken,
                       nextToken as string,
                       setLoading,
+                      navigation,
                     );
                   }
                 }}

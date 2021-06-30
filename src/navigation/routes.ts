@@ -21,4 +21,6 @@ export const membershipDetailsScreen = "membershipDetailsScreen";
 export const profileScreen = "profileScreen";
 export const editProfileScreen = "editProfileScreen";
 export const postLogoutScreen = "postLogoutScreen";
+
+// common
 export const errorScreen = "errorScreen";

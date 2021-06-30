@@ -1,7 +1,10 @@
+import { NavigationProp } from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch} from "react";
+import { errorScreen } from "../navigation/routes";
 import {CREATE_MEMBERSHIP} from "../queries/mutation";
 import {getToDate} from "../utils/dateTimeMethods";
+import { sentryError } from "../utils/sentrySetup";
 
 export const bookMembership = async (
   orderId: string,
@@ -9,6 +12,7 @@ export const bookMembership = async (
   type: number,
   email: string,
   setIsCompleted: Dispatch<boolean>,
+  navigation: NavigationProp<any>
 ) => {
   try {
     await API.graphql(
@@ -23,6 +27,7 @@ export const bookMembership = async (
     );
     setIsCompleted(true);
   } catch (error) {
-    console.log("Some error occured while booking session ", error);
+    sentryError(error);
+    navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

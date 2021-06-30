@@ -1,7 +1,7 @@
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
 import React, {useState} from "react";
-import {Alert, ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, Text, View} from "react-native";
 import {CONTENT_CONTAINER} from "../assets/constants/styles";
 import {Formik} from "formik";
 import signInValidationSchema from "../utils/signInValidationSchema";
@@ -13,68 +13,12 @@ import {CONTENT} from "../assets/constants/colors";
 import AuthHeader from "../components/auth/AuthHeader";
 import {forgotPasswordScreen} from "../navigation/routes";
 import LoadingIndicator from "../components/common/LoadingIndicator";
-import Auth from "@aws-amplify/auth";
-import setUserId from "../utils/setUserId";
+import {login} from "../helpers/login";
 
 export default function SignInScreen() {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const [isLoading, setLoading] = useState(false);
-
-  const login = async (email: string, password: string) => {
-    setLoading(true);
-    try {
-      const signInRes = await Auth.signIn(email.toLowerCase(), password);
-      setLoading(false);
-
-      // setting the user email in async storage
-      setUserId(signInRes.username);
-      
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: "appHomeScreen",
-          },
-        ],
-      });
-    } catch (error) {
-      setLoading(false);
-      if (error.code === "UserNotFoundException") {
-        return Alert.alert(
-          "Authentication failed",
-          "The user email does not exists!",
-          [{text: "OK"}],
-        );
-      }
-      if (error.code === "NotAuthorizedException") {
-        return Alert.alert(
-          "Authentication failed",
-          "The user email or password is incorrect!",
-          [{text: "OK"}],
-        );
-      }
-      if (error.code === "UserNotConfirmedException") {
-        Alert.alert(
-          "User not verified",
-          "Please continue to verify the user.",
-          [
-            {
-              text: "Verify",
-              onPress: async () => {
-                setLoading(true);
-                await Auth.resendSignUp(email);
-                setLoading(false);
-                navigation.navigate("verifySignUpScreen", {
-                  email,
-                });
-              },
-            },
-          ],
-        );
-      }
-    }
-  };
 
   return (
     <>
@@ -95,7 +39,14 @@ export default function SignInScreen() {
                 password: "",
               }}
               validationSchema={signInValidationSchema}
-              onSubmit={(values) => login(values.email, values.password)}
+              onSubmit={async (values) =>
+                await login(
+                  values.email,
+                  values.password,
+                  setLoading,
+                  navigation,
+                )
+              }
             >
               {({
                 handleChange,

@@ -15,6 +15,7 @@ import AuthHeader from "../components/auth/AuthHeader";
 import SocialSignIn from "../components/auth/SocialSignIn";
 import AppTextInput from "../components/common/AppTextInput";
 import LoadingIndicator from "../components/common/LoadingIndicator";
+import {signUp} from "../helpers/signUp";
 import {verifySignUpScreen} from "../navigation/routes";
 import signUpValidationSchema from "../utils/signUpValidationSchema";
 
@@ -22,41 +23,6 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
 
   const [isLoading, setLoading] = useState(false);
-
-  const signUp = async (
-    email: string,
-    password: string,
-    name: string,
-    phoneNumber: string,
-  ) => {
-    setLoading(true);
-    try {
-      const signUpRes = await Auth.signUp({
-        username: email.toLowerCase(),
-        password: password,
-        attributes: {
-          "custom:name": name,
-          "custom:phoneNumber": phoneNumber,
-          "custom:isPartner": "0",
-        },
-      });
-      setLoading(false);
-      navigation.navigate(verifySignUpScreen, {
-        email,
-        password,
-      });
-    } catch (error) {
-      // Checking if user exist
-      if (error.code === "UsernameExistsException") {
-        Alert.alert("Sign Up Error", error.message, [{text: "Try Again"}], {
-          cancelable: false,
-        });
-      } else {
-        console.log("Some error occured while signing up ", error);
-        setLoading(false);
-      }
-    }
-  };
 
   return (
     <>
@@ -81,12 +47,14 @@ export default function SignUpScreen() {
                   name: "",
                   phoneNumber: "",
                 }}
-                onSubmit={(values) =>
-                  signUp(
+                onSubmit={async (values) =>
+                  await signUp(
                     values.email,
                     values.password,
                     values.name,
                     values.phoneNumber,
+                    setLoading,
+                    navigation,
                   )
                 }
                 validationSchema={signUpValidationSchema}

@@ -11,6 +11,7 @@ import {Dispatch} from "react";
 import {bookSession} from "./bookSession";
 import {fetchJWT} from "./fetchJWT";
 import {errorScreen} from "../navigation/routes";
+import {sentryError} from "../utils/sentrySetup";
 
 export const continueToPay = async (
   amount: number,
@@ -71,6 +72,7 @@ export const continueToPay = async (
             type,
             userEmail,
             setIsCompleted,
+            navigation,
           );
         } else {
           // book sessions
@@ -81,6 +83,7 @@ export const continueToPay = async (
             timeSlot as string,
             userEmail,
             setIsCompleted,
+            navigation,
           );
         }
       })
@@ -89,7 +92,7 @@ export const continueToPay = async (
         Alert.alert("Payment Error", `${error.description}`);
       });
   } catch (error) {
-    console.log("some error occured while fetching order id", error);
+    sentryError(error);
     navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

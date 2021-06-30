@@ -2,9 +2,11 @@ import {StackNavigationProp} from "@react-navigation/stack";
 import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch, SetStateAction} from "react";
 import {Alert} from "react-native";
+import { errorScreen } from "../navigation/routes";
 import {CANCEL_BOOKING} from "../queries/mutation";
 import {addBookingsData} from "../redux/actions/actionCreator";
 import {IBookingState} from "../redux/reducers/bookingsReducer";
+import { sentryError } from "../utils/sentrySetup";
 
 export const cancelBooking = async (
   id: string,
@@ -40,6 +42,7 @@ export const cancelBooking = async (
     setLoading(false);
   } catch (error) {
     setLoading(false);
-    console.log("Some error occured while cancelling session", error);
+    sentryError(error);
+    navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

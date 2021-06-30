@@ -1,8 +1,8 @@
 import {useNavigation} from "@react-navigation/native";
-import {API, graphqlOperation} from "aws-amplify";
 import React, {useState} from "react";
 import {useEffect} from "react";
 import {FlatList, Image, Text, View} from "react-native";
+import {ActivityIndicator} from "react-native-paper";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {useSelector} from "react-redux";
 import {CONTENT} from "../assets/constants/colors";
@@ -13,8 +13,8 @@ import MainCard from "../components/home/MainCard";
 import NoPartnerData from "../components/home/NoPartnerData";
 import Search from "../components/search/Search";
 import {debounce} from "../helpers/debounce";
+import {search} from "../helpers/search";
 import {fitnessProfileScreen} from "../navigation/routes";
-import {SEARCH_FITNESS_PARTNER_BY_NAME} from "../queries/query";
 import {IUserState} from "../redux/reducers/userReducer";
 
 export default function SearchScreen() {
@@ -24,35 +24,21 @@ export default function SearchScreen() {
 
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [isTyping, setTyping] = useState(false);
 
   useEffect(() => {
-    debounceSearch(searchValue);
+    setSearchResults([]);
+    setTyping(true);
+    debounceSearch(
+      searchValue,
+      user,
+      setSearchResults,
+      navigation,
+      setLoading,
+      setTyping,
+    );
   }, [searchValue]);
-
-  const search = async (query: string) => {
-    try {
-      if (query && user) {
-        const searchRes = await API.graphql(
-          graphqlOperation(SEARCH_FITNESS_PARTNER_BY_NAME, {
-            name: query,
-          }),
-        );
-        // @ts-ignore
-        const requiredData = searchRes.data.listFitnessServices.items;
-
-        setSearchResults(
-          // @ts-ignore
-          requiredData.map((item) => ({
-            ...item,
-            plans: item.plans?.items,
-            availableSlots: item.availableSlots?.items,
-          })),
-        );
-      }
-    } catch (error) {
-      console.log("Some error occured while searching fitness profiles", error);
-    }
-  };
 
   const debounceSearch = debounce(search, 500);
 
@@ -64,7 +50,17 @@ export default function SearchScreen() {
           marginTop: scale(15),
         }}
       />
-      {!searchValue ? (
+      {isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.1)",
+          }}
+        >
+          <ActivityIndicator />
+        </View>
+      ) : !searchValue ? (
         // Initial Search view
         <View style={styles.initialSearchView}>
           <Image
@@ -75,7 +71,7 @@ export default function SearchScreen() {
             Search 100+ gyms and yoga centers
           </Text>
         </View>
-      ) : searchValue && searchResults.length < 1 ? (
+      ) : searchValue && searchResults.length < 1 && !isTyping ? (
         <NoPartnerData />
       ) : (
         //   Search results view

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Alert, FlatList, Text, View} from "react-native";
+import {FlatList, Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import AppHeaderBack from "../components/common/AppHeaderBack";
@@ -140,7 +140,13 @@ export default function BookingsScreen() {
 
   useEffect(() => {
     if (user.email) {
-      fetchBookings(user.email, dispatch, setMembershipData, setLoading);
+      fetchBookings(
+        user.email,
+        dispatch,
+        setMembershipData,
+        setLoading,
+        navigation,
+      );
     }
   }, [user]);
 

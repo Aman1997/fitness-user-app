@@ -1,6 +1,9 @@
+import { NavigationProp } from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch} from "react";
+import { errorScreen } from "../navigation/routes";
 import {CREATE_SESSION} from "../queries/mutation";
+import { sentryError } from "../utils/sentrySetup";
 
 export const bookSession = async (
   orderId: string,
@@ -9,6 +12,7 @@ export const bookSession = async (
   timeSlot: string,
   email: string,
   setIsCompleted: Dispatch<boolean>,
+  navigation: NavigationProp<any>
 ) => {
   try {
     const pin = Math.floor(100000 + Math.random() * 900000);
@@ -25,6 +29,7 @@ export const bookSession = async (
     );
     setIsCompleted(true);
   } catch (error) {
-    console.log("Some error occured while booking session ", error);
+    sentryError(error);
+    navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };
