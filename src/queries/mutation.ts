@@ -18,7 +18,6 @@ export const UPDATE_USER_DETAILS = `
         }
     }
 `;
-
 export const CREATE_SESSION = `
     mutation CREATE_SESSION(
         $bookingDate: String!
@@ -29,7 +28,7 @@ export const CREATE_SESSION = `
         $userEmail: String!
         $orderId: String!
     ) {
-        createBookings(input: {bookingDate: $bookingDate, fitnessServiceId: $fitnessPartnerId, pin: $pin, status: $status, timeSlot: $timeSlot, userEmail: $userEmail, orderId: $orderId}) {
+        createBookings(input: {bookingDate: $bookingDate, fitnessServiceId: $fitnessPartnerId, pin: $pin, status: $status, timeSlot: $timeSlot, userEmail: $userEmail, orderId: $orderId, isVerified: false}) {
         id
         }
     }  

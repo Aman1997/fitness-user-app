@@ -53,17 +53,16 @@ const styles = ScaledSheet.create({
     justifyContent: "space-around",
   },
   selectedView: {
-    borderBottomColor: PRIMARY,
-    borderBottomWidth: "3@s",
     paddingBottom: "8@s",
   },
   selectedText: {
     fontSize: "15@s",
-    fontWeight: "500",
+    fontWeight: "bold",
     color: HEAD_TEXT,
   },
   defaultText: {
     fontSize: "14@s",
     color: "#929290",
+    fontWeight: "500",
   },
 });

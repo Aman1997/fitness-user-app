@@ -42,8 +42,8 @@ const ProfileScreen = () => {
         }
       } catch (error) {
         sentryError(error);
-        navigation.reset({index: 0, routes: [{name: errorScreen}]});
         setLoading(false);
+        navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
   }, [user]);
