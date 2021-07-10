@@ -33,6 +33,9 @@ export const verifyOTP = async (
     });
   } catch (error) {
     setLoading(false);
+    if (error.code === "CodeMismatchException") {
+      return Alert.alert("Verification failed", "The otp entered is wrong!");
+    }
     sentryError(error);
     navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }

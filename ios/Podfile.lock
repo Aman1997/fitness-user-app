@@ -31,7 +31,7 @@ PODS:
   - EXPermissions (12.0.1):
     - UMCore
     - UMPermissionsInterface
-  - EXSplashScreen (0.10.2):
+  - EXSplashScreen (0.10.3):
     - React-Core
     - UMCore
   - EXStructuredHeaders (1.0.1):
@@ -302,7 +302,7 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - RNAWSCognito (5.0.3):
+  - RNAWSCognito (5.0.4):
     - React-Core
   - RNCAsyncStorage (1.15.5):
     - React-Core
@@ -310,7 +310,7 @@ PODS:
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNReanimated (2.1.0):
+  - RNReanimated (2.0.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -339,8 +339,9 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.0.0):
+  - RNScreens (3.4.0):
     - React-Core
+    - React-RCTImage
   - RNSentry (2.6.0):
     - React-Core
     - Sentry (= 7.0.0)
@@ -354,7 +355,7 @@ PODS:
     - UMCore
   - UMConstantsInterface (6.1.0):
     - UMCore
-  - UMCore (7.1.0)
+  - UMCore (7.1.1)
   - UMFaceDetectorInterface (6.1.0)
   - UMFileSystemInterface (6.1.0)
   - UMFontInterface (6.1.0)
@@ -594,7 +595,7 @@ SPEC CHECKSUMS:
   EXKeepAwake: da3b8472c2739a1edcd63b121ae4ab751aa325d4
   EXLocation: 0af832ac27e304d158365f4c16e478207977cfc6
   EXPermissions: ea8d63dd052737765bd350b2ca7cee9bcfd5e18e
-  EXSplashScreen: b59a58feda693c17f1af73c715e4e058919fcb7c
+  EXSplashScreen: f7a3aa117248375f1f2e8558e756794f052ff9fa
   EXStructuredHeaders: 0c3b4c8030ec5ed2c3bc0b64f5af81005b9cb5c8
   EXUpdates: 3bcd7a0fda56c88951ff3eaa207e68dcaabe9f19
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
@@ -629,19 +630,19 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  RNAWSCognito: a89946398b7fe2a387ad6af326fb69d82203f6db
+  RNAWSCognito: 14872bf41aca1a7f48114e7f4f470c00b45bef4d
   RNCAsyncStorage: 8324611026e8dc3706f829953aa6e3899f581589
   RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: 70f662b5232dd5d19ccff581e919a54ea73df51c
-  RNScreens: e8e8dd0588b5da0ab57dcca76ab9b2d8987757e0
+  RNReanimated: 5231286440b796e09df3bfa5c1b12b02bfe07664
+  RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   UMAppLoader: aae896b81e3fcaa6528992e2e19ec8db38c2cedd
   UMBarCodeScannerInterface: 96a01d81ff0c7febbfefc2d7396db9e7462d8c68
   UMCameraInterface: 8ad433fdadca22703ebeb614d42b814092d38d69
   UMConstantsInterface: 55c79ca258a3ede70480fed85e3843899cd47ea3
-  UMCore: 0da048c9753abcea0042258e6ad0fed77811f7e1
+  UMCore: 063edcab3a9de0c44301fe77af147aa1a654b40f
   UMFaceDetectorInterface: 4db950a25e785796a237bcebb8fff05078c4fb61
   UMFileSystemInterface: 4a92ee36e6c2757833031718f8496690fa931280
   UMFontInterface: 81a951117d03f57aa636fba3992adefd0191f200

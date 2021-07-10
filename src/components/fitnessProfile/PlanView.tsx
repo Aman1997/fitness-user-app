@@ -7,13 +7,21 @@ import {
   SECONDARY,
   WHITE,
 } from "../../assets/constants/colors";
+import {minPriceString} from "../../utils/plansMethods";
 import AppButton from "../common/AppButton";
 
 interface IProps {
   type: number;
-  plans: Array<{type: number; price: number}>;
+  plans: Array<{
+    type: number;
+    batch: number;
+    timeSlotTo: string;
+    timeSlotFrom: string;
+    price: string;
+  }>;
   isBestOffer: boolean;
-  selectPlan: (type: number, price: number) => void;
+  selectPlan: () => void;
+  onPress: () => void;
 }
 
 export default function PlanView({
@@ -21,14 +29,17 @@ export default function PlanView({
   plans,
   isBestOffer,
   selectPlan,
+  onPress,
 }: IProps) {
+  
   const select = () => {
-    selectPlan(type, getPrice(type));
+    selectPlan();
+    onPress();
   };
 
-  const getPrice = (type: number): number => {
-    return plans.filter((plan) => plan.type === type)[0]?.price;
-  };
+  // const getPrice = (type: number): number => {
+  //   return plans.filter((plan) => plan.type === type)[0]?.price;
+  // };
 
   return (
     <View style={styles.individualPlanContainer}>
@@ -38,34 +49,34 @@ export default function PlanView({
             text="Best Offer"
             textStyle={{
               color: WHITE,
-              fontSize: 12,
+              fontSize: scale(10),
             }}
             containerStyle={{
               backgroundColor: PRIMARY,
-              padding: 2,
-              borderRadius: 8,
+              padding: scale(2),
+              borderRadius: scale(8),
               alignItems: "center",
-              marginBottom: 2,
-              width: 80,
+              marginBottom: scale(2),
+              width: scale(70),
             }}
           />
         ) : null}
         <Text style={styles.textBody}>
           {type === 0
-            ? `Per session @ ₹ ${getPrice(0)}`
+            ? `Per session ${minPriceString(plans, 0)}`
             : type === 1
-            ? `1 month @ ₹ ${getPrice(1)}`
+            ? `1 month ${minPriceString(plans, 1)}`
             : type === 2
-            ? `3 months @ ₹ ${getPrice(2)}`
+            ? `3 months ${minPriceString(plans, 2)}`
             : type === 3
-            ? `6 months @ ₹ ${getPrice(3)}`
+            ? `6 months ${minPriceString(plans, 3)}`
             : type === 4
-            ? `12 months @ ₹ ${getPrice(4)}`
+            ? `12 months ${minPriceString(plans, 4)}`
             : null}
         </Text>
       </View>
       <AppButton
-        text={type === 0 ? "Book" : "Buy"}
+        text="Select"
         textStyle={{
           color: WHITE,
           fontSize: scale(14),

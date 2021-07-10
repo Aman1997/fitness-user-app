@@ -58,6 +58,7 @@ export default function HomeScreen() {
           const userData = await API.graphql(
             graphqlOperation(GET_USER_DATA, {email: id}),
           );
+
           dispatch(
             addUser({
               // @ts-ignore
@@ -87,20 +88,22 @@ export default function HomeScreen() {
 
   useEffect(() => {
     (async () => {
-      // check if service available in the user's city
-      if (await checkServiceAvailablibity(city.toLowerCase(), navigation)) {
-        setIsServiceAvailable(true);
-        await fetchData(
-          isTrainerSelected ? 1 : 0,
-          city,
-          dispatch,
-          setNextToken,
-          nextToken,
-          setLoading,
-          navigation,
-        );
-      } else {
-        setIsServiceAvailable(false);
+      if (city) {
+        // check if service available in the user's city
+        if (await checkServiceAvailablibity(city.toLowerCase(), navigation)) {
+          setIsServiceAvailable(true);
+          await fetchData(
+            isTrainerSelected ? 1 : 0,
+            city,
+            dispatch,
+            setNextToken,
+            nextToken,
+            setLoading,
+            navigation,
+          );
+        } else {
+          setIsServiceAvailable(false);
+        }
       }
     })();
   }, [isTrainerSelected, city]);
@@ -201,7 +204,7 @@ export default function HomeScreen() {
                   setRefreshing(false);
                 }}
                 onEndReached={async () => {
-                  console.log("ran");
+                  console.log("end reached Home screen");
 
                   if (nextToken === null) {
                     null;

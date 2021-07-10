@@ -34,6 +34,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.airbnb.android.react.lottie.LottiePackage;
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
