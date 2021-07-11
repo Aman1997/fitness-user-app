@@ -1,11 +1,17 @@
 import {useNavigation} from "@react-navigation/core";
 import React from "react";
-import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
+import {
+  Image,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Text,
+  View,
+} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT, HEAD_TEXT, SECONDARY} from "../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import AppButton from "../components/common/AppButton";
-import { signInScreen, signUpScreen } from "../navigation/routes";
+import {signInScreen, signUpScreen} from "../navigation/routes";
 
 export default function GetStartedScreen() {
   const navigation = useNavigation();
@@ -41,31 +47,35 @@ export default function GetStartedScreen() {
         }}
       >
         <View style={styles.buttonContainer}>
-          <View
-            style={{
-              width: "45%",
-              borderWidth: scale(1),
-              borderColor: SECONDARY,
-              borderRadius: scale(25),
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(signInScreen)}
           >
-            <AppButton
-              text="Login"
-              containerStyle={{
-                height: scale(50),
+            <View
+              style={{
+                width: "45%",
+                borderWidth: scale(1),
+                borderColor: SECONDARY,
+                borderRadius: scale(25),
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              textStyle={{
-                color: SECONDARY,
-                fontSize: scale(16),
-                fontWeight: "500",
-              }}
-              onPressHandle={() => navigation.navigate(signInScreen)}
-            />
-          </View>
+            >
+              <AppButton
+                text="Login"
+                containerStyle={{
+                  height: scale(50),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                textStyle={{
+                  color: SECONDARY,
+                  fontSize: scale(16),
+                  fontWeight: "500",
+                }}
+                onPressHandle={() => navigation.navigate(signInScreen)}
+              />
+            </View>
+          </TouchableWithoutFeedback>
           <AppButton
             text="Signup"
             containerStyle={{

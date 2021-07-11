@@ -6,7 +6,7 @@ import AuthNavigator from "./src/navigation/AuthNavigator";
 import AppNavigator from "./src/navigation/AppNavigator";
 import NoPartnerData from "./src/components/home/NoPartnerData";
 import Amplify, {Auth} from "aws-amplify";
-import config from "./aws-exports";
+import awsconfig from "./aws-exports";
 import setUserId from "./src/utils/setUserId";
 import {useNetInfo} from "@react-native-community/netinfo";
 import NoInternet from "./src/components/common/NoInternet";
@@ -15,10 +15,19 @@ import ReviewsScreen from "./src/screens/ReviewsScreen";
 import BookingCalendarScreen from "./src/screens/BookingCalendarScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/redux/store";
-import { sentryInit } from "./src/utils/sentrySetup";
+import {sentryInit} from "./src/utils/sentrySetup";
+import urlOpener from "./src/utils/urlOpener";
 
 // configuring amplify
-Amplify.configure(config);
+Amplify.configure({
+  ...awsconfig,
+  oauth: {
+    ...awsconfig.oauth,
+    redirectSignIn: awsconfig.oauth.redirectSignIn.split(",")[3],
+    redirectSignOut: awsconfig.oauth.redirectSignOut.split(",")[3],
+    urlOpener,
+  },
+});
 
 // configuring sentry
 sentryInit();

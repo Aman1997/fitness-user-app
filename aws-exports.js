@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "exp://127.0.0.1/,orbitFitnessClient://,exp://192.168.0.104/,orbitFitness://",
-        "redirectSignOut": "exp://127.0.0.1/,orbitFitnessClient://,orbitFitness://",
+        "redirectSignIn": "exp://127.0.0.1/,orbitFitnessClient://,exp://192.168.0.104/,orbitfitnessuserapp://",
+        "redirectSignOut": "exp://127.0.0.1/,orbitFitnessClient://,orbitfitnessuserapp://",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",

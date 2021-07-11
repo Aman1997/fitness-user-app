@@ -2,6 +2,7 @@ import React from "react";
 import {Dimensions} from "react-native";
 import {Image, Text, View} from "react-native";
 import {ScaledSheet} from "react-native-size-matters";
+import { HEAD_TEXT } from "../../assets/constants/colors";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -36,6 +37,7 @@ const styles = ScaledSheet.create({
     fontSize: "28@s",
     paddingRight: "15@s",
     width: WIDTH - 160,
+    color: HEAD_TEXT
   },
   profileImage: {
     height: "90@s",

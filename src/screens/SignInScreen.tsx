@@ -94,7 +94,7 @@ export default function SignInScreen() {
               )}
             </Formik>
 
-            <SocialSignIn optionText="Or login with" />
+            <SocialSignIn optionText="Or login with" setLoading={setLoading} navigation={navigation} />
           </View>
         </ScrollView>
       )}

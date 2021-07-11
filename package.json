@@ -27,6 +27,7 @@
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "^1.0.4",
     "expo-updates": "~0.5.4",
+    "expo-web-browser": "^9.2.0",
     "formik": "^2.2.9",
     "geolib": "^3.3.1",
     "lottie-ios": "^3.1.8",
