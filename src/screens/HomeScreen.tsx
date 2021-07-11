@@ -53,36 +53,37 @@ export default function HomeScreen() {
         accuracy: Location.Accuracy.Balanced,
       });
 
-      getUserId()
-        .then(async (id) => {
-          const userData = await API.graphql(
-            graphqlOperation(GET_USER_DATA, {email: id}),
-          );
+      try {
+        const id = await getUserId();
+        const userData = await API.graphql(
+          graphqlOperation(GET_USER_DATA, {email: id}),
+        );
 
-          dispatch(
-            addUser({
-              // @ts-ignore
-              ...userData.data.getUser,
-              currentLat: location.coords.latitude,
-              currentLong: location.coords.longitude,
-            }),
-          );
-        })
-        .catch((error) => {
-          sentryError(error);
-          navigation.reset({index: 0, routes: [{name: errorScreen}]});
+        dispatch(
+          addUser({
+            // @ts-ignore
+            ...userData.data.getUser,
+            currentLat: location.coords.latitude,
+            currentLong: location.coords.longitude,
+          }),
+        );
+
+        let address = await Location.reverseGeocodeAsync({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+        // @ts-ignore
+        setUserCity(address[0]?.city.toLowerCase() || "");
+        setUserCoords({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
         });
 
-      let address = await Location.reverseGeocodeAsync({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-      // @ts-ignore
-      setUserCity(address[0]?.city.toLowerCase() || "");
-      setUserCoords({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
+      } catch (error) {
+        sentryError(error);
+        setLoading(false);
+        navigation.reset({index: 0, routes: [{name: errorScreen}]});
+      }
     })();
   }, []);
 
@@ -102,6 +103,7 @@ export default function HomeScreen() {
             navigation,
           );
         } else {
+          setLoading(false)
           setIsServiceAvailable(false);
         }
       }

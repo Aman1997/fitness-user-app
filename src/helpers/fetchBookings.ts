@@ -20,6 +20,7 @@ export const fetchBookings = async (
     const bookingsRes = await API.graphql(
       graphqlOperation(CURRENT_USER_BOOKINGS, {email}),
     );
+
     // @ts-ignore
     const requiredBookingsData = bookingsRes.data.getUser.bookings.items;
     // @ts-ignore
@@ -36,13 +37,13 @@ export const fetchBookings = async (
           pin: item.pin,
           timeSlot: item.timeSlot,
           fitnessService: {
-            id: item.fitnessService.id,
-            longitude: item.fitnessService.longitude,
-            latitude: item.fitnessService.latitude,
-            name: item.fitnessService.name,
-            imageUrl: item.fitnessService.imageUrl[0],
-            trainerName: item.fitnessService.trainerName,
-            trainerImageUrl: item.fitnessService.trainerImageUrl,
+            id: item.fitnessService?.id,
+            longitude: item.fitnessService?.longitude,
+            latitude: item.fitnessService?.latitude,
+            name: item.fitnessService?.name,
+            imageUrl: item.fitnessService?.imageUrl[0],
+            trainerName: item.fitnessService?.trainerName,
+            trainerImageUrl: item.fitnessService?.trainerImageUrl,
           },
         })),
       }),
@@ -57,11 +58,11 @@ export const fetchBookings = async (
         from: item.from,
         ratings: item.ratings,
         fitnessService: {
-          id: item.fitnessService.id,
-          name: item.fitnessService.name,
-          imageUrl: item.fitnessService.imageUrl[0],
-          plans: item.fitnessService.plans.items,
-          address: item.fitnessService.address,
+          id: item.fitnessService?.id,
+          name: item.fitnessService?.name,
+          imageUrl: item.fitnessService?.imageUrl[0],
+          plans: item.fitnessService?.plans.items,
+          address: item.fitnessService?.address,
         },
       })),
     );

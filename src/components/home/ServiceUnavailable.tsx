@@ -33,12 +33,12 @@ export default function ServiceUnavailable({city, serviceType}: IProps) {
           {headers: await fetchJWT()},
         );
 
-        Alert.alert(
+        return Alert.alert(
           "Subscription Confirmed!",
           "Your email has been subscribed to notification for service availability.",
         );
       }
-      Alert.alert("Issue retrieveing user email. Please try again");
+      return Alert.alert("Issue retrieveing user email. Please try again");
     } catch (error) {
       console.log(
         "Some error occured while creating subscription for notification",

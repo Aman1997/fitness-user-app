@@ -7,14 +7,14 @@ export interface IBookingState {
     status: string;
     pin: number;
     timeSlot: string;
-    fitnessService: {
-      id: string;
-      longitude: string;
-      latitude: string;
-      name: string;
-      imageUrl: string;
-      trainerName: string;
-      trainerImageUrl: string;
+    fitnessService?: {
+      id?: string;
+      longitude?: string;
+      latitude?: string;
+      name?: string;
+      imageUrl?: string;
+      trainerName?: string;
+      trainerImageUrl?: string;
     };
   }>;
 }

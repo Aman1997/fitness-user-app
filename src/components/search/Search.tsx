@@ -35,6 +35,7 @@ const styles = ScaledSheet.create({
   container: {
     flexDirection: "row",
     marginHorizontal: APP_MARGIN_HORIZONTAL,
+    alignItems: 'center'
   },
   inputText: {
     marginHorizontal: "20@s",

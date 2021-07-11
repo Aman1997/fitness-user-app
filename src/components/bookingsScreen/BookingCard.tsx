@@ -5,7 +5,7 @@ import {ScaledSheet} from "react-native-size-matters";
 import {WHITE} from "../../assets/constants/colors";
 import {IBookingState} from "../../redux/reducers/bookingsReducer";
 import {IMembershipData} from "../../types/stateTypes";
-import { checkMembershipStatus } from "../../utils/checkMembershipStatus";
+import {checkMembershipStatus} from "../../utils/checkMembershipStatus";
 
 interface IProps {
   data: IMembershipData | IBookingState["bookings"][0];
@@ -23,12 +23,12 @@ export default function BookingCard({
     <TouchableWithoutFeedback onPress={onPressHandler}>
       <View style={styles.container}>
         <Image
-          source={{uri: data.fitnessService.imageUrl}}
+          source={{uri: data.fitnessService?.imageUrl}}
           style={styles.imageStyle}
         />
         <View style={styles.overlay} />
         <View style={styles.textContainer}>
-          <Text style={styles.name}>{data.fitnessService.name}</Text>
+          <Text style={styles.name}>{data.fitnessService?.name}</Text>
           <Text style={styles.date}>
             {isMembership
               ? `${format(

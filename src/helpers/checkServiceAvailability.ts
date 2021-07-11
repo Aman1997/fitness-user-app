@@ -10,6 +10,7 @@ export const checkServiceAvailablibity = async (
   navigation: NavigationProp<any>,
 ): Promise<boolean | undefined> => {
   try {
+    
     // make an api call to verify if service exists
     const availableCities = await axios.get(
       Config.SERVICE_AVAILABILITY_CITIES_URL,

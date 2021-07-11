@@ -166,20 +166,22 @@ export default function BookingsScreen() {
               setSessionSelected={setSessionSelected}
             />
             {isMembershipSelected ? (
-              membershipData && membershipData.length > 0 ? (
+              membershipData && membershipData[0].id ? (
                 <FlatList
                   data={membershipData}
                   keyExtractor={(_, index) => index.toString()}
-                  renderItem={({item, index}) => (
-                    <BookingCard
-                      // @ts-ignore
-                      data={item}
-                      onPressHandler={() =>
-                        selectBooking(item, isSessionSelected, navigation)
-                      }
-                      isMembership={isMembershipSelected}
-                    />
-                  )}
+                  renderItem={({item, index}) =>
+                    item.fitnessService?.id ? (
+                      <BookingCard
+                        // @ts-ignore
+                        data={item}
+                        onPressHandler={() =>
+                          selectBooking(item, isSessionSelected, navigation)
+                        }
+                        isMembership={isMembershipSelected}
+                      />
+                    ) : null
+                  }
                   style={{width: "100%", marginVertical: scale(15)}}
                   showsVerticalScrollIndicator={false}
                 />
@@ -194,19 +196,21 @@ export default function BookingsScreen() {
                   <Text>No membership yet!</Text>
                 </View>
               )
-            ) : bookings.length > 0 ? (
+            ) : bookings[0].id ? (
               <FlatList
                 data={bookings}
                 keyExtractor={(_, index) => index.toString()}
-                renderItem={({item, index}) => (
-                  <BookingCard
-                    data={item}
-                    onPressHandler={() =>
-                      selectBooking(item, isSessionSelected, navigation)
-                    }
-                    isMembership={isMembershipSelected}
-                  />
-                )}
+                renderItem={({item, index}) =>
+                  item.fitnessService?.id ? (
+                    <BookingCard
+                      data={item}
+                      onPressHandler={() =>
+                        selectBooking(item, isSessionSelected, navigation)
+                      }
+                      isMembership={isMembershipSelected}
+                    />
+                  ) : null
+                }
                 style={{width: "100%", marginVertical: scale(15)}}
                 showsVerticalScrollIndicator={false}
               />
