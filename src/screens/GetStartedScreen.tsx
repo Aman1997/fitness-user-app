@@ -21,13 +21,12 @@ export default function GetStartedScreen() {
       bounces={false}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.headContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/images/tempLogo.png")}
-        />
-        <Text style={styles.appName}>Orbit Fitness</Text>
-      </View>
+      <Image
+        source={require("../assets/images/logo.png")}
+        resizeMode="contain"
+        style={styles.logo}
+      />
+
       <Text style={styles.headingText}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit
       </Text>
@@ -105,15 +104,9 @@ const styles = ScaledSheet.create({
     marginHorizontal: APP_MARGIN_HORIZONTAL,
     marginTop: "35%",
   },
-  headContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   logo: {
-    height: "70@s",
-    width: "70@s",
-    marginRight: "20@s",
-    borderRadius: "35@s",
+    height: "150@s",
+    width: "150@s",
   },
   appName: {
     fontWeight: "bold",
@@ -123,7 +116,6 @@ const styles = ScaledSheet.create({
   headingText: {
     fontWeight: "bold",
     fontSize: "24@s",
-    marginTop: "50@s",
     color: HEAD_TEXT,
   },
   contentText: {
