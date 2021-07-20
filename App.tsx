@@ -50,6 +50,7 @@ export default function App() {
       } catch (error) {
       } finally {
         setDataFetched(true);
+        await SplashScreen.hideAsync();
       }
     })();
   }, []);
