@@ -15,8 +15,12 @@ export interface IFitnessProfilesState {
     tags: Array<string>;
     plans: Array<{
       id: string;
-      price: string;
       type: number;
+      batch: number;
+      timeSlotTo: string;
+      timeSlotFrom: string;
+      price: string;
+      days: Array<number>;
     }>;
     availableSlots: Array<{
       day: number;
@@ -39,13 +43,7 @@ export const fitnessProfilesInitialState = {
       about: "",
       trainerImageUrl: "",
       tags: [""],
-      plans: [
-        {
-          id: "",
-          price: "",
-          type: 0,
-        },
-      ],
+      plans: [],
       availableSlots: [
         {
           day: 0,

@@ -6,6 +6,7 @@ export interface ISelectedProfileState {
   ratings?: number | undefined;
   address?: string;
   plan?: number;
+  batch?: number;
   price?: number;
   imageUrl?: string;
   timeSlot?: string;
@@ -20,6 +21,7 @@ export const selectedProfileState = {
   plan: 0,
   price: 0,
   imageUrl: "",
+  batch: 0,
   timeSlot: "",
   date: new Date(),
 };
@@ -38,6 +40,7 @@ export const selectedProfileReducer = (
         plan: action.payload.plan,
         price: action.payload.price,
         imageUrl: action.payload.imageUrl,
+        batch: action.payload.batch,
         date: action.payload.date,
         timeSlot: action.payload.timeSlot,
       };

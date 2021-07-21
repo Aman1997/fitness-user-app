@@ -17,6 +17,7 @@ import {Provider} from "react-redux";
 import {store} from "./src/redux/store";
 import {sentryError, sentryInit} from "./src/utils/sentrySetup";
 import urlOpener from "./src/utils/urlOpener";
+import * as SplashScreen from "expo-splash-screen";
 
 // configuring amplify
 Amplify.configure({
@@ -24,7 +25,7 @@ Amplify.configure({
   oauth: {
     ...awsconfig.oauth,
     redirectSignIn: awsconfig.oauth.redirectSignIn.split(",")[3],
-    redirectSignOut: awsconfig.oauth.redirectSignOut.split(",")[3],
+    redirectSignOut: awsconfig.oauth.redirectSignOut.split(",")[2],
     urlOpener,
   },
 });
@@ -42,18 +43,15 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
+        await SplashScreen.preventAutoHideAsync();
         const authUser = await Auth.currentAuthenticatedUser();
         setUserId(authUser.attributes.email);
         updateUser(authUser);
       } catch (error) {
-        if (error === "The user is not authenticated") {
-          null
-        }
-        else {
-          sentryError(error);
-        }
+      } finally {
+        setDataFetched(true);
+        await SplashScreen.hideAsync();
       }
-      setDataFetched(true);
     })();
   }, []);
 

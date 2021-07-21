@@ -22,6 +22,10 @@ export const LIST_FITNESS_PARTNERS = `
                     id
                     price
                     type
+                    timeSlotFrom
+                    timeSlotTo
+                    batch
+                    days
                 }
             }
             availableSlots {
@@ -70,8 +74,12 @@ export const SEARCH_FITNESS_PARTNER_BY_NAME = `
         plans {
             items {
                 id
-                price
                 type
+                batch
+                timeSlotTo
+                timeSlotFrom
+                price
+                days
             }
         }
         availableSlots {
