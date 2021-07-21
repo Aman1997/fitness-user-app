@@ -14,14 +14,13 @@ import {
 import MembershipBar from "../components/bookingsScreen/MembershipBar";
 import {differenceInDays} from "date-fns";
 import MembershipPlan from "../components/bookingsScreen/MembershipPlan";
-import {
-  getPlanPrice,
-  handleRadioClick,
-} from "../utils/membershipMethods";
+import {getPlanPrice, handleRadioClick} from "../utils/membershipMethods";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import {useDispatch} from "react-redux";
 import {StatusBar} from "expo-status-bar";
 import {renewMemberships} from "../helpers/renewMemberships";
+import BottomSheet from "reanimated-bottom-sheet";
+import BatchContainer from "../components/fitnessProfile/BatchContainer";
 
 export default function MembershipDetailsScreen() {
   const navigation = useNavigation();
@@ -32,6 +31,7 @@ export default function MembershipDetailsScreen() {
 
   // @ts-ignore
   const {data} = route.params;
+  console.log(data);
 
   const [isPlanSelected, setPlanSelected] = useState({
     monthly: false,
@@ -40,121 +40,154 @@ export default function MembershipDetailsScreen() {
     yearly: false,
   });
 
-  return (
-    <View style={{flex: 1}}>
-      <StatusBar style="dark" />
-      <FitnessServiceImageView
-        data={{
-          imageUrl: data.imageUrl,
-          name: data.name,
-          to: data.to,
-        }}
-      />
-      <ScrollView
-        style={{
-          paddingHorizontal: scale(20),
-          marginTop: scale(20),
-          marginBottom: scale(70),
-          flex: 1,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {checkMembershipStatus(data.to) ? (
-          <MembershipBar
-            daysLeft={differenceInDays(Date.parse(data.to), Date.now())}
-            membershipTenure={differenceInDays(
-              Date.parse(data.to),
-              Date.parse(data.from),
-            )}
-          />
-        ) : (
-          <Text>Your membership has expired!!</Text>
-        )}
+  const sheetRef = React.useRef(null);
 
-        <Text
+  return (
+    <>
+      <View style={{flex: 1}}>
+        <StatusBar style="dark" />
+        <FitnessServiceImageView
+          data={{
+            imageUrl: data.imageUrl,
+            name: data.name,
+            to: data.to,
+          }}
+        />
+        <ScrollView
           style={{
-            marginVertical: scale(15),
-            fontSize: scale(15),
-            fontWeight: "600",
-            color: HEAD_TEXT,
+            paddingHorizontal: scale(20),
+            marginTop: scale(20),
+            marginBottom: scale(70),
+            flex: 1,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          {checkMembershipStatus(data.to) ? (
+            <MembershipBar
+              daysLeft={differenceInDays(Date.parse(data.to), Date.now())}
+              membershipTenure={differenceInDays(
+                Date.parse(data.to),
+                Date.parse(data.from),
+              )}
+            />
+          ) : (
+            <Text>Your membership has expired!!</Text>
+          )}
+
+          <Text
+            style={{
+              marginVertical: scale(15),
+              fontSize: scale(15),
+              fontWeight: "600",
+              color: HEAD_TEXT,
+            }}
+          >
+            Renew your membership
+          </Text>
+
+          {data.monthly ? (
+            <MembershipPlan
+              planName="1 month"
+              planPrice={`₹ ${getPlanPrice(1, data.plans)}`}
+              isSelected={isPlanSelected.monthly}
+              onSelected={(planType) =>
+                handleRadioClick(planType, setPlanSelected)
+              }
+            />
+          ) : null}
+          {data.quarterly ? (
+            <MembershipPlan
+              planName="3 months"
+              planPrice={`₹ ${getPlanPrice(2, data.plans)}`}
+              isSelected={isPlanSelected.quarterly}
+              onSelected={(planType) =>
+                handleRadioClick(planType, setPlanSelected)
+              }
+            />
+          ) : null}
+
+          {data.halfYearly ? (
+            <MembershipPlan
+              planName="6 months"
+              planPrice={`₹ ${getPlanPrice(3, data.plans)}`}
+              isSelected={isPlanSelected.halfYearly}
+              onSelected={(planType) =>
+                handleRadioClick(planType, setPlanSelected)
+              }
+            />
+          ) : null}
+          {data.yearly ? (
+            <MembershipPlan
+              planName="12 months"
+              planPrice={`₹ ${getPlanPrice(4, data.plans)}`}
+              isSelected={isPlanSelected.yearly}
+              onSelected={(planType) =>
+                handleRadioClick(planType, setPlanSelected)
+              }
+            />
+          ) : null}
+        </ScrollView>
+        <View
+          style={{
+            position: "absolute",
+            alignItems: "center",
+            paddingHorizontal: APP_MARGIN_HORIZONTAL,
+            width: "100%",
+            bottom: 0,
           }}
         >
-          Renew your membership
-        </Text>
-
-        {data.monthly ? (
-          <MembershipPlan
-            planName="1 month"
-            planPrice={`₹ ${getPlanPrice(1, data.plans)}`}
-            isSelected={isPlanSelected.monthly}
-            onSelected={(planType) =>
-              handleRadioClick(planType, setPlanSelected)
+          <AppButton
+            text="Renew Membership"
+            textStyle={{
+              color: WHITE,
+              fontSize: scale(16),
+              fontWeight: "500",
+            }}
+            containerStyle={{
+              backgroundColor: SECONDARY,
+              width: "100%",
+              alignItems: "center",
+              paddingHorizontal: scale(20),
+              paddingVertical: scale(15),
+              borderRadius: scale(24),
+              marginBottom: scale(25),
+            }}
+            onPressHandle={() =>
+              renewMemberships(dispatch, data, isPlanSelected, navigation)
             }
           />
-        ) : null}
-        {data.quarterly ? (
-          <MembershipPlan
-            planName="3 months"
-            planPrice={`₹ ${getPlanPrice(2, data.plans)}`}
-            isSelected={isPlanSelected.quarterly}
-            onSelected={(planType) =>
-              handleRadioClick(planType, setPlanSelected)
-            }
-          />
-        ) : null}
-
-        {data.halfYearly ? (
-          <MembershipPlan
-            planName="6 months"
-            planPrice={`₹ ${getPlanPrice(3, data.plans)}`}
-            isSelected={isPlanSelected.halfYearly}
-            onSelected={(planType) =>
-              handleRadioClick(planType, setPlanSelected)
-            }
-          />
-        ) : null}
-        {data.yearly ? (
-          <MembershipPlan
-            planName="12 months"
-            planPrice={`₹ ${getPlanPrice(4, data.plans)}`}
-            isSelected={isPlanSelected.yearly}
-            onSelected={(planType) =>
-              handleRadioClick(planType, setPlanSelected)
-            }
-          />
-        ) : null}
-      </ScrollView>
-      <View
-        style={{
-          position: "absolute",
-          alignItems: "center",
-          paddingHorizontal: APP_MARGIN_HORIZONTAL,
-          width: "100%",
-          bottom: 0,
-        }}
-      >
-        <AppButton
-          text="Renew Membership"
-          textStyle={{
-            color: WHITE,
-            fontSize: scale(16),
-            fontWeight: "500",
-          }}
-          containerStyle={{
-            backgroundColor: SECONDARY,
-            width: "100%",
-            alignItems: "center",
-            paddingHorizontal: scale(20),
-            paddingVertical: scale(15),
-            borderRadius: scale(24),
-            marginBottom: scale(25),
-          }}
-          onPressHandle={() =>
-            renewMemberships(dispatch, data, isPlanSelected, navigation)
-          }
-        />
+        </View>
       </View>
-    </View>
+
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={
+          // @ts-ignore
+          // data?.plans.filter((plan) => plan.type === type).length === 1
+          //   ? [scale(140), 0, 0]
+          //   : // @ts-ignore
+          //   data?.plans.filter((plan) => plan.type === type).length === 2
+          //   ? [scale(280), scale(140), 0]
+          [scale(400), scale(140), 0]
+        }
+        initialSnap={2}
+        borderRadius={scale(20)}
+        renderContent={() => (
+          <BatchContainer
+            plans={data?.plans?.sort((a, b) => a.type - b.type)}
+            // // @ts-ignore
+            // .filter((plan) => plan.type === type)
+            // @ts-ignore
+
+            id={data.id}
+            name={data.name}
+            imageUrl={data.imageUrl[0]}
+            ratings={data.ratings}
+            address={data.address}
+          />
+        )}
+      />
+    </>
   );
 }
 
