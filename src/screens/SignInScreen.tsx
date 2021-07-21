@@ -1,7 +1,7 @@
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
 import React, {useState} from "react";
-import {ScrollView, Text, View} from "react-native";
+import {Platform, ScrollView, Text, View} from "react-native";
 import {CONTENT_CONTAINER} from "../assets/constants/styles";
 import {Formik} from "formik";
 import signInValidationSchema from "../utils/signInValidationSchema";
@@ -105,7 +105,7 @@ export default function SignInScreen() {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    marginTop: "20@s",
+    marginTop: Platform.OS === 'android' ? "40@s" : "20@s",
   },
   inputContainer: {
     marginVertical: "20@s",

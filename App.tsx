@@ -15,7 +15,7 @@ import ReviewsScreen from "./src/screens/ReviewsScreen";
 import BookingCalendarScreen from "./src/screens/BookingCalendarScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/redux/store";
-import {sentryInit} from "./src/utils/sentrySetup";
+import {sentryError, sentryInit} from "./src/utils/sentrySetup";
 import urlOpener from "./src/utils/urlOpener";
 
 // configuring amplify
@@ -45,7 +45,14 @@ export default function App() {
         const authUser = await Auth.currentAuthenticatedUser();
         setUserId(authUser.attributes.email);
         updateUser(authUser);
-      } catch (error) {}
+      } catch (error) {
+        if (error === "The user is not authenticated") {
+          null
+        }
+        else {
+          sentryError(error);
+        }
+      }
       setDataFetched(true);
     })();
   }, []);
