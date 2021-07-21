@@ -24,7 +24,7 @@ import {
   calculateTotal,
 } from "../utils/confirmationScreenMethods";
 import {IUserState} from "../redux/reducers/userReducer";
-import {useNavigation, useRoute} from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import {continueToPay} from "../helpers/continueToPay";
 import {useState} from "react";
 import OrderCompletedLottie from "../components/confirmation/OrderCompletedLottie";
@@ -34,8 +34,6 @@ import LoadingIndicator from "../components/common/LoadingIndicator";
 export default function ConfirmationScreen() {
   const [isLoading, setLoading] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-
-  const route = useRoute();
 
   const navigation = useNavigation<StackNavigationProp<any>>();
 
