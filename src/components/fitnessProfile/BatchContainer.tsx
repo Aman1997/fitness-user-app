@@ -1,6 +1,8 @@
+import {useNavigation} from "@react-navigation/native";
 import React from "react";
 import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
+import {useDispatch} from "react-redux";
 import {
   CONTENT,
   LIGHT_GREY,
@@ -8,6 +10,11 @@ import {
   PRIMARY,
 } from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
+import {
+  bookingCalendarScreen,
+  confirmationScreen,
+} from "../../navigation/routes";
+import {addSelectedProfile} from "../../redux/actions/actionCreator";
 import {formatTimeSlot} from "../../utils/dateTimeMethods";
 import {getPlanDays} from "../../utils/plansMethods";
 import AppButton from "../common/AppButton";
@@ -23,9 +30,44 @@ interface IProps {
     price: string;
     days: Array<number>;
   }>;
+  id: string;
+  name: string;
+  imageUrl: string;
+  ratings: number;
+  address: string;
 }
 
-const BatchContainer = ({plans}: IProps) => {
+const BatchContainer = ({
+  plans,
+  id,
+  name,
+  imageUrl,
+  ratings,
+  address,
+}: IProps) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const selectPlan = (type: number, price: number, batch: number) => {
+    dispatch(
+      addSelectedProfile({
+        id,
+        name,
+        imageUrl,
+        ratings,
+        address,
+        plan: type,
+        price,
+        batch,
+      }),
+    );
+    if (type === 0) {
+      navigation.navigate(bookingCalendarScreen);
+    } else {
+      navigation.navigate(confirmationScreen);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {plans.map((plan) => (
@@ -60,6 +102,9 @@ const BatchContainer = ({plans}: IProps) => {
                   paddingVertical: scale(2),
                   borderRadius: scale(8),
                 }}
+                onPressHandle={() =>
+                  selectPlan(plan.type, Number(plan.price), plan.batch)
+                }
               />
             </View>
           </View>
