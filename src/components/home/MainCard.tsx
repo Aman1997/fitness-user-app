@@ -69,8 +69,9 @@ export default function MainCard({
 const styles = ScaledSheet.create({
   cardContainer: {
     borderRadius: "20@s",
-    elevation: 2,
+    elevation: 1,
     marginTop: "20@s",
+    marginBottom: "5@s",
     shadowColor: "#000",
     shadowOffset: {width: 1, height: 3},
     shadowOpacity: 0.2,

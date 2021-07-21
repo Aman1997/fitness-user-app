@@ -55,7 +55,7 @@ export default function FitnessProfileScreen() {
         snapPoints={
           // @ts-ignore
           data?.plans.filter((plan) => plan.type === type).length === 1
-            ? [scale(140), 0, 0]
+            ? [scale(180), 0, 0]
             : // @ts-ignore
             data?.plans.filter((plan) => plan.type === type).length === 2
             ? [scale(280), scale(140), 0]
@@ -63,13 +63,14 @@ export default function FitnessProfileScreen() {
         }
         initialSnap={2}
         borderRadius={scale(20)}
+        enabledContentTapInteraction={false}
         renderContent={() => (
           <BatchContainer
             plans={data?.plans
               // @ts-ignore
               .filter((plan) => plan.type === type)
               // @ts-ignore
-              .sort((a, b) => a.batch - b.batch)}
+              ?.sort((a, b) => a.batch - b.batch)}
             id={data.id}
             name={data.name}
             imageUrl={data.imageUrl[0]}

@@ -31,7 +31,7 @@ export const selectBooking = (
         longitude: data.fitnessService.longitude,
       };
       navigation.navigate(bookingDetailsScreen, {data: payload});
-    } else {
+    } else if (data.status === "cancelled") {
       Alert.alert(
         "Cancelled Session",
         `The session with reference id: ${data.id} has been canelled!`,
@@ -63,7 +63,7 @@ export const selectBooking = (
             .length > 0,
         yearly:
           data.fitnessService.plans.filter((item: IPlans) => item.type === 4)
-            .length > 0,  
+            .length > 0,
       };
       navigation.navigate(membershipDetailsScreen, {data: payload});
     }

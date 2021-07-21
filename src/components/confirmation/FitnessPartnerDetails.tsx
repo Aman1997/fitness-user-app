@@ -62,14 +62,14 @@ const styles = ScaledSheet.create({
     borderRadius: "8@s",
   },
   name: {
-    fontSize: "14@s",
+    fontSize: "15@s",
     fontWeight: "500",
     textTransform: "capitalize",
     color: HEAD_TEXT,
   },
   address: {
-    marginTop: "10@s",
-    fontSize: "13@s",
+    marginTop: "8@s",
+    fontSize: "12@s",
     textTransform: "capitalize",
     color: CONTENT,
   },

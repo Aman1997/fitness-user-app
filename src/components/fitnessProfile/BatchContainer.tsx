@@ -1,6 +1,7 @@
 import {useNavigation} from "@react-navigation/native";
 import React from "react";
 import {Text, View} from "react-native";
+import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {useDispatch} from "react-redux";
 import {
@@ -72,16 +73,16 @@ const BatchContainer = ({
     <View style={styles.container}>
       {plans.map((plan) => (
         <View key={plan.id}>
-          <Text style={styles.headText}>Batch-{plan.batch}</Text>
+          <Text style={styles.headText}>Batch-{plan?.batch}</Text>
           <View style={styles.mainRowContainer}>
             <View style={styles.detailsContainer}>
               <Text style={styles.daysText}>
-                {getPlanDays(plan.days).join(", ")}
+                {getPlanDays(plan?.days)?.join(", ")}
               </Text>
 
               <Text style={styles.timeSlotText}>
-                {formatTimeSlot(plan.timeSlotFrom)} -{" "}
-                {formatTimeSlot(plan.timeSlotTo)}
+                {formatTimeSlot(plan?.timeSlotFrom)} -{" "}
+                {formatTimeSlot(plan?.timeSlotTo)}
               </Text>
             </View>
 
@@ -99,11 +100,13 @@ const BatchContainer = ({
                   borderColor: PRIMARY,
                   borderWidth: scale(1),
                   paddingHorizontal: scale(18),
-                  paddingVertical: scale(2),
+                  paddingVertical: scale(5),
                   borderRadius: scale(8),
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
                 onPressHandle={() =>
-                  selectPlan(plan.type, Number(plan.price), plan.batch)
+                  selectPlan(plan.type, Number(plan?.price), plan?.batch)
                 }
               />
             </View>
