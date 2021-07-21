@@ -8,5 +8,7 @@
     <!-- Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually -->
     <item name="android:windowBackground">@drawable/splashscreen</item>
     <!-- Customize your splash screen theme here -->
+    <item name="android:statusBarColor">@color/splashscreen_statusbar_color</item>
+    <item name="android:windowLightStatusBar">true</item>
   </style>
 </resources>

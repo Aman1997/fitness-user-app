@@ -166,7 +166,7 @@ export default function BookingsScreen() {
               setSessionSelected={setSessionSelected}
             />
             {isMembershipSelected ? (
-              membershipData && membershipData[0].id ? (
+              membershipData && membershipData[0]?.id ? (
                 <FlatList
                   data={membershipData}
                   keyExtractor={(_, index) => index.toString()}
@@ -196,7 +196,7 @@ export default function BookingsScreen() {
                   <Text>No membership yet!</Text>
                 </View>
               )
-            ) : bookings[0].id ? (
+            ) : bookings[0]?.id ? (
               <FlatList
                 data={bookings}
                 keyExtractor={(_, index) => index.toString()}

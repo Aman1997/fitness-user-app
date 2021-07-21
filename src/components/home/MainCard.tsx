@@ -9,7 +9,15 @@ interface IProps {
   imageUrl: Array<string>;
   name: string;
   ratings: string | null;
-  plans: Array<{id: string; price: string; type: number}>;
+  plans: Array<{
+    id: string;
+    type: number;
+    batch: number;
+    timeSlotTo: string;
+    timeSlotFrom: string;
+    price: string;
+    days: Array<number>;
+  }>;
   coords: coords;
   latitude: string;
   longitude: string;
