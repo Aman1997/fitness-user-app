@@ -21,11 +21,11 @@ interface IProps {
     timeSlotFrom: string;
     price: string;
   }>;
-  id: string;
-  name: string;
-  imageUrl: string;
-  ratings: number;
-  address: string;
+  // id: string;
+  // name: string;
+  // imageUrl: string;
+  // ratings: number;
+  // address: string;
   setType: (type: number) => void;
   onPress: () => void;
 }

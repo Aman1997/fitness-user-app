@@ -38,11 +38,11 @@ export default function FitnessProfileScreen() {
         />
         <StudioPlans
           plans={data.plans}
-          id={data.id}
-          name={data.name}
-          imageUrl={data.imageUrl[0]}
-          ratings={data.ratings}
-          address={data.address}
+          // id={data.id}
+          // name={data.name}
+          // imageUrl={data.imageUrl[0]}
+          // ratings={data.ratings}
+          // address={data.address}
           setType={setType}
           // @ts-ignore
           onPress={() => sheetRef.current.snapTo(0)}
@@ -70,6 +70,11 @@ export default function FitnessProfileScreen() {
               .filter((plan) => plan.type === type)
               // @ts-ignore
               .sort((a, b) => a.batch - b.batch)}
+            id={data.id}
+            name={data.name}
+            imageUrl={data.imageUrl[0]}
+            ratings={data.ratings}
+            address={data.address}
           />
         )}
       />
