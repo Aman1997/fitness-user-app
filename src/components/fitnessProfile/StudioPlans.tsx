@@ -1,15 +1,15 @@
-import {useNavigation} from "@react-navigation/native";
+// import {useNavigation} from "@react-navigation/native";
 import React from "react";
 import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
-import {useDispatch} from "react-redux";
+// import {useDispatch} from "react-redux";
 import {HEAD_TEXT} from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
-import {
-  bookingCalendarScreen,
-  confirmationScreen,
-} from "../../navigation/routes";
-import {addSelectedProfile} from "../../redux/actions/actionCreator";
+// import {
+//   bookingCalendarScreen,
+//   confirmationScreen,
+// } from "../../navigation/routes";
+// import {addSelectedProfile} from "../../redux/actions/actionCreator";
 import AppSeparator from "../common/AppSeparator";
 import PlanView from "./PlanView";
 
@@ -26,42 +26,42 @@ interface IProps {
   imageUrl: string;
   ratings: number;
   address: string;
-  setType: (type: number) => void
-  onPress: () => void
+  setType: (type: number) => void;
+  onPress: () => void;
 }
 
 export default function StudioPlans({
   plans,
-  id,
-  name,
-  imageUrl,
-  ratings,
-  address,
+  // id,
+  // name,
+  // imageUrl,
+  // ratings,
+  // address,
   setType,
   onPress,
 }: IProps) {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const selectPlan = (type: number, price: number) => {
-    dispatch(
-      addSelectedProfile({
-        id,
-        name,
-        imageUrl,
-        ratings,
-        address,
-        plan: type,
-        price,
-      }),
-    );
-    if (type === 0) {
-      navigation.navigate(bookingCalendarScreen);
-    } else {
-      navigation.navigate(confirmationScreen, {id});
-    }
-  };
+  // // const selectPlan = (type: number, price: number) => {
+  // //   dispatch(
+  // //     addSelectedProfile({
+  // //       id,
+  // //       name,
+  // //       imageUrl,
+  // //       ratings,
+  // //       address,
+  // //       plan: type,
+  // //       price,
+  // //     }),
+  // //   );
+  // //   if (type === 0) {
+  // //     navigation.navigate(bookingCalendarScreen);
+  // //   } else {
+  // //     navigation.navigate(confirmationScreen, {id});
+  // //   }
+  // // };
 
   return (
     <View style={styles.container}>
