@@ -62,8 +62,6 @@ export default function BookingCalendarScreen() {
         start={start}
         setStart={setStart}
         calendarData={calendarData}
-        setCalendarData={setCalendarData}
-        setSlot={setSlot}
       />
 
       <AppSeparator
