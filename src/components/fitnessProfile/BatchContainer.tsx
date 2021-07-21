@@ -11,6 +11,7 @@ import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
 import {formatTimeSlot} from "../../utils/dateTimeMethods";
 import {getPlanDays} from "../../utils/plansMethods";
 import AppButton from "../common/AppButton";
+import AppSeparator from "../common/AppSeparator";
 
 interface IProps {
   plans: Array<{
@@ -62,6 +63,16 @@ const BatchContainer = ({plans}: IProps) => {
               />
             </View>
           </View>
+          {plans.length > 1 && (
+            <AppSeparator
+              style={{
+                backgroundColor: "#C4C4C4",
+                height: scale(1),
+                marginTop: scale(15),
+                opacity: scale(0.5),
+              }}
+            />
+          )}
         </View>
       ))}
     </View>
