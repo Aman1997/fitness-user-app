@@ -1,5 +1,5 @@
-import React, {useCallback, useMemo, useRef, useState} from "react";
-import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
+import React, {useState} from "react";
+import {ScrollView} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import ImageContainer from "../components/fitnessProfile/ImageContainer";
 import DetailsView from "../components/fitnessProfile/DetailsView";
@@ -10,9 +10,7 @@ import {useRoute} from "@react-navigation/native";
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 import BatchContainer from "../components/fitnessProfile/BatchContainer";
-import {scale, ScaledSheet} from "react-native-size-matters";
-
-const Data = [{}, {}];
+import {scale} from "react-native-size-matters";
 
 export default function FitnessProfileScreen() {
   const [type, setType] = useState(0);
@@ -55,11 +53,25 @@ export default function FitnessProfileScreen() {
       <BottomSheet
         ref={sheetRef}
         snapPoints={
-          Data.length === 1 ? [scale(180), 0, 0] : [scale(350), scale(180), 0]
+          // @ts-ignore
+          data?.plans.filter((plan) => plan.type === type).length === 1
+            ? [scale(140), 0, 0]
+            : // @ts-ignore
+            data?.plans.filter((plan) => plan.type === type).length === 2
+            ? [scale(280), scale(140), 0]
+            : [scale(400), scale(140), 0]
         }
         initialSnap={2}
         borderRadius={scale(20)}
-        renderContent={() => <BatchContainer />}
+        renderContent={() => (
+          <BatchContainer
+            plans={data?.plans
+              // @ts-ignore
+              .filter((plan) => plan.type === type)
+              // @ts-ignore
+              .sort((a, b) => a.batch - b.batch)}
+          />
+        )}
       />
     </>
   );
