@@ -8,8 +8,17 @@ import {
   PRIMARY,
   WHITE,
 } from "../../assets/constants/colors";
+import { minPriceString } from "../../utils/plansMethods";
 
 interface IProps {
+  plans: Array<{
+    type: number;
+    batch: number;
+    timeSlotTo: string;
+    timeSlotFrom: string;
+    price: string;
+  }>;
+  type: number;
   planName: string;
   planPrice: string;
   isSelected: boolean;
@@ -17,7 +26,9 @@ interface IProps {
 }
 
 export default function MembershipPlan({
+  plans,
   planName,
+  type,
   planPrice,
   isSelected,
   onSelected,
@@ -82,15 +93,15 @@ export default function MembershipPlan({
               {planName} membership
             </Text>
           </View>
-          <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
+          <View style={{flexDirection: "row", justifyContent: "flex-end", marginTop: scale(8)}}>
             <Text
               style={{
                 color: "#5A5A5C",
-                fontWeight: "bold",
-                fontSize: scale(16),
+                fontWeight: "600",
+                fontSize: scale(14),
               }}
             >
-              {planPrice}
+              {minPriceString(plans, type)}
             </Text>
           </View>
         </View>

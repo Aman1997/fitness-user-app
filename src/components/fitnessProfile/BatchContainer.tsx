@@ -77,13 +77,14 @@ const BatchContainer = ({
           <View style={styles.mainRowContainer}>
             <View style={styles.detailsContainer}>
               <Text style={styles.daysText}>
-                {getPlanDays(plan?.days)?.join(", ")}
+                {getPlanDays(plan?.days).join(", ")}
               </Text>
-
-              <Text style={styles.timeSlotText}>
-                {formatTimeSlot(plan?.timeSlotFrom)} -{" "}
-                {formatTimeSlot(plan?.timeSlotTo)}
-              </Text>
+              {plan.type === 0 ? (
+                <Text style={styles.timeSlotText}>
+                  {formatTimeSlot(plan?.timeSlotFrom)} -{" "}
+                  {formatTimeSlot(plan?.timeSlotTo)}
+                </Text>
+              ) : null}
             </View>
 
             <View style={styles.bookingContainer}>

@@ -7,7 +7,6 @@ import LocationView from "../components/fitnessProfile/LocationView";
 import StudioPlans from "../components/fitnessProfile/StudioPlans";
 import ReviewsContainer from "../components/fitnessProfile/ReviewsContainer";
 import {useRoute} from "@react-navigation/native";
-import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 import BatchContainer from "../components/fitnessProfile/BatchContainer";
 import {scale} from "react-native-size-matters";
@@ -38,11 +37,6 @@ export default function FitnessProfileScreen() {
         />
         <StudioPlans
           plans={data.plans}
-          // id={data.id}
-          // name={data.name}
-          // imageUrl={data.imageUrl[0]}
-          // ratings={data.ratings}
-          // address={data.address}
           setType={setType}
           // @ts-ignore
           onPress={() => sheetRef.current.snapTo(0)}
