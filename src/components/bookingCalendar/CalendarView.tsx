@@ -15,16 +15,6 @@ import {ICONS, PRIMARY, WHITE} from "../../assets/constants/colors";
 import {Dispatch} from "react";
 import {SetStateAction} from "react";
 
-const availableSlots = [
-  "07:00",
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "14:00",
-  "18:00",
-];
 
 const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
 
@@ -32,23 +22,19 @@ interface IProps {
   start: Date;
   setStart: Dispatch<SetStateAction<Date>>;
   calendarData: Array<Array<Date>>;
-  setCalendarData: (calendarData: Array<Array<Date>>) => void;
-  setSlot: (slot: Array<Array<string>>) => void;
 }
 
 export default function CalendarView({
   start,
   setStart,
   calendarData,
-  setCalendarData,
-  setSlot,
 }: IProps) {
-  useEffect(() => {
-    const generateMonth = takeMonth(start);
-    setCalendarData(generateMonth());
-    const tempSlots = generateTimeSlots(availableSlots);
-    setSlot(tempSlots);
-  }, [start]);
+  // useEffect(() => {
+  //   const generateMonth = takeMonth(start);
+  //   setCalendarData(generateMonth());
+  //   const tempSlots = generateTimeSlots(availableSlots);
+  //   setSlot(tempSlots);
+  // }, [start]);
 
   return (
     <View>

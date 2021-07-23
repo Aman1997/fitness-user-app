@@ -22,10 +22,6 @@ export interface IFitnessProfilesState {
       price: string;
       days: Array<number>;
     }>;
-    availableSlots: Array<{
-      day: number;
-      timeSlots: Array<string>;
-    }>;
   }>;
 }
 
@@ -44,12 +40,6 @@ export const fitnessProfilesInitialState = {
       trainerImageUrl: "",
       tags: [""],
       plans: [],
-      availableSlots: [
-        {
-          day: 0,
-          timeSlots: [],
-        },
-      ],
     },
   ],
 };

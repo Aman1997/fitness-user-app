@@ -45,6 +45,7 @@ export default function SocialSignIn({
             });
             if (data.status === "Success") {
               setUserId(authUser.attributes.email);
+              setLoading(false);
               navigation.reset({
                 index: 0,
                 routes: [

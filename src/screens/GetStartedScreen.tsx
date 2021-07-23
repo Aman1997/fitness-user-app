@@ -75,23 +75,30 @@ export default function GetStartedScreen() {
               />
             </View>
           </TouchableWithoutFeedback>
-          <AppButton
-            text="Signup"
-            containerStyle={{
-              height: scale(50),
-              width: "45%",
-              backgroundColor: SECONDARY,
-              borderRadius: scale(25),
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            textStyle={{
-              color: "#fff",
-              fontSize: scale(16),
-              fontWeight: "500",
-            }}
-            onPressHandle={() => navigation.navigate(signUpScreen)}
-          />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(signUpScreen)}
+          >
+            <View
+              style={{
+                height: scale(50),
+                width: "45%",
+                backgroundColor: SECONDARY,
+                borderRadius: scale(25),
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#fff",
+                  fontSize: scale(16),
+                  fontWeight: "500",
+                }}
+              >
+                Signup
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     </ScrollView>

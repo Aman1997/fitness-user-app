@@ -151,6 +151,8 @@ query CURRENT_USER_BOOKINGS($email: String!) {
                 id
                 price
                 type
+                batch
+                days
             }
         }
         }

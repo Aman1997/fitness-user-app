@@ -37,10 +37,6 @@ export default function PlanView({
     onPress();
   };
 
-  // const getPrice = (type: number): number => {
-  //   return plans.filter((plan) => plan.type === type)[0]?.price;
-  // };
-
   return (
     <View style={styles.individualPlanContainer}>
       <View>
@@ -96,7 +92,7 @@ export default function PlanView({
 
 const styles = ScaledSheet.create({
   textBody: {
-    fontSize: "14@s",
+    fontSize: "13@s",
     marginVertical: "10@s",
     color: CONTENT,
   },

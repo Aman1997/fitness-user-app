@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth";
 import {useNavigation} from "@react-navigation/core";
 import {Formik} from "formik";
 import React, {useState} from "react";
-import {Alert, ScrollView, Text, View} from "react-native";
+import {Alert, Platform, ScrollView, Text, View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT} from "../assets/constants/colors";
@@ -121,7 +121,7 @@ export default function SignUpScreen() {
                 )}
               </Formik>
 
-              <SocialSignIn optionText="Or continue with" />
+              <SocialSignIn optionText="Or continue with" setLoading={setLoading} navigation={navigation} />
             </View>
 
             <View style={styles.privacyPolicyContainer}>
@@ -146,7 +146,7 @@ export default function SignUpScreen() {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    marginTop: "20@s",
+    marginTop: Platform.OS === 'android' ? "40@s" : "20@s",
   },
   inputContainer: {
     marginVertical: "20@s",

@@ -33,6 +33,7 @@ export default function MembershipDetailsScreen() {
   const {data} = route.params;
   console.log(data);
 
+  const [type, setType] = useState(1);
   const [isPlanSelected, setPlanSelected] = useState({
     monthly: false,
     quarterly: false,
@@ -87,43 +88,55 @@ export default function MembershipDetailsScreen() {
 
           {data.monthly ? (
             <MembershipPlan
+              plans={data.plans}
+              type={1}
               planName="1 month"
               planPrice={`₹ ${getPlanPrice(1, data.plans)}`}
               isSelected={isPlanSelected.monthly}
-              onSelected={(planType) =>
-                handleRadioClick(planType, setPlanSelected)
-              }
+              onSelected={(planType) => {
+                handleRadioClick(planType, setPlanSelected);
+                setType(1);
+              }}
             />
           ) : null}
           {data.quarterly ? (
             <MembershipPlan
+              plans={data.plans}
+              type={2}
               planName="3 months"
               planPrice={`₹ ${getPlanPrice(2, data.plans)}`}
               isSelected={isPlanSelected.quarterly}
-              onSelected={(planType) =>
-                handleRadioClick(planType, setPlanSelected)
-              }
+              onSelected={(planType) => {
+                handleRadioClick(planType, setPlanSelected);
+                setType(2);
+              }}
             />
           ) : null}
 
           {data.halfYearly ? (
             <MembershipPlan
+              plans={data.plans}
+              type={3}
               planName="6 months"
               planPrice={`₹ ${getPlanPrice(3, data.plans)}`}
               isSelected={isPlanSelected.halfYearly}
-              onSelected={(planType) =>
-                handleRadioClick(planType, setPlanSelected)
-              }
+              onSelected={(planType) => {
+                handleRadioClick(planType, setPlanSelected);
+                setType(3);
+              }}
             />
           ) : null}
           {data.yearly ? (
             <MembershipPlan
+              plans={data.plans}
+              type={4}
               planName="12 months"
               planPrice={`₹ ${getPlanPrice(4, data.plans)}`}
               isSelected={isPlanSelected.yearly}
-              onSelected={(planType) =>
-                handleRadioClick(planType, setPlanSelected)
-              }
+              onSelected={(planType) => {
+                handleRadioClick(planType, setPlanSelected);
+                setType(4);
+              }}
             />
           ) : null}
         </ScrollView>
@@ -140,7 +153,7 @@ export default function MembershipDetailsScreen() {
             text="Renew Membership"
             textStyle={{
               color: WHITE,
-              fontSize: scale(16),
+              fontSize: scale(15),
               fontWeight: "500",
             }}
             containerStyle={{
@@ -152,33 +165,35 @@ export default function MembershipDetailsScreen() {
               borderRadius: scale(24),
               marginBottom: scale(25),
             }}
-            onPressHandle={() =>
-              renewMemberships(dispatch, data, isPlanSelected, navigation)
+            onPressHandle={
+              // @ts-ignore
+              () => sheetRef.current.snapTo(0)
+              // renewMemberships(dispatch, data, isPlanSelected, navigation)
             }
           />
         </View>
       </View>
-
       <BottomSheet
         ref={sheetRef}
         snapPoints={
           // @ts-ignore
-          // data?.plans.filter((plan) => plan.type === type).length === 1
-          //   ? [scale(140), 0, 0]
-          //   : // @ts-ignore
-          //   data?.plans.filter((plan) => plan.type === type).length === 2
-          //   ? [scale(280), scale(140), 0]
-          [scale(400), scale(140), 0]
+          data?.plans.filter((plan) => plan.type === type).length === 1
+            ? [scale(200), 0, 0]
+            : // @ts-ignore
+            data?.plans.filter((plan) => plan.type === type).length === 2
+            ? [scale(280), scale(260), 0]
+            : [scale(400), scale(260), 0]
         }
         initialSnap={2}
         borderRadius={scale(20)}
+        enabledContentTapInteraction={false}
         renderContent={() => (
           <BatchContainer
-            plans={data?.plans?.sort((a, b) => a.type - b.type)}
-            // // @ts-ignore
-            // .filter((plan) => plan.type === type)
-            // @ts-ignore
-
+            plans={data?.plans
+              // @ts-ignore
+              .filter((plan) => plan.type === type)
+              // @ts-ignore
+              ?.sort((a, b) => a.batch - b.batch)}
             id={data.id}
             name={data.name}
             imageUrl={data.imageUrl[0]}

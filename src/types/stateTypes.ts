@@ -12,6 +12,8 @@ export interface IMembershipData {
       id?: string;
       price?: string;
       type?: number;
+      batch?: number;
+      days?: Array<number>;
     }>;
   };
 }

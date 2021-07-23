@@ -52,7 +52,10 @@ export const generateTimeSlots = (availableSlots: Array<string>) => {
 };
 
 // checking if time slot has been selected
-export const isSameTimeSlot = (selectedTimeSlot: string | null, timeSlot: string) => {
+export const isSameTimeSlot = (
+  selectedTimeSlot: string | null,
+  timeSlot: string,
+) => {
   return selectedTimeSlot === timeSlot;
 };
 
@@ -62,4 +65,24 @@ export const isBeforeTimeSlot = (timeSlot: string, start: Date) => {
     new Date().getHours() >= parseInt(timeSlot.split(":")[0]) &&
     new Date() > start
   );
+};
+
+export const getTimeSlotArray = (
+  starting: string,
+  ending: string,
+): Array<string> => {
+  const startTime = Number(starting.split(":")[0]);
+  const endTime = Number(ending.split(":")[0]);
+
+  let reqdArr = [];
+
+  for (let i = 0; i < endTime - startTime - 1; i++) {
+    if (startTime + i < 10) {
+      reqdArr.push(`0${startTime + i}:00`);
+    } else {
+      reqdArr.push(`${startTime + i}:00`);
+    }
+  }
+
+  return reqdArr;
 };

@@ -41,7 +41,6 @@ export const handleRadioClick = (
     }>
   >,
 ) => {
-  console.log("clicked");
   if (data === "1 month") {
     setPlanSelected({
       monthly: true,

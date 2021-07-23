@@ -77,7 +77,7 @@ const styles = ScaledSheet.create({
     color: HEAD_TEXT,
   },
   appSeparatorStyle: {
-    height: "6@s",
+    height: "4@s",
     backgroundColor: OFF_WHITE,
     marginTop: "20@s",
   },
