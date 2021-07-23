@@ -43,8 +43,8 @@ export default function BookingCalendarScreen() {
     setCalendarData(generateMonth());
     const tempSlots = generateTimeSlots(
       getTimeSlotArray(
-        fitnessProfilePlans.filter((item) => item.type === 1)[0]?.timeSlotFrom,
-        fitnessProfilePlans.filter((item) => item.type === 1)[0]?.timeSlotTo,
+        fitnessProfilePlans.filter((item) => item.type === 0)[0]?.timeSlotFrom,
+        fitnessProfilePlans.filter((item) => item.type === 0)[0]?.timeSlotTo,
       ),
     );
     setSlot(tempSlots);
@@ -55,6 +55,8 @@ export default function BookingCalendarScreen() {
     dispatch(addSelectedProfile({...profile, timeSlot: time, date: start}));
     navigation.replace(confirmationScreen);
   };
+
+  console.log("plans", fitnessProfilePlans.filter((item) => item.type === 0)[0])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -80,23 +82,28 @@ export default function BookingCalendarScreen() {
       </Text> */}
 
       <View style={{flex: 1, justifyContent: "flex-end"}}>
-        <AppButton
-          text="Book Session"
-          textStyle={{
-            color: WHITE,
-            fontWeight: "500",
-            fontSize: scale(16),
-          }}
-          containerStyle={{
-            alignItems: "center",
-            padding: scale(10),
+        <View
+          style={{
             borderColor: WHITE,
             borderRadius: scale(20),
             borderWidth: scale(1),
+            padding: scale(10),
             marginVertical: scale(10),
           }}
-          onPressHandle={proceedToConfirmation}
-        />
+        >
+          <AppButton
+            text="Book Session"
+            textStyle={{
+              color: WHITE,
+              fontWeight: "500",
+              fontSize: scale(16),
+            }}
+            containerStyle={{
+              alignItems: "center",
+            }}
+            onPressHandle={proceedToConfirmation}
+          />
+        </View>
         <AppButton
           text="Cancel"
           textStyle={{

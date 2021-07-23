@@ -44,6 +44,8 @@ export default function BookingsScreen() {
     }
   }, [user]);
 
+  console.log("bookings", bookings)
+
   return (
     <>
       {isLoading ? (
@@ -90,7 +92,7 @@ export default function BookingsScreen() {
                   <Text>No membership yet!</Text>
                 </View>
               )
-            ) : bookings[0]?.id ? (
+            ) : bookings[0]?.id && bookings[0]?.fitnessService?.id ? (
               <FlatList
                 data={bookings}
                 keyExtractor={(_, index) => index.toString()}

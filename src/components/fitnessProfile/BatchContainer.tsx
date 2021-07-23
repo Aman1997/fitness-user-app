@@ -77,7 +77,7 @@ const BatchContainer = ({
           <View style={styles.mainRowContainer}>
             <View style={styles.detailsContainer}>
               <Text style={styles.daysText}>
-                {getPlanDays(plan?.days).join(", ")}
+                {getPlanDays(plan?.days)?.join(", ")}
               </Text>
               {plan.type === 0 ? (
                 <Text style={styles.timeSlotText}>
@@ -90,26 +90,31 @@ const BatchContainer = ({
             <View style={styles.bookingContainer}>
               <Text style={styles.priceText}>₹ {plan.price}</Text>
 
-              <AppButton
-                text="Book"
-                textStyle={{
-                  color: PRIMARY,
-                  fontSize: scale(14),
-                  fontWeight: "500",
-                }}
-                containerStyle={{
+              <View
+                style={{
                   borderColor: PRIMARY,
                   borderWidth: scale(1),
-                  paddingHorizontal: scale(18),
-                  paddingVertical: scale(5),
                   borderRadius: scale(8),
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
-                onPressHandle={() =>
-                  selectPlan(plan.type, Number(plan?.price), plan?.batch)
-                }
-              />
+              >
+                <AppButton
+                  text="Book"
+                  textStyle={{
+                    color: PRIMARY,
+                    fontSize: scale(14),
+                    fontWeight: "500",
+                  }}
+                  containerStyle={{
+                    paddingHorizontal: scale(18),
+                    paddingVertical: scale(5),
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onPressHandle={() =>
+                    selectPlan(plan.type, Number(plan?.price), plan?.batch)
+                  }
+                />
+              </View>
             </View>
           </View>
           {plans.length > 1 && (

@@ -89,7 +89,10 @@ export const continueToPay = async (
       })
       .catch((error: any) => {
         // handle failure
-        Alert.alert("Payment Error", `${error.description}`);
+        Alert.alert(
+          "Payment Error",
+          `${JSON.parse(error.description).error.description}`,
+        );
       });
   } catch (error) {
     sentryError(error);

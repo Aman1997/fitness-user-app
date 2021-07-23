@@ -11,7 +11,6 @@ import {
   fitnessProfileScreen,
   homeScreen,
   membershipDetailsScreen,
-  paymentScreen,
   postLogoutScreen,
   profileScreen,
   reviewsDetailsScreen,

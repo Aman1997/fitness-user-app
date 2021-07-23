@@ -76,11 +76,19 @@ export const getTimeSlotArray = (
 
   let reqdArr = [];
 
-  for (let i = 0; i < endTime - startTime - 1; i++) {
-    if (startTime + i < 10) {
-      reqdArr.push(`0${startTime + i}:00`);
+  if (startTime === endTime - 1) {
+    if (startTime < 10) {
+      reqdArr.push(`0${startTime}:00`);
     } else {
-      reqdArr.push(`${startTime + i}:00`);
+      reqdArr.push(`${startTime}:00`);
+    }
+  } else {
+    for (let i = 0; i < endTime - startTime - 1; i++) {
+      if (startTime + i < 10) {
+        reqdArr.push(`0${startTime + i}:00`);
+      } else {
+        reqdArr.push(`${startTime + i}:00`);
+      }
     }
   }
 

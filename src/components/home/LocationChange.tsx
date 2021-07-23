@@ -4,7 +4,6 @@ import {Entypo} from "@expo/vector-icons";
 import {RadioButton} from "react-native-paper";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {ICONS, PRIMARY} from "../../assets/constants/colors";
-import {capitalize} from "../../utils/capitalize";
 import {fetchAvailableCities} from "../../helpers/fetchAvailableCities";
 import {useNavigation} from "@react-navigation/native";
 
@@ -56,10 +55,10 @@ export default function LocationChange({onCancel, city, setUserCity}: IProps) {
               keyExtractor={(_, index) => index.toString()}
               renderItem={({item, index}) => (
                 <RadioButton.Item
-                  label={capitalize(item)}
+                  label={item}
                   value={item}
                   color={PRIMARY}
-                  labelStyle={{color: ICONS}}
+                  labelStyle={{color: ICONS, textTransform : "capitalize"}}
                 />
               )}
               showsVerticalScrollIndicator={false}
