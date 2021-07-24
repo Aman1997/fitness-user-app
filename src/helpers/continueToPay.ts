@@ -4,7 +4,7 @@ import Config from "react-native-config";
 import {getMembershipType} from "../utils/confirmationScreenMethods";
 import RazorpayCheckout from "react-native-razorpay";
 import {NavigationProp} from "@react-navigation/native";
-import {Alert} from "react-native";
+import {Alert, Platform} from "react-native";
 import {PRIMARY} from "../assets/constants/colors";
 import {bookMembership} from "./bookMembership";
 import {Dispatch} from "react";
@@ -45,9 +45,9 @@ export const continueToPay = async (
             new Date(date as Date),
             "dd MMMM yyyy",
           )}`,
-      image: "https://i.imgur.com/3g7nmJC.png", // Change to app image
+      image: "https://of-public-assets.s3.ap-south-1.amazonaws.com/icon.png", // Change to app image
       currency: "INR",
-      key: __DEV__ ? Config.RAZORPAY_TEST_KEY : Config.RAZORPAY_PROD_KEY,
+      key: Config.RAZORPAY_KEY,
       amount: amount.toString(),
       name: "Orbit Fitness",
       order_id: orderId.data.orderId,
@@ -91,7 +91,11 @@ export const continueToPay = async (
         // handle failure
         Alert.alert(
           "Payment Error",
-          `${JSON.parse(error.description).error.description}`,
+          `${
+            Platform.OS === "android"
+              ? JSON.parse(error.description).error.description
+              : error.description
+          }`,
         );
       });
   } catch (error) {

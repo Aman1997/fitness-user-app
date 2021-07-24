@@ -14,6 +14,8 @@ import {store} from "./src/redux/store";
 import {sentryInit} from "./src/utils/sentrySetup";
 import urlOpener from "./src/utils/urlOpener";
 import * as SplashScreen from "expo-splash-screen";
+import {setJSExceptionHandler} from "react-native-exception-handler";
+import { uncaughtExceptionHandler } from "./src/utils/uncaughtExceptionHandler";
 
 // configuring amplify
 Amplify.configure({
@@ -28,6 +30,9 @@ Amplify.configure({
 
 // configuring sentry
 sentryInit();
+
+// catching uncaught errors
+setJSExceptionHandler(uncaughtExceptionHandler);
 
 export default function App() {
   const [user, updateUser] = useState(null);

@@ -57,4 +57,4 @@ buck-out/
 web-build/
 
 # env files
-.env
+.env*

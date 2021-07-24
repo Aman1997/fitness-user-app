@@ -56,8 +56,6 @@ export default function BookingCalendarScreen() {
     navigation.replace(confirmationScreen);
   };
 
-  console.log("plans", fitnessProfilePlans.filter((item) => item.type === 0)[0])
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <CalendarView

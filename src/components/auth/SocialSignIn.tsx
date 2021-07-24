@@ -10,11 +10,9 @@ import Config from "react-native-config";
 import {fetchJWT} from "../../helpers/fetchJWT";
 import axios from "axios";
 import setUserId from "../../utils/setUserId";
-import {NavigationProp, useNavigation} from "@react-navigation/native";
+import {NavigationProp} from "@react-navigation/native";
 import {appHomeScreen, errorScreen} from "../../navigation/routes";
 import {sentryError} from "../../utils/sentrySetup";
-import {useState} from "react";
-import LoadingIndicator from "../common/LoadingIndicator";
 
 interface IProps {
   optionText: string;
@@ -27,12 +25,16 @@ export default function SocialSignIn({
   setLoading,
   navigation,
 }: IProps) {
+  const googleSignIn = useCallback(() => {
+    setLoading(true);
+    Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google});
+  }, []);
+
   useEffect(() => {
     try {
       Hub.listen("auth", async ({payload: {event, data}}) => {
         switch (event) {
           case "signIn":
-            setLoading(true);
             const authUser = await Auth.currentAuthenticatedUser();
             const params = {
               email: authUser.attributes.email,
@@ -55,10 +57,10 @@ export default function SocialSignIn({
                 ],
               });
             }
-            setLoading(false);
             break;
           case "signIn_failure":
           case "cognitoHostedUI_failure":
+            setLoading(false);
             console.log("Sign in failure", data);
             throw new Error(data);
         }
@@ -98,13 +100,9 @@ export default function SocialSignIn({
           name="google"
           size={scale(24)}
           color="green"
-          onPress={() => {
-            Auth.federatedSignIn({
-              provider: CognitoHostedUIIdentityProvider.Google,
-            });
-          }}
+          onPress={googleSignIn}
         />
-        <FontAwesome name="facebook-official" size={scale(24)} color="blue" />
+        {/* <FontAwesome name="facebook-official" size={scale(24)} color="blue" /> */}
       </View>
     </View>
   );
