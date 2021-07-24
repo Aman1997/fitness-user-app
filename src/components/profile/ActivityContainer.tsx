@@ -55,13 +55,18 @@ const ActivityContainer = () => {
   return (
     <View>
       <Text style={styles.headText}>Activity</Text>
-      <View style={styles.activityContainer}>
-        <FlatList
-          data={Activities}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <Activity content={item.content} />}
-        />
-      </View>
+
+      {true ? (
+        <View style={{marginVertical: scale(20), alignItems: 'center'}}>
+          <Text style={{ color: CONTENT, fontWeight: 'bold'}}>Your activities will be shown here</Text>
+        </View>
+      ) : (
+        <View style={styles.activityContainer}>
+          {Activities.map((activity, index) => {
+            <Activity content={activity.content} key={index} />;
+          })}
+        </View>
+      )}
     </View>
   );
 };
