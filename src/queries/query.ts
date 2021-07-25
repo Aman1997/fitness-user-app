@@ -28,12 +28,6 @@ export const LIST_FITNESS_PARTNERS = `
                     days
                 }
             }
-            availableSlots {
-                items {
-                    day
-                    timeSlots
-                }
-            }
           }
           nextToken
         }
@@ -50,6 +44,20 @@ export const GET_USER_DATA = `
         phoneNumber
         }
     }
+`;
+
+export const GET_USER_ACTIVITIES = `
+query GET_USER_ACTIVITIES($email: String!) {
+  getUser(email: $email) {
+    userActivity(limit: 10, sortDirection: DESC) {
+      items {
+        id
+        metadata
+        type
+      }
+    }
+  }
+}
 `;
 
 export const SEARCH_FITNESS_PARTNER_BY_NAME = `
@@ -80,12 +88,6 @@ export const SEARCH_FITNESS_PARTNER_BY_NAME = `
                 timeSlotFrom
                 price
                 days
-            }
-        }
-        availableSlots {
-            items {
-                day
-                timeSlots
             }
         }
       }

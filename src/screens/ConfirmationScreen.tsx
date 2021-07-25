@@ -89,7 +89,7 @@ export default function ConfirmationScreen() {
             <PriceDetails
               type={profile.plan as number}
               isMembership={profile.plan !== 0}
-              price={profile.price as number}
+              price={profile.price as string}
             />
           </ScrollView>
           <View style={{backgroundColor: WHITE}}>
@@ -98,13 +98,14 @@ export default function ConfirmationScreen() {
                 setLoading(true);
                 continueToPay(
                   calculateTotal(
-                    profile.price as number,
-                    calculateSGST(profile.price as number),
-                    calculateCGST(profile.price as number),
+                    Number(profile.price),
+                    Number(calculateSGST(Number(profile.price))),
+                    Number(calculateCGST(Number(profile.price))),
                   ),
                   profile.plan !== 0,
                   profile.date,
                   profile.plan as number,
+                  profile.batch as number,
                   profile.name as string,
                   user.email,
                   user.phoneNumber,
@@ -113,6 +114,7 @@ export default function ConfirmationScreen() {
                   profile.timeSlot as string,
                   setLoading,
                   setIsCompleted,
+                  profile.isMembershipRenew as boolean,
                 );
               }}
             >

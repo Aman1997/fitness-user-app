@@ -6,6 +6,7 @@ import {WHITE} from "../../assets/constants/colors";
 import {IBookingState} from "../../redux/reducers/bookingsReducer";
 import {IMembershipData} from "../../types/stateTypes";
 import {checkMembershipStatus} from "../../utils/checkMembershipStatus";
+import { formatTimeSlot } from "../../utils/dateTimeMethods";
 
 interface IProps {
   data: IMembershipData | IBookingState["bookings"][0];
@@ -40,7 +41,7 @@ export default function BookingCard({
               : // @ts-ignore
                 `${format(new Date(data.bookingDate), "dd MMMM yyyy")}, ${
                   // @ts-ignore
-                  data.timeSlot
+                  formatTimeSlot(data.timeSlot)
                 }`}
           </Text>
           <View style={{flex: 1, justifyContent: "flex-end"}}>

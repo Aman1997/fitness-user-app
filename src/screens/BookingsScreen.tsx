@@ -44,8 +44,6 @@ export default function BookingsScreen() {
     }
   }, [user]);
 
-  console.log("bookings", bookings)
-
   return (
     <>
       {isLoading ? (

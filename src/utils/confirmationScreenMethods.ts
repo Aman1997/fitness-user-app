@@ -5,12 +5,12 @@ export const getMembershipType = (type: number) => {
   if (type === 4) return "12 months";
 };
 
-export const calculateCGST = (amount: number): number => {
-  return amount * 0.1;
+export const calculateCGST = (amount: number): string => {
+  return (amount * 0.1).toFixed(2);
 };
 
-export const calculateSGST = (amount: number): number => {
-  return amount * 0.1;
+export const calculateSGST = (amount: number): string => {
+  return (amount * 0.1).toFixed(2);
 };
 
 export const calculateTotal = (

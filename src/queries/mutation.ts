@@ -49,3 +49,11 @@ export const CREATE_MEMBERSHIP = `
     }
   
 `;
+
+export const LOG_USER_ACITIVITY = `
+    mutation LOG_USER_ACITIVITY($metadata: String!, $type: String!, $userEmail: String!) {
+        createUserActivities(input: {metadata: $metadata, type: $type, userEmail: $userEmail}) {
+        id
+        }
+    }
+`;

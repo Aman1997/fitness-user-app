@@ -49,11 +49,11 @@ export default function HomeScreen() {
     (async () => {
       // requesting permission to location
       await requestLocationPermission();
-      let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
-      });
-
       try {
+        let location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        });
+
         const id = await getUserId();
         const userData = await API.graphql(
           graphqlOperation(GET_USER_DATA, {email: id}),
@@ -78,7 +78,6 @@ export default function HomeScreen() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         });
-
       } catch (error) {
         sentryError(error);
         setLoading(false);
@@ -103,7 +102,7 @@ export default function HomeScreen() {
             navigation,
           );
         } else {
-          setLoading(false)
+          setLoading(false);
           setIsServiceAvailable(false);
         }
       }

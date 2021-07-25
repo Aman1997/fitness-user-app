@@ -36,7 +36,7 @@ export default function BookingCalendarScreen() {
 
   const fitnessProfilePlans = useSelector(
     (state: {fitnessProfiles: IFitnessProfilesState}) => state.fitnessProfiles,
-  ).profiles.filter((item) => item.id === profile.id)[0].plans;
+  ).profiles.filter((item) => item.id === profile.id)[0]?.plans;
 
   useEffect(() => {
     const generateMonth = takeMonth(start);

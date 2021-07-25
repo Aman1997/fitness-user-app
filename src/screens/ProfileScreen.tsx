@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
 import {ScaledSheet} from "react-native-size-matters";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import AboutContainer from "../components/profile/AboutContainer";
 import ActivityContainer from "../components/profile/ActivityContainer";
@@ -15,11 +15,14 @@ import {fetchJWT} from "../helpers/fetchJWT";
 import {sentryError} from "../utils/sentrySetup";
 import {useNavigation} from "@react-navigation/native";
 import {errorScreen} from "../navigation/routes";
+import {fetchUserActivities} from "../helpers/fetchUserActivities";
 
 const ProfileScreen = () => {
   const [sessions, setSessions] = useState("0");
   const [memberships, setMemberships] = useState("0");
   const [isLoading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
 
   const user = useSelector((state: {user: IUserState}) => state.user);
 
@@ -38,6 +41,7 @@ const ProfileScreen = () => {
           );
           setSessions(apiRes.data.bookings.toString());
           setMemberships(apiRes.data.memberships.toString());
+          await fetchUserActivities(user.email, user, dispatch);
           setLoading(false);
         }
       } catch (error) {
@@ -46,7 +50,7 @@ const ProfileScreen = () => {
         navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
-  }, [user]);
+  }, []);
 
   return (
     <>
@@ -69,7 +73,7 @@ const ProfileScreen = () => {
             <AboutContainer sessions={sessions} memberships={memberships} />
 
             {/* Activity container */}
-            <ActivityContainer />
+            <ActivityContainer activities={user.activities} />
           </ScrollView>
         </View>
       )}

@@ -45,7 +45,7 @@ export default function BookingsDetailsContainer({data}: IProps) {
         <View style={{paddingHorizontal: scale(12)}}>
           <Text style={styles.pin}>PIN: {data.pin}</Text>
           <Text style={styles.pinText}>
-            Share the pin with the fitness partner.
+            Share the pin with the fitness partner
           </Text>
         </View>
       </View>
@@ -93,7 +93,7 @@ const styles = ScaledSheet.create({
     borderRadius: "23@s",
   },
   gymPOCText: {
-    paddingHorizontal: "12@s",
+    paddingHorizontal: "15@s",
     fontSize: "14@s",
     color: CONTENT,
   },
@@ -114,7 +114,7 @@ const styles = ScaledSheet.create({
     color: CONTENT,
   },
   pinText: {
-    fontSize: "14@s",
+    fontSize: "13@s",
     color: PRIMARY,
     paddingTop: "5@s",
   },

@@ -8,6 +8,7 @@ import {useNavigation} from "@react-navigation/native";
 import {format} from "date-fns";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import AppImageOverlay from "../common/AppImageOverlay";
+import {formatTimeSlot} from "../../utils/formatTimeSlot";
 
 interface IProps {
   data: {
@@ -72,7 +73,7 @@ export default function FitnessServiceImageView({data}: IProps) {
           ) : (
             <Text style={styles.date}>
               {format(new Date(data.bookingDate as string), "dd MMMM yyyy")},{" "}
-              {data.timeSlot}
+              {formatTimeSlot(data.timeSlot as string)}
             </Text>
           )}
         </View>

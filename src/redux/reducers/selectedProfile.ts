@@ -7,10 +7,11 @@ export interface ISelectedProfileState {
   address?: string;
   plan?: number;
   batch?: number;
-  price?: number;
+  price?: string;
   imageUrl?: string;
   timeSlot?: string;
   date?: Date;
+  isMembershipRenew?: boolean
 }
 
 export const selectedProfileState = {
@@ -19,11 +20,12 @@ export const selectedProfileState = {
   ratings: undefined,
   address: "",
   plan: 0,
-  price: 0,
+  price: "",
   imageUrl: "",
   batch: 0,
   timeSlot: "",
   date: new Date(),
+  isMembershipRenew: false
 };
 
 export const selectedProfileReducer = (
@@ -43,6 +45,7 @@ export const selectedProfileReducer = (
         batch: action.payload.batch,
         date: action.payload.date,
         timeSlot: action.payload.timeSlot,
+        isMembershipRenew: action.payload.isMembershipRenew
       };
     default:
       return state;

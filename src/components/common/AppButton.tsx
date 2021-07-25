@@ -16,8 +16,8 @@ export default function AppButton({
   onPressHandle,
 }: IProps) {
   return (
-    <TouchableWithoutFeedback onPress={onPressHandle} containerStyle={containerStyle}>
-      <View>
+    <TouchableWithoutFeedback onPress={onPressHandle}>
+      <View style={containerStyle}>
         <Text style={textStyle}>{text}</Text>
       </View>
     </TouchableWithoutFeedback>

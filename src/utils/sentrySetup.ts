@@ -10,8 +10,8 @@ export const sentryInit = () => {
   });
 };
 
-export const sentryError = (error: Error) => {
+export const sentryError = (error: any) => {
   if (__DEV__) {
     return console.log(error);
-  } else Sentry.captureException(error);
+  } else Sentry.captureException(JSON.stringify(error));
 };

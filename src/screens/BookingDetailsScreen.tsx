@@ -14,6 +14,7 @@ import {cancelBooking} from "../helpers/cancelBooking";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {useDispatch, useSelector} from "react-redux";
 import {IBookingState} from "../redux/reducers/bookingsReducer";
+import { IUserState } from "../redux/reducers/userReducer";
 
 export default function BookingDetailsScreen() {
   const [isLoading, setLoading] = useState(false);
@@ -24,6 +25,8 @@ export default function BookingDetailsScreen() {
   const bookings = useSelector(
     (state: {bookings: IBookingState}) => state.bookings,
   ).bookings;
+
+  const user = useSelector((state: {user: IUserState}) => state.user);
 
   const route = useRoute();
 
@@ -53,7 +56,7 @@ export default function BookingDetailsScreen() {
 
           <BookingsDetailsContainer
             data={{
-              trainerName: data.trainerName,
+              trainerName: data.trainerName || data.name,
               trainerImageUrl: data.trainerImageUrl,
               pin: data.pin,
               longitude: data.longitude,
@@ -104,10 +107,14 @@ export default function BookingDetailsScreen() {
                           setLoading(true);
                           cancelBooking(
                             data.id,
+                            data.name,
+                            data.bookingDate,
+                            data.timeSlot,
                             setLoading,
                             navigation,
                             dispatch,
                             bookings,
+                            user.email
                           );
                         },
                       },
