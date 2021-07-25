@@ -56,7 +56,7 @@ export default function BookingDetailsScreen() {
 
           <BookingsDetailsContainer
             data={{
-              trainerName: data.trainerName,
+              trainerName: data.trainerName || data.name,
               trainerImageUrl: data.trainerImageUrl,
               pin: data.pin,
               longitude: data.longitude,

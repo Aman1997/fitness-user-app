@@ -7,7 +7,7 @@ export interface ISelectedProfileState {
   address?: string;
   plan?: number;
   batch?: number;
-  price?: number;
+  price?: string;
   imageUrl?: string;
   timeSlot?: string;
   date?: Date;
@@ -20,7 +20,7 @@ export const selectedProfileState = {
   ratings: undefined,
   address: "",
   plan: 0,
-  price: 0,
+  price: "",
   imageUrl: "",
   batch: 0,
   timeSlot: "",

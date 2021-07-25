@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {CONTENT, HEAD_TEXT} from "../../assets/constants/colors";
 import {APP_MARGIN_HORIZONTAL} from "../../assets/constants/styles";
@@ -13,7 +13,7 @@ import {
 interface IProps {
   type: number;
   isMembership: boolean;
-  price: number;
+  price: string;
 }
 
 export default function PriceDetails({type, isMembership, price}: IProps) {
@@ -33,16 +33,16 @@ export default function PriceDetails({type, isMembership, price}: IProps) {
       )}
       <View style={[styles.rowContainers, {marginTop: scale(10)}]}>
         <Text style={styles.textColor}>SGST@ 10.00%</Text>
-        <Text style={styles.textColor}>{calculateSGST(price)}</Text>
+        <Text style={styles.textColor}>{calculateSGST(Number(price))}</Text>
       </View>
       <View style={[styles.rowContainers, {marginTop: scale(10)}]}>
         <Text style={styles.textColor}>CGST@ 10.00%</Text>
-        <Text style={styles.textColor}>{calculateCGST(price)}</Text>
+        <Text style={styles.textColor}>{calculateCGST(Number(price))}</Text>
       </View>
       <View style={[styles.rowContainers, {marginTop: scale(10)}]}>
         <Text style={{fontWeight: "500", fontSize: scale(13)}}>Total</Text>
         <Text style={{fontWeight: "500", fontSize: scale(13)}}>
-          ₹ {calculateTotal(price, calculateSGST(price), calculateCGST(price))}
+          ₹ {calculateTotal(Number(price), Number(calculateSGST(Number(price))), Number(calculateCGST(Number(price))))}
         </Text>
       </View>
     </View>

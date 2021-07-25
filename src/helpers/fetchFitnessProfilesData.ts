@@ -35,7 +35,6 @@ export const fetchData = async (
           profiles: requiredData.map((item) => ({
             ...item,
             plans: item.plans?.items,
-            availableSlots: item.availableSlots?.items,
           })),
         }),
       );

@@ -49,7 +49,7 @@ const BatchContainer = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const selectPlan = (type: number, price: number, batch: number) => {
+  const selectPlan = (type: number, price: string, batch: number) => {
     dispatch(
       addSelectedProfile({
         id,
@@ -112,7 +112,7 @@ const BatchContainer = ({
                     alignItems: "center",
                   }}
                   onPressHandle={() =>
-                    selectPlan(plan.type, Number(plan?.price), plan?.batch)
+                    selectPlan(plan.type, plan?.price, plan?.batch)
                   }
                 />
               </View>
