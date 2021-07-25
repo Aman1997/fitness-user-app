@@ -23,7 +23,7 @@ const Activity = ({content, type}: {content: string; type: string}) => {
           fontSize: scale(14),
           color: CONTENT,
           paddingLeft: scale(15),
-          paddingRight: scale(20),
+          paddingRight: scale(30),
         }}
       >
         {buildUserActivityDesc(content, type)}

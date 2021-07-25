@@ -30,7 +30,7 @@ export const bookMembership = async (
       }),
     );
 
-    // log the activity
+    // log the user activity
     await API.graphql(
       graphqlOperation(LOG_USER_ACITIVITY, {
         type: isMembershipRenew

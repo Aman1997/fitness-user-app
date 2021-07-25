@@ -49,7 +49,7 @@ export const GET_USER_DATA = `
 export const GET_USER_ACTIVITIES = `
 query GET_USER_ACTIVITIES($email: String!) {
   getUser(email: $email) {
-    userActivity(limit: 10) {
+    userActivity(limit: 10, sortDirection: DESC) {
       items {
         id
         metadata

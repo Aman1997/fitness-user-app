@@ -41,9 +41,7 @@ const ProfileScreen = () => {
           );
           setSessions(apiRes.data.bookings.toString());
           setMemberships(apiRes.data.memberships.toString());
-          if (!user.activities) {
-            await fetchUserActivities(user.email, user, dispatch);
-          }
+          await fetchUserActivities(user.email, user, dispatch);
           setLoading(false);
         }
       } catch (error) {
@@ -52,7 +50,7 @@ const ProfileScreen = () => {
         navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
-  }, [user]);
+  }, []);
 
   return (
     <>
