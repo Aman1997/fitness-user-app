@@ -90,12 +90,6 @@ export const SEARCH_FITNESS_PARTNER_BY_NAME = `
                 days
             }
         }
-        availableSlots {
-            items {
-                day
-                timeSlots
-            }
-        }
       }
       nextToken
     }
