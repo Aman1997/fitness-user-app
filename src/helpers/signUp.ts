@@ -21,7 +21,6 @@ export const signUp = async (
       attributes: {
         "custom:name": name,
         "custom:phoneNumber": phoneNumber,
-        "custom:isPartner": "0",
       },
     });
     setLoading(false);

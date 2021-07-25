@@ -60,6 +60,7 @@ const BatchContainer = ({
         plan: type,
         price,
         batch,
+        isMembershipRenew: true,
       }),
     );
     if (type === 0) {

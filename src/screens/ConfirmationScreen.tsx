@@ -105,6 +105,7 @@ export default function ConfirmationScreen() {
                   profile.plan !== 0,
                   profile.date,
                   profile.plan as number,
+                  profile.batch as number,
                   profile.name as string,
                   user.email,
                   user.phoneNumber,
@@ -113,6 +114,7 @@ export default function ConfirmationScreen() {
                   profile.timeSlot as string,
                   setLoading,
                   setIsCompleted,
+                  profile.isMembershipRenew as boolean,
                 );
               }}
             >

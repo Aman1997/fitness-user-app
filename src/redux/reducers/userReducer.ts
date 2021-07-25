@@ -8,6 +8,11 @@ export interface IUserState {
   phoneNumber: string;
   currentLat: number;
   currentLong: number;
+  activities?: Array<{
+    id: string;
+    metadata: string;
+    type: string;
+  }>;
 }
 
 const initialState = {
@@ -27,6 +32,7 @@ export const userReducer = (
   switch (action.type) {
     case "ADD_USER":
       return {
+        ...state,
         id: action.payload.id,
         name: action.payload.name,
         email: action.payload.email,
@@ -34,6 +40,7 @@ export const userReducer = (
         phoneNumber: action.payload.phoneNumber,
         currentLat: action.payload.currentLat,
         currentLong: action.payload.currentLong,
+        activities: action.payload.activities,
       };
     default:
       return state;
