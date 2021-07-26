@@ -205,11 +205,10 @@ export default function HomeScreen() {
                   setRefreshing(false);
                 }}
                 onEndReached={async () => {
-                  console.log("end reached Home screen");
-
-                  if (nextToken === null) {
+                  if (!nextToken) {
                     null;
                   } else {
+                    console.log("called from onEndReached");
                     await fetchData(
                       isTrainerSelected ? 1 : 0,
                       city,
@@ -221,7 +220,7 @@ export default function HomeScreen() {
                     );
                   }
                 }}
-                onEndReachedThreshold={0.8}
+                onEndReachedThreshold={0.9}
               />
             )}
           </View>

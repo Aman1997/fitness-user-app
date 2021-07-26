@@ -1,8 +1,6 @@
 export const LIST_FITNESS_PARTNERS = `
-    query LIST_FITNESS_PARTNERS($nextToken: String, $type: Int, $city: String!) {
+    query LIST_FITNESS_PARTNERS($type: Int, $city: String!) {
         listFitnessServices(
-          limit: 20
-          nextToken: $nextToken
           filter: { type: { eq: $type }, city: { contains: $city }, status: { eq: 1} }
         ) {
           items {
