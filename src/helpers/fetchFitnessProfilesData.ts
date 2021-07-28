@@ -1,12 +1,12 @@
-import { NavigationProp } from "@react-navigation/native";
+import {NavigationProp} from "@react-navigation/native";
 import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch} from "react";
-import { errorScreen } from "../navigation/routes";
+import {errorScreen} from "../navigation/routes";
 import {LIST_FITNESS_PARTNERS} from "../queries/query";
 import {addFitnessProfiles} from "../redux/actions/actionCreator";
 import {FitnessProfilesAction} from "../redux/actions/actionType";
 import {fitnessProfilesInitialState} from "../redux/reducers/fitnessProfiles";
-import { sentryError } from "../utils/sentrySetup";
+import {sentryError} from "../utils/sentrySetup";
 
 export const fetchData = async (
   type: number,
@@ -15,14 +15,13 @@ export const fetchData = async (
   setNextToken: (nextToken: string) => void,
   nextToken: string | null,
   setLoading: Dispatch<boolean>,
-  navigation: NavigationProp<any>
+  navigation: NavigationProp<any>,
 ) => {
   try {
     const dataRes = await API.graphql(
       graphqlOperation(LIST_FITNESS_PARTNERS, {
         type,
         city,
-        nextToken,
       }),
     );
     // @ts-ignore
@@ -40,9 +39,11 @@ export const fetchData = async (
       );
       // @ts-ignore
       setNextToken(dataRes.data.listFitnessServices.nextToken);
+      // @ts-ignore
     } else {
       dispatch(addFitnessProfiles(fitnessProfilesInitialState));
     }
+
     setLoading(false);
   } catch (error) {
     setLoading(false);

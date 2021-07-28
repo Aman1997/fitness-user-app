@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ScrollView, View, Platform} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {PRIMARY, SECONDARY, WHITE} from "../assets/constants/colors";
-import {startOfDay} from "date-fns";
+import {addDays, format, startOfDay} from "date-fns";
 import takeMonth, {
   generateTimeSlots,
   getTimeSlotArray,
@@ -20,6 +20,7 @@ import {ISelectedProfileState} from "../redux/reducers/selectedProfile";
 import {Alert} from "react-native";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {IFitnessProfilesState} from "../redux/reducers/fitnessProfiles";
+import {addToDays} from "../utils/calendarHelper";
 
 export default function BookingCalendarScreen() {
   const [start, setStart] = useState(startOfDay(new Date()));
@@ -50,8 +51,20 @@ export default function BookingCalendarScreen() {
     setSlot(tempSlots);
   }, [start, fitnessProfilePlans]);
 
+  useEffect(() => {
+    Alert.alert("Kindly select date upto next 15 days");
+  }, []);
+
   const proceedToConfirmation = () => {
+    console.log("date", addDays(new Date(), 15) < start);
     if (!time) return Alert.alert("Please select a time slot");
+    if (addDays(startOfDay(new Date()), 15) < start)
+      return Alert.alert(
+        `Please select a slot till ${format(
+          addDays(new Date(), 15),
+          "dd MMMM yyyy",
+        )}`,
+      );
     dispatch(addSelectedProfile({...profile, timeSlot: time, date: start}));
     navigation.replace(confirmationScreen);
   };
