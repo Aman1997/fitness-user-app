@@ -27,6 +27,8 @@ import {
 } from "../navigation/routes";
 import {ActivityIndicator} from "react-native-paper";
 import {sentryError} from "../utils/sentrySetup";
+import messaging from "@react-native-firebase/messaging";
+import {saveDeviceToken} from "../helpers/pushNotificationMethods";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -46,6 +48,7 @@ export default function HomeScreen() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    let unsubscribe;
     (async () => {
       // requesting permission to location
       await requestLocationPermission();
@@ -58,6 +61,18 @@ export default function HomeScreen() {
         const userData = await API.graphql(
           graphqlOperation(GET_USER_DATA, {email: id}),
         );
+
+        // Get the device token
+        messaging()
+          .getToken()
+          .then(async (token) => {
+            await saveDeviceToken(token, id as string);
+          })
+
+        // Listen to whether the token changes
+        unsubscribe = messaging().onTokenRefresh(async (token) => {
+          await saveDeviceToken(token, id as string);
+        });
 
         dispatch(
           addUser({
@@ -84,6 +99,8 @@ export default function HomeScreen() {
         navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -121,6 +138,8 @@ export default function HomeScreen() {
       );
     }
   };
+
+  console.log("fitness", fitnessProfiles)
 
   return (
     <>

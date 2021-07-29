@@ -23,6 +23,7 @@ export const selectBooking = (
         id: data.id,
         imageUrl: data.fitnessService.imageUrl,
         name: data.fitnessService.name,
+        ownerEmail: data.fitnessService.ownerEmail,
         bookingDate: data.bookingDate,
         timeSlot: data.timeSlot,
         trainerName: data.fitnessService.trainerName,

@@ -2,6 +2,7 @@ import {useNavigation} from "@react-navigation/native";
 import React from "react";
 import {Text, View, ScrollView, ViewStyle} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
+import {useSelector} from "react-redux";
 import {
   CONTENT,
   HEAD_TEXT,
@@ -13,14 +14,14 @@ import AppHeaderBack from "../components/common/AppHeaderBack";
 import AppPageTitle from "../components/common/AppPageTitle";
 import AppSeparator from "../components/common/AppSeparator";
 import SettingsListBlock from "../components/settings/SettingsListBlock";
-import { signOut } from "../helpers/signOut";
-import {
-  bookingsScreen,
-  profileScreen,
-} from "../navigation/routes";
+import {signOut} from "../helpers/signOut";
+import {bookingsScreen, profileScreen} from "../navigation/routes";
+import {IUserState} from "../redux/reducers/userReducer";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
+
+  const user = useSelector((state: {user: IUserState}) => state.user);
 
   return (
     <View style={styles.container}>
@@ -53,7 +54,10 @@ export default function SettingsScreen() {
             <SettingsListBlock text="Terms of Use" icon="book" />
             <SettingsListBlock text="Community Guidelines" icon="team" />
             <SettingsListBlock text="Copyright Policy" icon="copyright" />
-            <Text style={styles.logoutText} onPress={async () => await signOut(navigation)}>
+            <Text
+              style={styles.logoutText}
+              onPress={async () => await signOut(user.email, navigation)}
+            >
               Logout
             </Text>
             <Text style={styles.version}>V1.0(beta)</Text>

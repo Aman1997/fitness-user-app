@@ -3,17 +3,20 @@ import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch} from "react";
 import {errorScreen} from "../navigation/routes";
 import {CREATE_MEMBERSHIP, LOG_USER_ACITIVITY} from "../queries/mutation";
-import {LOG_TYPE} from "../utils/constants";
+import {LOG_TYPE, NotificationType} from "../utils/constants";
 import {getToDate} from "../utils/dateTimeMethods";
 import {sentryError} from "../utils/sentrySetup";
+import {sendNotification} from "./pushNotificationMethods";
 
 export const bookMembership = async (
   orderId: string,
   partnerId: string,
   partnerName: string,
+  partnerEmail: string,
   type: number,
   batch: number,
   email: string,
+  userName: string,
   setIsCompleted: Dispatch<boolean>,
   navigation: NavigationProp<any>,
   isMembershipRenew: boolean,
@@ -47,6 +50,17 @@ export const bookMembership = async (
         }),
         userEmail: email,
       }),
+    );
+
+    // send the notification
+    await sendNotification(
+      isMembershipRenew
+        ? NotificationType.MEMBERSHIP_RENEWED
+        : NotificationType.MEMBERSHIP_BOOKED,
+      partnerEmail,
+      userName,
+      new Date(),
+      type,
     );
 
     setIsCompleted(true);

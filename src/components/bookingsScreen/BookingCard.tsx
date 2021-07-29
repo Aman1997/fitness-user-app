@@ -1,4 +1,4 @@
-import {differenceInDays, format} from "date-fns";
+import {format} from "date-fns";
 import React from "react";
 import {Image, Text, TouchableWithoutFeedback, View} from "react-native";
 import {ScaledSheet} from "react-native-size-matters";

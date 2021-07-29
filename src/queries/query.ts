@@ -6,6 +6,7 @@ export const LIST_FITNESS_PARTNERS = `
           items {
             id
             name
+            ownerEmail
             imageUrl
             ratings
             type
@@ -68,6 +69,7 @@ export const SEARCH_FITNESS_PARTNER_BY_NAME = `
       items {
         id
         name
+        ownerEmail
         imageUrl
         ratings
         type
@@ -129,6 +131,7 @@ query CURRENT_USER_BOOKINGS($email: String!) {
           longitude
           latitude
           name
+          ownerEmail
           imageUrl
           trainerName
           trainerImageUrl
@@ -143,6 +146,7 @@ query CURRENT_USER_BOOKINGS($email: String!) {
         fitnessService {
           id
           name
+          ownerEmail
           imageUrl
           ratings
           address

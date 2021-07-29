@@ -3,6 +3,7 @@ import {SelectedProfileAction} from "../actions/actionType";
 export interface ISelectedProfileState {
   id?: string;
   name?: string;
+  ownerEmail?: string
   ratings?: number | undefined;
   address?: string;
   plan?: number;
@@ -17,6 +18,7 @@ export interface ISelectedProfileState {
 export const selectedProfileState = {
   id: "",
   name: "",
+  ownerEmail: "",
   ratings: undefined,
   address: "",
   plan: 0,
@@ -37,6 +39,7 @@ export const selectedProfileReducer = (
       return {
         id: action.payload.id,
         name: action.payload.name,
+        ownerEmail: action.payload.ownerEmail,
         ratings: action.payload.ratings,
         address: action.payload.address,
         plan: action.payload.plan,

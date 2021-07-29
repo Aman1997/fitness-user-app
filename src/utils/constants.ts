@@ -14,3 +14,10 @@ export const LOG_TYPE = {
   "membership_booked": "membership_booked",
   "membership_renewed": "membership_renewed",
 }
+
+export const NotificationType = {
+  "SESSION_BOOKED": "session_booked_notification",
+  "SESSION_CANCELLED": "session_cancelled_notification",
+  "MEMBERSHIP_BOOKED": "membership_booked_notification",
+  "MEMBERSHIP_RENEWED": "membership_renewed_notification",
+}

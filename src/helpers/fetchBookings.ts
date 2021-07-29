@@ -44,6 +44,7 @@ export const fetchBookings = async (
             imageUrl: item.fitnessService?.imageUrl[0],
             trainerName: item.fitnessService?.trainerName,
             trainerImageUrl: item.fitnessService?.trainerImageUrl,
+            ownerEmail: item.fitnessService?.ownerEmail
           },
         })),
       }),
@@ -63,6 +64,7 @@ export const fetchBookings = async (
           imageUrl: item.fitnessService?.imageUrl[0],
           plans: item.fitnessService?.plans.items,
           address: item.fitnessService?.address,
+          ownerEmail: item.fitnessService?.ownerEmail
         },
       })),
     );

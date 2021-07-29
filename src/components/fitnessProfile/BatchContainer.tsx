@@ -36,6 +36,7 @@ interface IProps {
   imageUrl: string;
   ratings: number;
   address: string;
+  ownerEmail: string
 }
 
 const BatchContainer = ({
@@ -45,6 +46,7 @@ const BatchContainer = ({
   imageUrl,
   ratings,
   address,
+  ownerEmail
 }: IProps) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -54,6 +56,7 @@ const BatchContainer = ({
       addSelectedProfile({
         id,
         name,
+        ownerEmail,
         imageUrl,
         ratings,
         address,

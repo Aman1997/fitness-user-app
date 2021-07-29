@@ -6,12 +6,14 @@ import {errorScreen} from "../navigation/routes";
 import {CANCEL_BOOKING, LOG_USER_ACITIVITY} from "../queries/mutation";
 import {addBookingsData} from "../redux/actions/actionCreator";
 import {IBookingState} from "../redux/reducers/bookingsReducer";
-import {LOG_TYPE} from "../utils/constants";
+import {LOG_TYPE, NotificationType} from "../utils/constants";
 import {sentryError} from "../utils/sentrySetup";
+import {sendNotification} from "./pushNotificationMethods";
 
 export const cancelBooking = async (
   id: string,
   partnerName: string,
+  partnerEmail: string,
   date: Date,
   timeSlot: string,
   setLoading: Dispatch<SetStateAction<boolean>>,
@@ -19,6 +21,7 @@ export const cancelBooking = async (
   dispatch: Dispatch<any>,
   bookings: IBookingState["bookings"],
   email: string,
+  userName: string,
 ) => {
   try {
     await API.graphql(graphqlOperation(CANCEL_BOOKING, {id}));
@@ -38,6 +41,25 @@ export const cancelBooking = async (
       }),
     );
 
+    dispatch(
+      addBookingsData({
+        bookings: bookings.map((item) =>
+          item.id === id ? {...item, status: "cancelled"} : item,
+        ),
+      }),
+    );
+
+    // send the notification
+    await sendNotification(
+      NotificationType.SESSION_CANCELLED,
+      partnerEmail,
+      userName,
+      date,
+      0,
+    );
+
+    setLoading(false);
+
     Alert.alert(
       "Booking Cancelled",
       `Your booking with reference no: ${id} has been cancelled`,
@@ -51,16 +73,6 @@ export const cancelBooking = async (
         cancelable: false,
       },
     );
-
-    dispatch(
-      addBookingsData({
-        bookings: bookings.map((item) =>
-          item.id === id ? {...item, status: "cancelled"} : item,
-        ),
-      }),
-    );
-
-    setLoading(false);
   } catch (error) {
     setLoading(false);
     sentryError(error);
