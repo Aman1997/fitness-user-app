@@ -42,6 +42,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-maps": "0.28.0",
     "react-native-paper": "^4.9.1",
+    "react-native-ratings": "^8.1.0",
     "react-native-razorpay": "^2.2.7",
     "react-native-reanimated": "^2.0.0",
     "react-native-safe-area-context": "^3.2.0",
