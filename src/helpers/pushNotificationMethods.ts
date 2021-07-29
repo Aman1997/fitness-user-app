@@ -26,19 +26,21 @@ export const sendNotification = async (
   userName: string,
   bookingDate: Date,
   membershipType: number,
+  logType: string,
+  metadata: {},
 ) => {
-  console.log(
-    "send notification data",
-    type,
-    partnerEmail,
-    userName,
-    bookingDate,
-    membershipType,
-  );
 
   await axios.post(
     `${Config.NOTIFICATION_API}/sendNotification`,
-    {type, partnerEmail, userName, bookingDate, membershipType},
+    {
+      type,
+      partnerEmail,
+      userName,
+      bookingDate,
+      membershipType,
+      logType,
+      metadata,
+    },
     {headers: await fetchJWT()},
   );
 };

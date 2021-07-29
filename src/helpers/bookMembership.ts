@@ -61,6 +61,17 @@ export const bookMembership = async (
       userName,
       new Date(),
       type,
+      isMembershipRenew
+        ? LOG_TYPE.membership_renewed
+        : LOG_TYPE.membership_booked,
+      {
+        type,
+        batch,
+        userName,
+        orderId,
+        // @ts-ignore
+        bookingId: membershipId.data.createMemberships.id,
+      },
     );
 
     setIsCompleted(true);

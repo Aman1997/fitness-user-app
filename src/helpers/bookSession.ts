@@ -57,6 +57,16 @@ export const bookSession = async (
       userName,
       date,
       0,
+      LOG_TYPE.session_booked,
+      {
+        date,
+        timeSlot,
+        email,
+        userName,
+        orderId,
+        // @ts-ignore
+        bookingId: sessionId.data.createBookings.id,
+      },
     );
 
     setIsCompleted(true);
