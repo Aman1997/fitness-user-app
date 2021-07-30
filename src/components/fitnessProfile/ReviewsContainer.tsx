@@ -25,12 +25,11 @@ export default function ReviewsContainer({id}: {id: string}) {
         );
         // @ts-ignore
         const requiredData = reviewRes.data.getFitnessService.reviews.items;
-        console.log(requiredData)
         setReviews(
           // @ts-ignore
           requiredData.map((item) => ({
-            imageUrl: item.user.items[0].imageUrl,
-            name: item.user.items[0].name,
+            imageUrl: item.user.imageUrl,
+            name: item.user.name,
             createdAt: item.createdAt,
             review: item.review,
           })),
