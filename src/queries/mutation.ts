@@ -57,3 +57,11 @@ export const LOG_USER_ACITIVITY = `
         }
     }
 `;
+
+export const CREATE_REVIEWS = `
+    mutation CREATE_REVIEWS($fitnessServiceId: ID!, $ratings: Float!, $review: String, $userEmail: String!) {
+        createReviews(input: {fitnessServiceId: $fitnessServiceId, ratings: $ratings, review: $review, userEmail: $userEmail}) {
+            id
+        }
+    }
+`;
