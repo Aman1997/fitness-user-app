@@ -40,6 +40,7 @@ export const sendNotification = async (
       membershipType,
       logType,
       metadata,
+      logClient: true
     },
     {headers: await fetchJWT()},
   );

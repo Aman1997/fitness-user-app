@@ -71,6 +71,7 @@ export default function FitnessProfileScreen() {
             ratings={data.ratings}
             address={data.address}
             ownerEmail={data.ownerEmail}
+            isMembershipRenew={false}
           />
         )}
       />

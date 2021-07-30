@@ -139,8 +139,6 @@ export default function HomeScreen() {
     }
   };
 
-  console.log("fitness", fitnessProfiles)
-
   return (
     <>
       <View style={styles.container}>

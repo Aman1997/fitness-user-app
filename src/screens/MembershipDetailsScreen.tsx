@@ -198,6 +198,8 @@ export default function MembershipDetailsScreen() {
             imageUrl={data.imageUrl[0]}
             ratings={data.ratings}
             address={data.address}
+            ownerEmail={data.ownerEmail}
+            isMembershipRenew={true}
           />
         )}
       />
