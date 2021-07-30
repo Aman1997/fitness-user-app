@@ -65,3 +65,11 @@ export const CREATE_REVIEWS = `
         }
     }
 `;
+
+export const UPDATE_USER_BOOKING_REVIEW_STATUS = `
+    mutation UPDATE_USER_BOOKING_REVIEW_STATUS($id: ID!) {
+        updateBookings(input: {id: $id, isReviewed: true}) {
+            id                     
+        }
+    }
+`;
