@@ -28,7 +28,7 @@ export const CREATE_SESSION = `
         $userEmail: String!
         $orderId: String!
     ) {
-        createBookings(input: {bookingDate: $bookingDate, fitnessServiceId: $fitnessPartnerId, pin: $pin, status: $status, timeSlot: $timeSlot, userEmail: $userEmail, orderId: $orderId, isVerified: false}) {
+        createBookings(input: {bookingDate: $bookingDate, fitnessServiceId: $fitnessPartnerId, pin: $pin, status: $status, timeSlot: $timeSlot, userEmail: $userEmail, orderId: $orderId, isVerified: false, isReviewed: false}) {
         id
         }
     }  
@@ -43,7 +43,7 @@ export const CREATE_MEMBERSHIP = `
         $userEmail: String!
         $orderId: String!
     )  {
-        createMemberships(input: {fitnessServiceId: $fitnessPartnerId, from: $from, to: $to, type: $type, userEmail: $userEmail, orderId: $orderId}) {
+        createMemberships(input: {fitnessServiceId: $fitnessPartnerId, from: $from, to: $to, type: $type, userEmail: $userEmail, orderId: $orderId, isReviewed: false}) {
         id
         }
     }
@@ -70,6 +70,15 @@ export const UPDATE_USER_BOOKING_REVIEW_STATUS = `
     mutation UPDATE_USER_BOOKING_REVIEW_STATUS($id: ID!) {
         updateBookings(input: {id: $id, isReviewed: true}) {
             id                     
+        }
+    }
+`;
+
+export const UPDATE_USER_MEMBERSHIP_REVIEW_STATUS = `
+    mutation UPDATE_USER_MEMBERSHIP_REVIEW_STATUS($id: ID!) {
+        updateMemberships(input: {id: $id, isReviewed: true}) {
+            id
+            isReviewed
         }
     }
 `;
