@@ -161,3 +161,32 @@ query CURRENT_USER_BOOKINGS($email: String!) {
   }
 }
 `;
+
+export const COMPLETED_BOOKINGS = `
+query COMPLETED_BOOKINGS($email: String!, $to: String!) {
+  getUser(email: $email) {
+    bookings(filter: {status: {eq: "completed"}}, sortDirection: DESC) {
+      items {
+        id
+        status
+        isReviewed        
+        fitnessService {
+          id
+          name
+        }
+      }
+    }
+    memberships(filter: {to: {le: $to}}, sortDirection: DESC) {
+      items {
+        id
+        to                
+        isReviewed
+        fitnessService {
+          id
+          name          
+        }
+      }
+    }
+  }
+}
+`;
