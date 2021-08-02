@@ -1,4 +1,5 @@
 import {API, graphqlOperation} from "aws-amplify";
+import {Dispatch} from "react";
 import {
   CREATE_REVIEWS,
   UPDATE_USER_BOOKING_REVIEW_STATUS,
@@ -33,9 +34,8 @@ export const updateBookingReview = async (id: string) => {
         id,
       }),
     );
-    console.log(`Updated booking review status for ${id}`);
+    console.log("Updated booking status");
   } catch (error) {
-    console.log(error);
     sentryError(error);
   }
 };
@@ -47,7 +47,28 @@ export const updateMembershipReview = async (id: string) => {
         id,
       }),
     );
-    console.log(`Updated membership review status for ${id}`);
+
+    console.log("Updated membership status");
+  } catch (error) {
+    sentryError(error);
+  }
+};
+
+export const checkReviewStatus = async (
+  isReviewed: boolean,
+  bookingsId: string,
+  membershipsId: string,
+  setBookingReviewChecked: Dispatch<boolean>,
+  setMembershipReviewChecked: Dispatch<boolean>,
+) => {
+  try {
+    if (!isReviewed) {
+      await updateBookingReview(bookingsId);
+      setBookingReviewChecked(true);
+    } else {
+      await updateMembershipReview(membershipsId);
+      setMembershipReviewChecked(true);
+    }
   } catch (error) {
     sentryError(error);
   }

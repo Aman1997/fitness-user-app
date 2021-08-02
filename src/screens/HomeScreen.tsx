@@ -1,9 +1,9 @@
 import {useNavigation} from "@react-navigation/core";
 import {API, graphqlOperation} from "aws-amplify";
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import {useEffect} from "react";
 import {Alert, Modal, View, FlatList} from "react-native";
-import {ScaledSheet} from "react-native-size-matters";
+import {scale, ScaledSheet} from "react-native-size-matters";
 import {useDispatch, useSelector} from "react-redux";
 import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import MainCard from "../components/home/MainCard";
@@ -11,7 +11,7 @@ import MainHeader from "../components/home/MainHeader";
 import NoPartnerData from "../components/home/NoPartnerData";
 import ServiceUnavailable from "../components/home/ServiceUnavailable";
 import {fetchData} from "../helpers/fetchFitnessProfilesData";
-import {GET_USER_DATA} from "../queries/query";
+import {COMPLETED_BOOKINGS, GET_USER_DATA} from "../queries/query";
 import {addUser} from "../redux/actions/actionCreator";
 import {IFitnessProfilesState} from "../redux/reducers/fitnessProfiles";
 import getUserId from "../utils/getUserId";
@@ -27,6 +27,16 @@ import {
 } from "../navigation/routes";
 import {ActivityIndicator} from "react-native-paper";
 import {sentryError} from "../utils/sentrySetup";
+import BottomSheet from "reanimated-bottom-sheet";
+import ReviewContainer from "../components/home/ReviewContainer";
+import {IUserState} from "../redux/reducers/userReducer";
+import ReviewToast from "../components/home/ReviewToast";
+import {
+  checkReviewStatus,
+  createReview,
+  updateBookingReview,
+  updateMembershipReview,
+} from "../helpers/reviewMethods";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -36,6 +46,8 @@ export default function HomeScreen() {
     (state: {fitnessProfiles: IFitnessProfilesState}) => state.fitnessProfiles,
   ).profiles;
 
+  const user = useSelector((state: {user: IUserState}) => state.user);
+
   const [isTrainerSelected, setTrainerSelected] = useState(false);
   const [isServiceAvailable, setIsServiceAvailable] = useState(true);
   const [isSetLocation, setLocation] = useState(false);
@@ -44,6 +56,41 @@ export default function HomeScreen() {
   const [city, setUserCity] = useState("");
   const [isRefreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [screen, setScreen] = useState(0);
+  const [review, setReview] = useState("");
+  const [ratings, setRatings] = useState(0);
+  const [completedBookings, setCompletedBookings] = useState<{
+    id: string;
+    isReviewed: boolean;
+    fitnessService: {
+      id: string;
+      name: string;
+    };
+  }>({
+    id: "",
+    isReviewed: true,
+    fitnessService: {
+      id: "",
+      name: "",
+    },
+  });
+  const [completedMemberships, setCompletedMemberships] = useState<{
+    id: string;
+    isReviewed: boolean;
+    fitnessService: {
+      id: string;
+      name: string;
+    };
+  }>({
+    id: "",
+    isReviewed: true,
+    fitnessService: {
+      id: "",
+      name: "",
+    },
+  });
+  const [bookingReviewChecked, setBookingReviewChecked] = useState(false);
+  const [membershipReviewChecked, setMembershipReviewChecked] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -109,6 +156,26 @@ export default function HomeScreen() {
     })();
   }, [isTrainerSelected, city]);
 
+  useEffect(() => {
+    (async () => {
+      const id = await getUserId();
+      const response = await API.graphql(
+        graphqlOperation(COMPLETED_BOOKINGS, {
+          email: id,
+          to: new Date().toISOString(),
+        }),
+      );
+
+      // @ts-ignore
+      const bookingsRes = response.data.getUser.bookings.items[0];
+      // @ts-ignore
+      const membershipRes = response.data.getUser.memberships.items[0];
+
+      setCompletedBookings(bookingsRes);
+      setCompletedMemberships(membershipRes);
+    })();
+  }, [membershipReviewChecked, bookingReviewChecked]);
+
   // function to request permission for location
   const requestLocationPermission = async () => {
     const {granted} = await Location.requestForegroundPermissionsAsync();
@@ -120,6 +187,58 @@ export default function HomeScreen() {
         {cancelable: false},
       );
     }
+  };
+
+  const sheetRef = useRef(null);
+
+  const onPressCancel = async () => {
+    if (screen === 1) return setScreen(0);
+
+    await checkReviewStatus(
+      completedBookings.isReviewed,
+      completedBookings.id,
+      completedMemberships.id,
+      setBookingReviewChecked,
+      setMembershipReviewChecked,
+    );
+
+    // @ts-ignore
+    sheetRef.current.snapTo(1);
+  };
+
+  const onPressNext = async () => {
+    if (ratings < 1)
+      return Alert.alert(
+        `Please rate ${
+          !completedBookings.isReviewed
+            ? completedBookings.fitnessService.name
+            : completedMemberships.fitnessService.name
+        } service.`,
+      );
+
+    await createReview(
+      !completedBookings.isReviewed
+        ? completedBookings?.fitnessService.id
+        : completedMemberships?.fitnessService.id,
+      ratings,
+      review,
+      user.email,
+    );
+
+    await checkReviewStatus(
+      completedBookings.isReviewed,
+      completedBookings.id,
+      completedMemberships.id,
+      setBookingReviewChecked,
+      setMembershipReviewChecked,
+    );
+
+    // @ts-ignore
+    sheetRef.current.snapTo(1);
+    Alert.alert("Thank you", "Your review has been submitted!");
+    setRatings(0);
+    setReview("");
+    setScreen(0);
   };
 
   return (
@@ -164,68 +283,117 @@ export default function HomeScreen() {
           >
             <ActivityIndicator />
           </View>
-        ) : !isServiceAvailable ? (
-          <ServiceUnavailable
-            city={city}
-            serviceType={isTrainerSelected ? 1 : 0}
-          />
         ) : (
-          <View style={styles.cardContainer}>
-            {!fitnessProfiles[0].id ? (
-              <NoPartnerData />
+          <View style={{flex: 1}}>
+            {!isServiceAvailable ? (
+              <ServiceUnavailable
+                city={city}
+                serviceType={isTrainerSelected ? 1 : 0}
+              />
             ) : (
-              // Flatlist for studios
-              <FlatList
-                data={fitnessProfiles}
-                renderItem={({item}) => (
-                  <MainCard
-                    {...item}
-                    coords={userCoords as coords}
-                    onPressHandler={() =>
-                      navigation.navigate(fitnessProfileScreen, {
-                        data: item,
-                      })
-                    }
+              <View style={styles.cardContainer}>
+                {!fitnessProfiles[0].id ? (
+                  <NoPartnerData />
+                ) : (
+                  // Flatlist for studios
+                  <FlatList
+                    data={fitnessProfiles}
+                    renderItem={({item}) => (
+                      <MainCard
+                        {...item}
+                        coords={userCoords as coords}
+                        onPressHandler={() =>
+                          navigation.navigate(fitnessProfileScreen, {
+                            data: item,
+                          })
+                        }
+                      />
+                    )}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+                    refreshing={isRefreshing}
+                    onRefresh={async () => {
+                      setRefreshing(true);
+                      await fetchData(
+                        isTrainerSelected ? 1 : 0,
+                        city,
+                        dispatch,
+                        setNextToken,
+                        null,
+                        setLoading,
+                        navigation,
+                      );
+                      setRefreshing(false);
+                    }}
+                    onEndReached={async () => {
+                      if (!nextToken) {
+                        null;
+                      } else {
+                        console.log("called from onEndReached");
+                        await fetchData(
+                          isTrainerSelected ? 1 : 0,
+                          city,
+                          dispatch,
+                          setNextToken,
+                          nextToken as string,
+                          setLoading,
+                          navigation,
+                        );
+                      }
+                    }}
+                    onEndReachedThreshold={0.9}
                   />
                 )}
-                keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false}
-                refreshing={isRefreshing}
-                onRefresh={async () => {
-                  setRefreshing(true);
-                  await fetchData(
-                    isTrainerSelected ? 1 : 0,
-                    city,
-                    dispatch,
-                    setNextToken,
-                    null,
-                    setLoading,
-                    navigation,
+              </View>
+            )}
+
+            {(!completedBookings.isReviewed ||
+              !completedMemberships.isReviewed) && (
+              <ReviewToast
+                // @ts-ignore
+                onRateReview={() => sheetRef.current.snapTo(0)}
+                onCancelRateReview={async () => {
+                  await checkReviewStatus(
+                    completedBookings.isReviewed,
+                    completedBookings.id,
+                    completedMemberships.id,
+                    setBookingReviewChecked,
+                    setMembershipReviewChecked,
                   );
-                  setRefreshing(false);
                 }}
-                onEndReached={async () => {
-                  if (!nextToken) {
-                    null;
-                  } else {
-                    console.log("called from onEndReached");
-                    await fetchData(
-                      isTrainerSelected ? 1 : 0,
-                      city,
-                      dispatch,
-                      setNextToken,
-                      nextToken as string,
-                      setLoading,
-                      navigation,
-                    );
-                  }
-                }}
-                onEndReachedThreshold={0.9}
+                fitnessServiceName={
+                  !completedBookings.isReviewed
+                    ? completedBookings.fitnessService.name
+                    : completedMemberships.fitnessService.name
+                }
               />
             )}
           </View>
         )}
       </View>
+
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[scale(375), 0]}
+        initialSnap={1}
+        borderRadius={scale(40)}
+        enabledContentTapInteraction={false}
+        renderContent={() => (
+          <ReviewContainer
+            bookings={
+              !bookingReviewChecked ? completedBookings : completedMemberships
+            }
+            screen={screen}
+            review={review}
+            ratings={ratings}
+            setReview={setReview}
+            setScreen={setScreen}
+            setRatings={setRatings}
+            onPressNext={onPressNext}
+            onPressCancel={onPressCancel}
+          />
+        )}
+      />
     </>
   );
 }
