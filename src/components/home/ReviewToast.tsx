@@ -51,8 +51,8 @@ const styles = ScaledSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: "5@s",
-    paddingHorizontal: "10@s",
+    padding: "10@s",
+    borderRadius: "8@s",
     backgroundColor: PRIMARY_20,
     marginHorizontal: APP_MARGIN_HORIZONTAL,
     marginVertical: "10@s",
