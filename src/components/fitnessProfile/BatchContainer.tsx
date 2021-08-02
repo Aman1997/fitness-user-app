@@ -36,6 +36,8 @@ interface IProps {
   imageUrl: string;
   ratings: number;
   address: string;
+  ownerEmail: string;
+  isMembershipRenew: boolean;
 }
 
 const BatchContainer = ({
@@ -45,6 +47,8 @@ const BatchContainer = ({
   imageUrl,
   ratings,
   address,
+  ownerEmail,
+  isMembershipRenew
 }: IProps) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -54,13 +58,14 @@ const BatchContainer = ({
       addSelectedProfile({
         id,
         name,
+        ownerEmail,
         imageUrl,
         ratings,
         address,
         plan: type,
         price,
         batch,
-        isMembershipRenew: true,
+        isMembershipRenew,
       }),
     );
     if (type === 0) {

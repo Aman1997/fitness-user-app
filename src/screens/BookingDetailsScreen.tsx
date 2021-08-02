@@ -14,7 +14,7 @@ import {cancelBooking} from "../helpers/cancelBooking";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {useDispatch, useSelector} from "react-redux";
 import {IBookingState} from "../redux/reducers/bookingsReducer";
-import { IUserState } from "../redux/reducers/userReducer";
+import {IUserState} from "../redux/reducers/userReducer";
 
 export default function BookingDetailsScreen() {
   const [isLoading, setLoading] = useState(false);
@@ -66,10 +66,8 @@ export default function BookingDetailsScreen() {
 
           <View
             style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "flex-end",
-              marginHorizontal: APP_MARGIN_HORIZONTAL,
+              paddingHorizontal: APP_MARGIN_HORIZONTAL,
+              width: '100%'
             }}
           >
             <AppButton
@@ -108,13 +106,15 @@ export default function BookingDetailsScreen() {
                           cancelBooking(
                             data.id,
                             data.name,
+                            data.ownerEmail,
                             data.bookingDate,
                             data.timeSlot,
                             setLoading,
                             navigation,
                             dispatch,
                             bookings,
-                            user.email
+                            user.email,
+                            user.name,
                           );
                         },
                       },

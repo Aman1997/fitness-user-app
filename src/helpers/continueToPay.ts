@@ -20,14 +20,16 @@ export const continueToPay = async (
   type: number,
   batch: number,
   name: string,
+  partnerEmail: string,
   userEmail: string,
+  userName: string,
   phoneNumber: string,
   navigation: NavigationProp<any>,
   partnerId: string,
   timeSlot: string,
   setLoading: Dispatch<boolean>,
   setIsCompleted: Dispatch<boolean>,
-  isMembershipRenew: boolean
+  isMembershipRenew: boolean,
 ) => {
   // create an order
   try {
@@ -72,12 +74,14 @@ export const continueToPay = async (
             orderId.data.orderId,
             partnerId,
             name,
+            partnerEmail,
             type,
             batch,
             userEmail,
+            userName,
             setIsCompleted,
             navigation,
-            isMembershipRenew
+            isMembershipRenew,
           );
         } else {
           // book sessions
@@ -85,9 +89,11 @@ export const continueToPay = async (
             orderId.data.orderId,
             partnerId,
             name,
+            partnerEmail,
             date as Date,
             timeSlot as string,
             userEmail,
+            userName,
             setIsCompleted,
             navigation,
           );

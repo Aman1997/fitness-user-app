@@ -1,7 +1,6 @@
 import {useNavigation} from "@react-navigation/core";
 import {API, graphqlOperation} from "aws-amplify";
-import React, {useState, useRef} from "react";
-import {useEffect} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {Alert, Modal, View, FlatList} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {useDispatch, useSelector} from "react-redux";
@@ -31,12 +30,9 @@ import BottomSheet from "reanimated-bottom-sheet";
 import ReviewContainer from "../components/home/ReviewContainer";
 import {IUserState} from "../redux/reducers/userReducer";
 import ReviewToast from "../components/home/ReviewToast";
-import {
-  checkReviewStatus,
-  createReview,
-  updateBookingReview,
-  updateMembershipReview,
-} from "../helpers/reviewMethods";
+import {checkReviewStatus, createReview} from "../helpers/reviewMethods";
+import messaging from "@react-native-firebase/messaging";
+import {saveDeviceToken} from "../helpers/pushNotificationMethods";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -93,6 +89,7 @@ export default function HomeScreen() {
   const [membershipReviewChecked, setMembershipReviewChecked] = useState(false);
 
   useEffect(() => {
+    let unsubscribe;
     (async () => {
       // requesting permission to location
       await requestLocationPermission();
@@ -105,6 +102,18 @@ export default function HomeScreen() {
         const userData = await API.graphql(
           graphqlOperation(GET_USER_DATA, {email: id}),
         );
+
+        // Get the device token
+        messaging()
+          .getToken()
+          .then(async (token) => {
+            await saveDeviceToken(token, id as string);
+          });
+
+        // Listen to whether the token changes
+        unsubscribe = messaging().onTokenRefresh(async (token) => {
+          await saveDeviceToken(token, id as string);
+        });
 
         dispatch(
           addUser({
@@ -131,6 +140,8 @@ export default function HomeScreen() {
         navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {

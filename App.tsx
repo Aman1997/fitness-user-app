@@ -15,7 +15,9 @@ import {sentryInit} from "./src/utils/sentrySetup";
 import urlOpener from "./src/utils/urlOpener";
 import * as SplashScreen from "expo-splash-screen";
 import {setJSExceptionHandler} from "react-native-exception-handler";
-import { uncaughtExceptionHandler } from "./src/utils/uncaughtExceptionHandler";
+import {uncaughtExceptionHandler} from "./src/utils/uncaughtExceptionHandler";
+import messaging from "@react-native-firebase/messaging";
+
 
 // configuring amplify
 Amplify.configure({
@@ -35,7 +37,7 @@ sentryInit();
 setJSExceptionHandler(uncaughtExceptionHandler);
 
 export default function App() {
-  const [user, updateUser] = useState(null);
+  const [user, updateUser] = useState<string | null>(null);
   const [dataFetched, setDataFetched] = useState(false);
 
   //Check for internet connection
@@ -47,13 +49,18 @@ export default function App() {
         await SplashScreen.preventAutoHideAsync();
         const authUser = await Auth.currentAuthenticatedUser();
         setUserId(authUser.attributes.email);
-        updateUser(authUser);
+        updateUser(authUser.attributes.email);
       } catch (error) {
       } finally {
         setDataFetched(true);
         await SplashScreen.hideAsync();
       }
     })();
+  }, []);
+
+  // push notification permissions
+  useEffect(() => {
+    messaging().requestPermission();
   }, []);
 
   return (

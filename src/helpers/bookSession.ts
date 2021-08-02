@@ -3,16 +3,19 @@ import {API, graphqlOperation} from "aws-amplify";
 import {Dispatch} from "react";
 import {errorScreen} from "../navigation/routes";
 import {CREATE_SESSION, LOG_USER_ACITIVITY} from "../queries/mutation";
-import {LOG_TYPE} from "../utils/constants";
+import {LOG_TYPE, NotificationType} from "../utils/constants";
 import {sentryError} from "../utils/sentrySetup";
+import {sendNotification} from "./pushNotificationMethods";
 
 export const bookSession = async (
   orderId: string,
   partnerId: string,
   partnerName: string,
+  partnerEmail: string,
   date: Date,
   timeSlot: string,
   email: string,
+  userName: string,
   setIsCompleted: Dispatch<boolean>,
   navigation: NavigationProp<any>,
 ) => {
@@ -45,6 +48,25 @@ export const bookSession = async (
         }),
         userEmail: email,
       }),
+    );
+
+    // send the notification
+    await sendNotification(
+      NotificationType.SESSION_BOOKED,
+      partnerEmail,
+      userName,
+      date,
+      0,
+      LOG_TYPE.session_booked,
+      {
+        date,
+        timeSlot,
+        email,
+        userName,
+        orderId,
+        // @ts-ignore
+        bookingId: sessionId.data.createBookings.id,
+      },
     );
 
     setIsCompleted(true);

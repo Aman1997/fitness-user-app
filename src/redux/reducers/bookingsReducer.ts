@@ -15,6 +15,7 @@ export interface IBookingState {
       imageUrl?: string;
       trainerName?: string;
       trainerImageUrl?: string;
+      ownerEmail?: string;
     };
   }>;
 }
@@ -35,6 +36,7 @@ export const bookingInitialState = {
         imageUrl: "",
         trainerName: "",
         trainerImageUrl: "",
+        ownerEmail: "",
       },
     },
   ],

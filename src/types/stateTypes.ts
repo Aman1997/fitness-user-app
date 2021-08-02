@@ -7,6 +7,7 @@ export interface IMembershipData {
   fitnessService?: {
     id?: string;
     name?: string;
+    ownerEmail?: string,
     imageUrl?: string;
     plans?: Array<{
       id?: string;

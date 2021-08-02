@@ -4,6 +4,7 @@ export interface IFitnessProfilesState {
   profiles: Array<{
     id: string;
     name: string;
+    ownerEmail: string;
     imageUrl: Array<string>;
     ratings: string;
     type: number;
@@ -30,6 +31,7 @@ export const fitnessProfilesInitialState = {
     {
       id: "",
       name: "",
+      ownerEmail: "",
       imageUrl: [],
       ratings: "",
       type: 0,
