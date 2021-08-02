@@ -1,7 +1,7 @@
 import React from "react";
 import {Text, View, TouchableWithoutFeedback, Image} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
-import { CONTENT, HEAD_TEXT } from "../../assets/constants/colors";
+import {CONTENT, HEAD_TEXT} from "../../assets/constants/colors";
 import {getTimeElapsed} from "../../utils/dateTimeMethods";
 
 interface IProps {
@@ -48,7 +48,7 @@ const styles = ScaledSheet.create({
     borderRadius: "10@s",
     borderColor: "#929290",
     padding: "15@s",
-    marginRight: "15@s"
+    marginRight: "15@s",
   },
   profileContainer: {
     flexDirection: "row",
@@ -61,14 +61,14 @@ const styles = ScaledSheet.create({
     marginRight: "15@s",
   },
   name: {
-    fontSize: "12@s",
+    fontSize: "14@s",
     fontWeight: "500",
-    color: HEAD_TEXT
+    color: HEAD_TEXT,
   },
   reviewText: {
     marginTop: "10@s",
-    fontSize: "11@s",
+    fontSize: "14@s",
     lineHeight: "14@s",
-    color: CONTENT
+    color: CONTENT,
   },
 });

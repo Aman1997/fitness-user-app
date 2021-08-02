@@ -31,6 +31,7 @@ export default function MembershipDetailsScreen() {
 
   // @ts-ignore
   const {data} = route.params;
+  console.log(data);
 
   const [type, setType] = useState(1);
   const [isPlanSelected, setPlanSelected] = useState({
