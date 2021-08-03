@@ -58,17 +58,15 @@ export const checkReviewStatus = async (
   isReviewed: boolean,
   bookingsId: string,
   membershipsId: string,
-  setBookingReviewChecked: Dispatch<boolean>,
-  setMembershipReviewChecked: Dispatch<boolean>,
+  setIsReviewChecked: Dispatch<boolean>,
 ) => {
   try {
     if (!isReviewed) {
       await updateBookingReview(bookingsId);
-      setBookingReviewChecked(true);
     } else {
       await updateMembershipReview(membershipsId);
-      setMembershipReviewChecked(true);
     }
+    setIsReviewChecked(true);
   } catch (error) {
     sentryError(error);
   }

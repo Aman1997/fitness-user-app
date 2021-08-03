@@ -85,8 +85,7 @@ export default function HomeScreen() {
       name: "",
     },
   });
-  const [bookingReviewChecked, setBookingReviewChecked] = useState(false);
-  const [membershipReviewChecked, setMembershipReviewChecked] = useState(false);
+  const [isReviewChecked, setIsReviewChecked] = useState(false);
 
   useEffect(() => {
     let unsubscribe;
@@ -178,14 +177,14 @@ export default function HomeScreen() {
       );
 
       // @ts-ignore
-      const bookingsRes = response.data.getUser.bookings.items[0];
+      const bookingsRes = response.data.getUser.bookings?.items[0];
       // @ts-ignore
-      const membershipRes = response.data.getUser.memberships.items[0];
+      const membershipRes = response.data.getUser.memberships?.items[0];
 
       setCompletedBookings(bookingsRes);
       setCompletedMemberships(membershipRes);
     })();
-  }, [membershipReviewChecked, bookingReviewChecked]);
+  }, [isReviewChecked]);
 
   // function to request permission for location
   const requestLocationPermission = async () => {
@@ -206,11 +205,10 @@ export default function HomeScreen() {
     if (screen === 1) return setScreen(0);
 
     await checkReviewStatus(
-      completedBookings.isReviewed,
-      completedBookings.id,
-      completedMemberships.id,
-      setBookingReviewChecked,
-      setMembershipReviewChecked,
+      completedBookings?.isReviewed,
+      completedBookings?.id,
+      completedMemberships?.id,
+      setIsReviewChecked,
     );
 
     // @ts-ignore
@@ -221,14 +219,14 @@ export default function HomeScreen() {
     if (ratings < 1)
       return Alert.alert(
         `Please rate ${
-          !completedBookings.isReviewed
-            ? completedBookings.fitnessService.name
-            : completedMemberships.fitnessService.name
+          !completedBookings?.isReviewed
+            ? completedBookings?.fitnessService.name
+            : completedMemberships?.fitnessService.name
         } service.`,
       );
 
     await createReview(
-      !completedBookings.isReviewed
+      !completedBookings?.isReviewed
         ? completedBookings?.fitnessService.id
         : completedMemberships?.fitnessService.id,
       ratings,
@@ -237,11 +235,10 @@ export default function HomeScreen() {
     );
 
     await checkReviewStatus(
-      completedBookings.isReviewed,
-      completedBookings.id,
-      completedMemberships.id,
-      setBookingReviewChecked,
-      setMembershipReviewChecked,
+      completedBookings?.isReviewed,
+      completedBookings?.id,
+      completedMemberships?.id,
+      setIsReviewChecked,
     );
 
     // @ts-ignore
@@ -358,24 +355,23 @@ export default function HomeScreen() {
               </View>
             )}
 
-            {(!completedBookings.isReviewed ||
-              !completedMemberships.isReviewed) && (
+            {((completedBookings && !completedBookings?.isReviewed) ||
+              (completedMemberships && !completedMemberships?.isReviewed)) && (
               <ReviewToast
                 // @ts-ignore
                 onRateReview={() => sheetRef.current.snapTo(0)}
                 onCancelRateReview={async () => {
                   await checkReviewStatus(
-                    completedBookings.isReviewed,
-                    completedBookings.id,
-                    completedMemberships.id,
-                    setBookingReviewChecked,
-                    setMembershipReviewChecked,
+                    completedBookings?.isReviewed,
+                    completedBookings?.id,
+                    completedMemberships?.id,
+                    setIsReviewChecked,
                   );
                 }}
                 fitnessServiceName={
-                  !completedBookings.isReviewed
-                    ? completedBookings.fitnessService.name
-                    : completedMemberships.fitnessService.name
+                  !completedBookings?.isReviewed
+                    ? completedBookings?.fitnessService?.name
+                    : completedMemberships?.fitnessService?.name
                 }
               />
             )}
@@ -392,7 +388,9 @@ export default function HomeScreen() {
         renderContent={() => (
           <ReviewContainer
             bookings={
-              !bookingReviewChecked ? completedBookings : completedMemberships
+              !completedBookings?.isReviewed
+                ? completedBookings
+                : completedMemberships
             }
             screen={screen}
             review={review}
