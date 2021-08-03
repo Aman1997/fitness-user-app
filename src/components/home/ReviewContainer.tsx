@@ -1,5 +1,5 @@
 import React, {Dispatch} from "react";
-import {View, Text, Alert} from "react-native";
+import {View, Text, Alert, Platform} from "react-native";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {TextInput} from "react-native-paper";
 import {AirbnbRating, Rating} from "react-native-ratings";
@@ -147,7 +147,7 @@ const ReviewContainer = ({
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "flex-end",
-          marginBottom: scale(8),
+          marginBottom: Platform.OS === 'android' ? scale(8) : scale(25),
         }}
       >
         <View

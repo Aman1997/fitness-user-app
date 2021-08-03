@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text} from "react-native";
+import {View, Text, Platform} from "react-native";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {
@@ -38,8 +38,8 @@ export default function ReviewToast({
         </TouchableWithoutFeedback>
 
         <TouchableWithoutFeedback onPress={onCancelRateReview}>
-          <View>
-            <Entypo name="circle-with-cross" size={18} color={ICONS} />
+          <View style={{padding: scale(5)}}>
+            <Entypo name="circle-with-cross" size={scale(18)} color={ICONS} />
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -51,15 +51,17 @@ const styles = ScaledSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: "10@s",
+    paddingVertical: "10@s",
+    paddingHorizontal: "15@s",
     borderRadius: "8@s",
     backgroundColor: PRIMARY_20,
     marginHorizontal: APP_MARGIN_HORIZONTAL,
-    marginVertical: "10@s",
+    marginBottom: Platform.OS === "android" ? "10@s" : "25@s",
   },
   headText: {
     color: CONTENT,
     fontSize: "14@s",
     flexWrap: "wrap",
+    padding : "5@s"
   },
 });
