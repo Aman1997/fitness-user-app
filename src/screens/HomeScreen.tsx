@@ -413,7 +413,7 @@ const styles = ScaledSheet.create({
   },
   cardContainer: {
     flex: 1,
-    paddingHorizontal: APP_MARGIN_HORIZONTAL,
+    paddingHorizontal: "10@s",
     marginBottom: "20@s",
   },
 });

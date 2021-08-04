@@ -88,9 +88,9 @@ const styles = ScaledSheet.create({
     paddingHorizontal: "20@s",
   },
   gymPOCImage: {
-    height: "24@s",
-    width: "24@s",
-    borderRadius: "23@s",
+    height: "30@s",
+    width: "30@s",
+    borderRadius: "15@s",
   },
   gymPOCText: {
     paddingHorizontal: "15@s",

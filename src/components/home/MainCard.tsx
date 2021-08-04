@@ -2,7 +2,7 @@ import React from "react";
 import {Text, View, TouchableWithoutFeedback, Image} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
 import {scale, ScaledSheet} from "react-native-size-matters";
-import {CONTENT, HEAD_TEXT, PRIMARY} from "../../assets/constants/colors";
+import {CONTENT, HEAD_TEXT, PRIMARY, WHITE} from "../../assets/constants/colors";
 import {coords, findDistance} from "../../utils/findDistance";
 
 interface IProps {
@@ -58,7 +58,7 @@ export default function MainCard({
             kms away
           </Text>
           <Text style={styles.detailsText}>
-            {plans.filter((plan) => plan.type === 0)[0].price} INR/day
+            {plans.filter((plan) => plan.type === 0)[0]?.price} INR/day
           </Text>
         </View>
       </View>
@@ -68,20 +68,21 @@ export default function MainCard({
 
 const styles = ScaledSheet.create({
   cardContainer: {
-    borderRadius: "20@s",
+    borderRadius: "10@s",
     elevation: 1,
     marginTop: "20@s",
     marginBottom: "5@s",
     shadowColor: "#000",
-    shadowOffset: {width: 1, height: 3},
+    shadowOffset: {width: 2, height: 3},
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    marginHorizontal: "5@s"
   },
   image: {
     height: "160@s",
     width: "100%",
-    borderTopLeftRadius: "20@s",
-    borderTopRightRadius: "20@s",
+    borderTopLeftRadius: "10@s",
+    borderTopRightRadius: "10@s",
     resizeMode: "cover",
   },
   nameContainer: {
@@ -90,7 +91,8 @@ const styles = ScaledSheet.create({
     paddingTop: "10@s",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "rgba(243,243,243, 0.2)",
+    backgroundColor: WHITE
+    // backgroundColor: "rgba(243,243,243, 0.2)",
   },
   name: {
     fontSize: "14@s",
@@ -105,9 +107,10 @@ const styles = ScaledSheet.create({
     paddingHorizontal: "10@s",
     paddingTop: "5@s",
     paddingBottom: "15@s",
-    backgroundColor: "rgba(243,243,243, 0.2)",
-    borderBottomLeftRadius: "20@s",
-    borderBottomRightRadius: "20@s",
+    backgroundColor: WHITE,
+    // backgroundColor: "rgba(243,243,243, 0.2)",
+    borderBottomLeftRadius: "10@s",
+    borderBottomRightRadius: "10@s",
   },
   detailsText: {
     fontSize: "12@s",

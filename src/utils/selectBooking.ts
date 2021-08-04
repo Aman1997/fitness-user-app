@@ -27,6 +27,7 @@ export const selectBooking = (
         bookingDate: data.bookingDate,
         timeSlot: data.timeSlot,
         trainerName: data.fitnessService.trainerName,
+        trainerImageUrl: data.fitnessService.trainerImageUrl,
         pin: data.pin,
         latitude: data.fitnessService.latitude,
         longitude: data.fitnessService.longitude,
