@@ -24,7 +24,7 @@ export const sendNotification = async (
   type: string,
   partnerEmail: string,
   userName: string,
-  bookingDate: Date,
+  bookingDate: Date | string,
   membershipType: number,
   logType: string,
   metadata: {},

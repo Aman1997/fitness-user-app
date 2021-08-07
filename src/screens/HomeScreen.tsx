@@ -61,6 +61,7 @@ export default function HomeScreen() {
     fitnessService: {
       id: string;
       name: string;
+      ownerEmail: string;
     };
   }>({
     id: "",
@@ -68,6 +69,7 @@ export default function HomeScreen() {
     fitnessService: {
       id: "",
       name: "",
+      ownerEmail: "",
     },
   });
   const [completedMemberships, setCompletedMemberships] = useState<{
@@ -76,6 +78,7 @@ export default function HomeScreen() {
     fitnessService: {
       id: string;
       name: string;
+      ownerEmail: string;
     };
   }>({
     id: "",
@@ -83,6 +86,7 @@ export default function HomeScreen() {
     fitnessService: {
       id: "",
       name: "",
+      ownerEmail: "",
     },
   });
   const [isReviewChecked, setIsReviewChecked] = useState(false);
@@ -232,6 +236,10 @@ export default function HomeScreen() {
       ratings,
       review,
       user.email,
+      user.name,
+      completedBookings.id || completedMemberships.id,
+      completedBookings.fitnessService.ownerEmail ||
+        completedMemberships.fitnessService.ownerEmail,
     );
 
     await checkReviewStatus(

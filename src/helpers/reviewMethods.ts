@@ -5,13 +5,18 @@ import {
   UPDATE_USER_BOOKING_REVIEW_STATUS,
   UPDATE_USER_MEMBERSHIP_REVIEW_STATUS,
 } from "../queries/mutation";
+import {LOG_TYPE, NotificationType} from "../utils/constants";
 import {sentryError} from "../utils/sentrySetup";
+import {sendNotification} from "./pushNotificationMethods";
 
 export const createReview = async (
   fitnessServiceId: string,
   ratings: Number,
   review: string,
   userEmail: string,
+  userName: string,
+  bookingId: string,
+  partnerEmail: string,
 ) => {
   try {
     await API.graphql(
@@ -21,6 +26,21 @@ export const createReview = async (
         review,
         userEmail,
       }),
+    );
+
+    // send the notification
+    await sendNotification(
+      NotificationType.REVIEW_ADDED,
+      partnerEmail,
+      userName,
+      new Date().toISOString(),
+      0,
+      LOG_TYPE.review_added,
+      {
+        email: userEmail,
+        userName,
+        bookingId,
+      },
     );
   } catch (error) {
     sentryError(error);

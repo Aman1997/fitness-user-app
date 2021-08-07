@@ -177,6 +177,7 @@ query COMPLETED_BOOKINGS($email: String!, $to: String!) {
         fitnessService {
           id
           name
+          ownerEmail
         }
       }
     }
@@ -187,7 +188,8 @@ query COMPLETED_BOOKINGS($email: String!, $to: String!) {
         isReviewed
         fitnessService {
           id
-          name          
+          name 
+          ownerEmail         
         }
       }
     }
