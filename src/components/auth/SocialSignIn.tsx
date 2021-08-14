@@ -25,9 +25,9 @@ export default function SocialSignIn({
   setLoading,
   navigation,
 }: IProps) {
-  const googleSignIn = useCallback(() => {
+  const googleSignIn = useCallback(async () => {
     setLoading(true);
-    Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google});
+    await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google});
   }, []);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function SocialSignIn({
               headers: await fetchJWT(),
             });
             if (data.status === "Success") {
-              setUserId(authUser.attributes.email);
+              await setUserId(authUser.attributes.email);
               setLoading(false);
               navigation.reset({
                 index: 0,

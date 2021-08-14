@@ -39,14 +39,14 @@ export default function SignInScreen() {
                 password: "",
               }}
               validationSchema={signInValidationSchema}
-              onSubmit={async (values) =>
+              onSubmit={async (values) => {
                 await login(
                   values.email,
                   values.password,
                   setLoading,
                   navigation,
-                )
-              }
+                );
+              }}
             >
               {({
                 handleChange,
@@ -94,7 +94,11 @@ export default function SignInScreen() {
               )}
             </Formik>
 
-            <SocialSignIn optionText="Or login with" setLoading={setLoading} navigation={navigation} />
+            <SocialSignIn
+              optionText="Or login with"
+              setLoading={setLoading}
+              navigation={navigation}
+            />
           </View>
         </ScrollView>
       )}
@@ -105,7 +109,7 @@ export default function SignInScreen() {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? "40@s" : "20@s",
+    marginTop: Platform.OS === "android" ? "40@s" : "20@s",
   },
   inputContainer: {
     marginVertical: "20@s",

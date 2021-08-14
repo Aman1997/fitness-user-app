@@ -19,12 +19,13 @@ export const login = async (
   setLoading(true);
   try {
     const signInRes = await Auth.signIn(email.toLowerCase(), password);
-    setLoading(false);
 
     // setting the user email in async storage
-    setUserId(signInRes.username);
+    await setUserId(signInRes.username);
 
-    navigation.reset({
+    setLoading(false);
+
+    return navigation.reset({
       index: 0,
       routes: [
         {
@@ -68,6 +69,6 @@ export const login = async (
       );
     }
     sentryError(error);
-    navigation.reset({index: 0, routes: [{name: errorScreen}]});
+    return navigation.reset({index: 0, routes: [{name: errorScreen}]});
   }
 };

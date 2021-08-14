@@ -31,7 +31,6 @@ export default function MembershipDetailsScreen() {
 
   // @ts-ignore
   const {data} = route.params;
-  console.log(data);
 
   const [type, setType] = useState(1);
   const [isPlanSelected, setPlanSelected] = useState({
@@ -46,7 +45,7 @@ export default function MembershipDetailsScreen() {
   return (
     <>
       <View style={{flex: 1}}>
-        <StatusBar style="dark" />
+        <StatusBar style="light" />
         <FitnessServiceImageView
           data={{
             imageUrl: data.imageUrl,

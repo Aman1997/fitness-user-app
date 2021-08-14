@@ -21,7 +21,7 @@ export default function ReviewCard({reviewsData, onReviewSelected}: IProps) {
         <View style={styles.profileContainer}>
           <Image
             source={{
-              uri: reviewsData.imageUrl,
+              uri: reviewsData.imageUrl || "https://picsum.photos/300",
             }}
             style={styles.profileIcon}
           />

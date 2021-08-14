@@ -56,7 +56,6 @@ export default function BookingCalendarScreen() {
   }, []);
 
   const proceedToConfirmation = () => {
-    console.log("date", addDays(new Date(), 15) < start);
     if (!time) return Alert.alert("Please select a time slot");
     if (addDays(startOfDay(new Date()), 15) < start)
       return Alert.alert(

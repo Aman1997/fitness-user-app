@@ -48,7 +48,7 @@ export default function App() {
       try {
         await SplashScreen.preventAutoHideAsync();
         const authUser = await Auth.currentAuthenticatedUser();
-        setUserId(authUser.attributes.email);
+        await setUserId(authUser.attributes.email);
         updateUser(authUser.attributes.email);
       } catch (error) {
       } finally {

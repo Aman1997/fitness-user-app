@@ -4,7 +4,6 @@ import React, {useState, useRef, useEffect} from "react";
 import {Alert, Modal, View, FlatList} from "react-native";
 import {scale, ScaledSheet} from "react-native-size-matters";
 import {useDispatch, useSelector} from "react-redux";
-import {APP_MARGIN_HORIZONTAL} from "../assets/constants/styles";
 import MainCard from "../components/home/MainCard";
 import MainHeader from "../components/home/MainHeader";
 import NoPartnerData from "../components/home/NoPartnerData";
@@ -92,7 +91,6 @@ export default function HomeScreen() {
   const [isReviewChecked, setIsReviewChecked] = useState(false);
 
   useEffect(() => {
-    let unsubscribe;
     (async () => {
       // requesting permission to location
       await requestLocationPermission();
@@ -105,18 +103,6 @@ export default function HomeScreen() {
         const userData = await API.graphql(
           graphqlOperation(GET_USER_DATA, {email: id}),
         );
-
-        // Get the device token
-        messaging()
-          .getToken()
-          .then(async (token) => {
-            await saveDeviceToken(token, id as string);
-          });
-
-        // Listen to whether the token changes
-        unsubscribe = messaging().onTokenRefresh(async (token) => {
-          await saveDeviceToken(token, id as string);
-        });
 
         dispatch(
           addUser({
@@ -143,8 +129,6 @@ export default function HomeScreen() {
         navigation.reset({index: 0, routes: [{name: errorScreen}]});
       }
     })();
-
-    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -172,21 +156,25 @@ export default function HomeScreen() {
 
   useEffect(() => {
     (async () => {
-      const id = await getUserId();
-      const response = await API.graphql(
-        graphqlOperation(COMPLETED_BOOKINGS, {
-          email: id,
-          to: new Date().toISOString(),
-        }),
-      );
+      try {
+        const id = await getUserId();
+        const response = await API.graphql(
+          graphqlOperation(COMPLETED_BOOKINGS, {
+            email: id,
+            to: new Date().toISOString(),
+          }),
+        );
 
-      // @ts-ignore
-      const bookingsRes = response.data.getUser.bookings?.items[0];
-      // @ts-ignore
-      const membershipRes = response.data.getUser.memberships?.items[0];
+        // @ts-ignore
+        const bookingsRes = response.data.getUser?.bookings.items[0];
+        // @ts-ignore
+        const membershipRes = response.data.getUser?.memberships.items[0];
 
-      setCompletedBookings(bookingsRes);
-      setCompletedMemberships(membershipRes);
+        setCompletedBookings(bookingsRes);
+        setCompletedMemberships(membershipRes);
+      } catch (error) {
+        console.log("Error while fetching completed bookings and memberships", error)
+      }
     })();
   }, [isReviewChecked]);
 
@@ -256,6 +244,25 @@ export default function HomeScreen() {
     setReview("");
     setScreen(0);
   };
+
+  useEffect(() => {
+    let unsubscribe;
+    (async () => {
+      const id = await getUserId();
+      // Get the device token
+      messaging()
+        .getToken()
+        .then(async (token) => {
+          await saveDeviceToken(token, id as string);
+        });
+
+      // Listen to whether the token changes
+      unsubscribe = messaging().onTokenRefresh(async (token) => {
+        await saveDeviceToken(token, id as string);
+      });
+      return unsubscribe;
+    })();
+  }, []);
 
   return (
     <>
