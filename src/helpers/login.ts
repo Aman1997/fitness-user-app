@@ -18,21 +18,7 @@ export const login = async (
 ) => {
   setLoading(true);
   try {
-    const signInRes = await Auth.signIn(email.toLowerCase(), password);
-
-    // setting the user email in async storage
-    await setUserId(signInRes.username);
-
-    setLoading(false);
-
-    return navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: appHomeScreen,
-        },
-      ],
-    });
+    await Auth.signIn(email.toLowerCase(), password);
   } catch (error) {
     setLoading(false);
     if (error.code === "UserNotFoundException") {

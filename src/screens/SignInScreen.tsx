@@ -1,6 +1,6 @@
 import {useNavigation} from "@react-navigation/core";
 import {StackNavigationProp} from "@react-navigation/stack";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Platform, ScrollView, Text, View} from "react-native";
 import {CONTENT_CONTAINER} from "../assets/constants/styles";
 import {Formik} from "formik";
@@ -11,14 +11,53 @@ import SocialSignIn from "../components/auth/SocialSignIn";
 import {ScaledSheet} from "react-native-size-matters";
 import {CONTENT} from "../assets/constants/colors";
 import AuthHeader from "../components/auth/AuthHeader";
-import {forgotPasswordScreen} from "../navigation/routes";
+import {appHomeScreen, forgotPasswordScreen} from "../navigation/routes";
 import LoadingIndicator from "../components/common/LoadingIndicator";
 import {login} from "../helpers/login";
+import {Auth, Hub} from "aws-amplify";
+import axios from "axios";
+import Config from "react-native-config";
+import {fetchJWT} from "../helpers/fetchJWT";
+import setUserId from "../utils/setUserId";
 
 export default function SignInScreen() {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    Hub.listen("auth", async ({payload: {event, data}}) => {
+      switch (event) {
+        case "signIn":
+          const authUser = await Auth.currentAuthenticatedUser();
+          const params = {
+            email: authUser.attributes.email,
+            name: authUser.attributes["custom:name"] || "",
+            phoneNumber: authUser.attributes["custom:phoneNumber"] || "",
+            imageUrl: authUser.attributes.picture || "",
+          };
+          const {data} = await axios.post(Config.SOCIAL_SIGN_IN, params, {
+            headers: await fetchJWT(),
+          });
+          if (data.status === "Success") {
+            await setUserId(authUser.attributes.email);
+            setLoading(false);
+            navigation.reset({
+              index: 0,
+              routes: [
+                {
+                  name: appHomeScreen,
+                },
+              ],
+            });
+          }
+          break;
+        case "signIn_failure":
+        case "cognitoHostedUI_failure":
+          console.log("Sign in failure", data);
+      }
+    });
+  }, []);
 
   return (
     <>
