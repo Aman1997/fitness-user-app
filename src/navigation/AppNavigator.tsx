@@ -6,8 +6,10 @@ import {
   bookingDetailsScreen,
   bookingsScreen,
   confirmationScreen,
+  contactUsScreen,
   editProfileScreen,
   errorScreen,
+  faqAndSupportScreen,
   fitnessProfileScreen,
   homeScreen,
   membershipDetailsScreen,
@@ -34,6 +36,8 @@ import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import BookingCalendarScreen from "../screens/BookingCalendarScreen";
 import AppError from "../components/common/AppError";
+import ContactUsScreen from "../screens/ContactUsScreen";
+import FaqAndSupportScreen from "../screens/FaqAndSupportScreen";
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -45,69 +49,36 @@ const modalStyle: NativeStackNavigationOptions = {
 };
 
 const AppNavigator = () => (
-  <Stack.Navigator initialRouteName={homeScreen}>
-    <Stack.Screen name={homeScreen} component={HomeScreen} options={noHeader} />
-    <Stack.Screen
-      name={searchScreen}
-      component={SearchScreen}
-      options={noHeader}
-    />
+  <Stack.Navigator initialRouteName={homeScreen} screenOptions={noHeader}>
+    <Stack.Screen name={homeScreen} component={HomeScreen} />
+    <Stack.Screen name={searchScreen} component={SearchScreen} />
     <Stack.Screen
       name={fitnessProfileScreen}
       component={FitnessProfileScreen}
-      options={noHeader}
     />
     <Stack.Screen
       name={bookingCalendarScreen}
       component={BookingCalendarScreen}
       options={modalStyle}
     />
-    <Stack.Screen
-      name={confirmationScreen}
-      component={ConfirmationScreen}
-      options={{headerShown: false}}
-    />
-    <Stack.Screen
-      name={reviewsDetailsScreen}
-      component={ReviewsScreen}
-      options={noHeader}
-    />
-    <Stack.Screen
-      name={settingsScreen}
-      component={SettingsScreen}
-      options={noHeader}
-    />
-    <Stack.Screen
-      name={bookingsScreen}
-      component={BookingsScreen}
-      options={noHeader}
-    />
+    <Stack.Screen name={confirmationScreen} component={ConfirmationScreen} />
+    <Stack.Screen name={reviewsDetailsScreen} component={ReviewsScreen} />
+    <Stack.Screen name={settingsScreen} component={SettingsScreen} />
+    <Stack.Screen name={bookingsScreen} component={BookingsScreen} />
     <Stack.Screen
       name={bookingDetailsScreen}
       component={BookingDetailsScreen}
-      options={noHeader}
     />
     <Stack.Screen
       name={membershipDetailsScreen}
       component={MembershipDetailsScreen}
-      options={noHeader}
     />
-    <Stack.Screen
-      name={profileScreen}
-      component={ProfileScreen}
-      options={noHeader}
-    />
-    <Stack.Screen
-      name={editProfileScreen}
-      component={EditProfileScreen}
-      options={noHeader}
-    />
-    <Stack.Screen
-      name={postLogoutScreen}
-      component={AuthNavigator}
-      options={noHeader}
-    />
-    <Stack.Screen name={errorScreen} component={AppError} options={noHeader} />
+    <Stack.Screen name={profileScreen} component={ProfileScreen} />
+    <Stack.Screen name={editProfileScreen} component={EditProfileScreen} />
+    <Stack.Screen name={postLogoutScreen} component={AuthNavigator} />
+    <Stack.Screen name={contactUsScreen} component={ContactUsScreen} />
+    <Stack.Screen name={faqAndSupportScreen} component={FaqAndSupportScreen} />
+    <Stack.Screen name={errorScreen} component={AppError} />
   </Stack.Navigator>
 );
 

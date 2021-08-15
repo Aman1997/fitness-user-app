@@ -158,7 +158,6 @@ export default function HomeScreen() {
     (async () => {
       try {
         const id = await getUserId();
-        console.log("user in home", id)
         const response = await API.graphql(
           graphqlOperation(COMPLETED_BOOKINGS, {
             email: id,

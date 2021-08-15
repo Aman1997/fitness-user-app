@@ -15,7 +15,12 @@ import AppPageTitle from "../components/common/AppPageTitle";
 import AppSeparator from "../components/common/AppSeparator";
 import SettingsListBlock from "../components/settings/SettingsListBlock";
 import {signOut} from "../helpers/signOut";
-import {bookingsScreen, profileScreen} from "../navigation/routes";
+import {
+  bookingsScreen,
+  contactUsScreen,
+  faqAndSupportScreen,
+  profileScreen,
+} from "../navigation/routes";
 import {IUserState} from "../redux/reducers/userReducer";
 
 export default function SettingsScreen() {
@@ -54,6 +59,11 @@ export default function SettingsScreen() {
             <SettingsListBlock text="Terms of Use" icon="book" />
             <SettingsListBlock text="Community Guidelines" icon="team" />
             <SettingsListBlock text="Copyright Policy" icon="copyright" />
+            <SettingsListBlock
+              text="FAQ & Support"
+              icon="contacts"
+              onPressHandle={() => navigation.navigate(faqAndSupportScreen)}
+            />
             <Text
               style={styles.logoutText}
               onPress={async () => await signOut(user.email, navigation)}

@@ -3,12 +3,10 @@ import {Auth} from "aws-amplify";
 import {Dispatch} from "react";
 import {Alert} from "react-native";
 import {
-  appHomeScreen,
   errorScreen,
   verifySignUpScreen,
 } from "../navigation/routes";
 import {sentryError} from "../utils/sentrySetup";
-import setUserId from "../utils/setUserId";
 
 export const login = async (
   email: string,
